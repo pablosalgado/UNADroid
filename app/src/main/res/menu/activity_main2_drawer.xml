@@ -3,36 +3,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single" android:id="@+id/grp1">
+            <item
+                android:id="@+id/nav_home"
+                android:icon="@drawable/ic_nav_home"
+                android:title="Inicio" />
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/ic_nav_account"
+                android:title="Mi perfil" />
+    </group>
+    <group android:checkableBehavior="single" android:id="@+id/grp2">
         <item
             android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:icon="@drawable/ic_nav_docs"
+            android:title="Documentación" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:icon="@drawable/ic_nav_examples"
+            android:title="Ejemplos" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:icon="@drawable/ic_nav_quiz"
+            android:title="Evaluaciones" />
         <item
             android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:icon="@drawable/ic_nav_school"
+            android:title="Sobre el curso" />
+    </group>
+    <group android:checkableBehavior="single" android:id="@+id/grp3">
+        <item
+            android:id="@+id/nav_resources"
+            android:icon="@drawable/ic_nav_resources"
+            android:title="Recursos" />
+    </group>
+    <group android:checkableBehavior="single" android:id="@+id/grp4">
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@drawable/ic_nav_about"
+            android:title="Acera de" />
+        <item
+            android:id="@+id/nav_send"
+            android:icon="@drawable/ic_nav_exit"
+            android:title="Salir" />
     </group>
 
-    <item android:title="Communicate">
+    <!--<item android:title="Communicate">
         <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+
         </menu>
-    </item>
+    </item>-->
 
 </menu>
