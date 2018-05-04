@@ -36,6 +36,10 @@
             android:id="@+id/nav_resources"
             android:icon="@drawable/ic_nav_resources"
             android:title="Recursos" />
+        <item
+            android:id="@+id/nav_campus"
+            android:icon="@drawable/ic_nav_web"
+            android:title="Ir al Campus" />
     </group>
     <group android:checkableBehavior="single" android:id="@+id/grp4">
         <item
@@ -43,8 +47,8 @@
             android:icon="@drawable/ic_nav_about"
             android:title="Acera de" />
         <item
-            android:id="@+id/nav_send"
-            android:icon="@drawable/ic_nav_exit"
+            android:id="@+id/nav_exit"
+            android:icon="@drawable/ic_nav_poweroff"
             android:title="Salir" />
     </group>
 
