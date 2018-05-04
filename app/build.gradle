@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "co.edu.unadvirtual.computacion.movil"
+        applicationId "co.edu.unadvirtual.computacion.movil.unadroid"
         minSdkVersion 15
         targetSdkVersion 27
         versionCode 1

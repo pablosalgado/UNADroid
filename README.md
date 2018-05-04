@@ -1,2 +1,2 @@
-# unad-computacion-movil
+# UNADroid
 Proyecto de opción de grado 
