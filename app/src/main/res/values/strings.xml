@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">UNADroid</string>
+    <string name="app_name_upper">UNADROID</string>
+    <string name="app_name_subtitle">Guia de programación</string>
+    <string name="loader_footer_text">DIPLOMADO PROFUNDIZACIÓN EN COMPUTACIÓN MÓVIL</string>
     <string name="edit_message">Enter a message</string>
     <string name="button_send">Send</string>
     <string name="title_activity_main2">UNADroid</string>

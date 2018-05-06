@@ -9,22 +9,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".MainActivity" android:label="Un mensaje" android:parentActivityName=".Main2Activity">
-        </activity>
-
         <activity
-            android:name=".DisplayMessageActivity" android:label="Mensaje"
-            android:parentActivityName=".MainActivity">
+            android:name=".MainActivity"
+            android:label="Un mensaje"
+            android:parentActivityName=".Main2Activity"></activity>
+        <activity
+            android:name=".DisplayMessageActivity"
+            android:label="Mensaje"
+            android:parentActivityName=".MainActivity"></activity>
+        <activity
+            android:name=".Main2Activity" android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/title_activity_main2">
         </activity>
-
-        <activity android:name=".Main2Activity" android:label="@string/title_activity_main2" android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".LoaderActivity"  android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

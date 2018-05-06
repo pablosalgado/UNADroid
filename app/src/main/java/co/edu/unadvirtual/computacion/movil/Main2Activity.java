@@ -112,4 +112,10 @@ public class Main2Activity extends AppCompatActivity
         startActivity(intent);
 
     }
+
+    public void callLoader(View view){
+        Intent intent = new Intent(this,LoaderActivity.class);
+        startActivity(intent);
+
+    }
 }
