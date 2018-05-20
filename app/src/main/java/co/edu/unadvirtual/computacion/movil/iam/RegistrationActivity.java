@@ -1,8 +1,8 @@
 package co.edu.unadvirtual.computacion.movil.iam;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,78 +21,76 @@ import co.edu.unadvirtual.computacion.movil.MainActivity;
 import co.edu.unadvirtual.computacion.movil.R;
 
 /**
- * Captura las credenciales del usuario y las valida contra el servidor
+ * Captura los datos básicos del usuario y los envia al servidor.
  */
-public class LoginActivity extends AppCompatActivity {
+public class RegistrationActivity extends AppCompatActivity {
 
-    private static final String TAG = "LoginActivity";
-    private EditText editTextPassword;
+    private static final String TAG = "RegistrationActivity";
     private EditText editTextEmail;
+    private EditText editTextPassword;
+    private EditText editTextFirstName;
+    private EditText editTextLastName;
+    private Button buttonSend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_registration);
 
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
+        editTextFirstName = findViewById(R.id.editTextFirstName);
+        editTextLastName = findViewById(R.id.editTextLastName);
 
-        Button buttonLogin = findViewById(R.id.buttonLogin);
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
+        buttonSend = findViewById(R.id.buttonSend);
+        buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                loginUser(
+            public void onClick(View v) {
+                registerUser(
                         editTextEmail.getText().toString(),
-                        editTextPassword.getText().toString()
+                        editTextPassword.getText().toString(),
+                        editTextFirstName.getText().toString(),
+                        editTextLastName.getText().toString()
                 );
             }
         });
 
-        Button buttonRegister = findViewById(R.id.buttonRegister);
-        buttonRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
     }
 
     /**
-     * Método para llevar a cabo la autenticación del usuario.
+     * Método para hacer el registro del usuario
      *
-     * @param email El nombre de usuario.
-     * @param password La contraseña del usuario.
+     * @param email     Correo electrónico del usuario.
+     * @param password  Contraseña
+     * @param firstName Nombres
+     * @param lastName  Apellidos
      */
-    private void loginUser(final String email, final String password) {
-        // Las credenciales del usuario para ser enviadas al servidor en formato JSON
+    private void registerUser(String email, String password, String firstName, String lastName) {
+        // Los datos del usuario para ser enviadas al servidor en formato JSON
         JSONObject params = new JSONObject();
 
         try {
             params.put("email", email);
             params.put("password", password);
+            params.put("firstName", firstName);
+            params.put("lastName", lastName);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        // Se hace una petición POST al servidor con las credenciales de acceso del usuario.
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                "https://unadroid.tk/api/login",
+                "https://unadroid.tk/api/register",
                 params,
                 new SuccessListener(),
                 new ErrorListener()
         );
 
-        // Enviar la petición a la cola. Los resultados enviados por el servidor serán procesados
-        // por los Listener asociados en el momento que la respuesta arrive al dispositivo.
         AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(request, TAG);
     }
 
     /**
-     * Procesa la respuesta del servidor. Si las credenciales que el usuario ha ingresado permiten
-     * autenticar con éxito, se carga la aplicación
+     * Procesa la respuesta del servidor.
      */
     private class SuccessListener implements Response.Listener<JSONObject> {
         @Override
@@ -102,11 +100,12 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (!error) {
                     Intent intent = new Intent(
-                            LoginActivity.this,
+                            RegistrationActivity.this,
                             MainActivity.class);
                     intent.putExtra("email", response.getString("email"));
                     startActivity(intent);
                     finish();
+
                 } else {
                     String errorMsg = response.getString("error_msg");
                     Toast.makeText(
@@ -114,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
                             errorMsg, Toast.LENGTH_LONG
                     ).show();
                 }
-            } catch (JSONException e) {
+            } catch (JSONException e){
                 e.printStackTrace();
             }
         }
@@ -127,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void onErrorResponse(VolleyError error) {
             Toast.makeText(
-                    LoginActivity.this.getApplicationContext(),
+                    RegistrationActivity.this.getApplicationContext(),
                     error.getMessage(),
                     Toast.LENGTH_LONG
             ).show();

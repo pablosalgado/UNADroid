@@ -17,4 +17,7 @@
     <string name="iam_password">Contraseña</string>
     <string name="iam_login">Ingrese</string>
     <string name="iam_register">Regístrese</string>
+    <string name="iam_first_name">Nombres</string>
+    <string name="iam_last_name">Apellidos</string>
+    <string name="iam_send">Enviar</string>
 </resources>
