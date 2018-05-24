@@ -26,6 +26,7 @@
         </activity>
         <activity android:name=".iam.LoginActivity" />
         <activity android:name=".iam.RegistrationActivity" />
+        <activity android:name=".videos.VideosActivity"></activity>
     </application>
 
 </manifest>

@@ -15,7 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-//import co.edu.unadvirtual.computacion.movil.resources.VideosActivity;
+import co.edu.unadvirtual.computacion.movil.videos.VideosActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -93,8 +93,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_videos) {
-//            Intent intent = new Intent(MainActivity.this, VideosActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(MainActivity.this, VideosActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_campus) {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.campus_url)));
             startActivity(browserIntent);
