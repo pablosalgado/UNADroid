@@ -80,7 +80,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                "https://unadroid.tk/api/register",
+                AppSingleton.UNADROID_SERVER_ENDPOINT + "/register",
                 params,
                 new SuccessListener(),
                 new ErrorListener()

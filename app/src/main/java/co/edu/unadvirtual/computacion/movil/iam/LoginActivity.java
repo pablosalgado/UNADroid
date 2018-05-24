@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
         // Se hace una petición POST al servidor con las credenciales de acceso del usuario.
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                "https://unadroid.tk/api/login",
+                AppSingleton.UNADROID_SERVER_ENDPOINT + "/login",
                 params,
                 new SuccessListener(),
                 new ErrorListener()

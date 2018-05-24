@@ -10,6 +10,11 @@ import com.android.volley.toolbox.Volley;
  * hace uso de la biblioteca Volley que permite simplificar el manejo de las operaciones de red.
  */
 public class AppSingleton {
+    /**
+     * Endpoint para las peticiones REST al servidor de UNADroid
+     */
+    public final static String UNADROID_SERVER_ENDPOINT = "https://unadroid.tk/api";
+
     private static AppSingleton instance;
     private RequestQueue requestQueue;
     private static Context context;
