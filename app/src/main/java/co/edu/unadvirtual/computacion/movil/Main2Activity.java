@@ -92,9 +92,12 @@ public class Main2Activity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_campus) {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.campus_url)));
-            startActivity(browserIntent);
+            Intent intent = new Intent(this,WebCampusActivity.class);
+            startActivity(intent);
+            //Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.campus_url)));
+            //startActivity(browserIntent);
         } else if (id == R.id.nav_exit) {
+           // finish();
             Intent homeIntent = new Intent(Intent.ACTION_MAIN);
             homeIntent.addCategory( Intent.CATEGORY_HOME );
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="co.edu.unadvirtual.computacion.movil">
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,21 +14,26 @@
         <activity
             android:name=".MainActivity"
             android:label="Un mensaje"
-            android:parentActivityName=".Main2Activity"></activity>
+            android:parentActivityName=".Main2Activity" />
         <activity
             android:name=".DisplayMessageActivity"
             android:label="Mensaje"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".Main2Activity" android:theme="@style/AppTheme.NoActionBar"
-            android:label="@string/title_activity_main2">
-        </activity>
-        <activity android:name=".LoaderActivity"  android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait">
+            android:name=".Main2Activity"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".LoaderActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".WebCampusActivity" android:parentActivityName=".Main2Activity"></activity>
     </application>
 
 </manifest>
