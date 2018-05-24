@@ -13,4 +13,11 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="campus_url">https://www.unad.edu.co/</string>
+    <string name="iam_email">Correo electrónico</string>
+    <string name="iam_password">Contraseña</string>
+    <string name="iam_login">Ingrese</string>
+    <string name="iam_register">Regístrese</string>
+    <string name="iam_first_name">Nombres</string>
+    <string name="iam_last_name">Apellidos</string>
+    <string name="iam_send">Enviar</string>
 </resources>
