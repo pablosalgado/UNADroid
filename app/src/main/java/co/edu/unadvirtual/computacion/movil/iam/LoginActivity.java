@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -28,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private EditText editTextPassword;
     private EditText editTextEmail;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,26 +38,22 @@ public class LoginActivity extends AppCompatActivity {
 
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
+        progressBar = findViewById(R.id.progressBar);
 
         Button buttonLogin = findViewById(R.id.buttonLogin);
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loginUser(
-                        editTextEmail.getText().toString(),
-                        editTextPassword.getText().toString()
-                );
-            }
+        buttonLogin.setOnClickListener((View view) -> {
+            progressBar.setVisibility(View.VISIBLE);
+            loginUser(
+                    editTextEmail.getText().toString(),
+                    editTextPassword.getText().toString()
+            );
         });
 
         Button buttonRegister = findViewById(R.id.buttonRegister);
-        buttonRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        buttonRegister.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
+            startActivity(intent);
+            finish();
         });
     }
 
@@ -116,6 +114,8 @@ public class LoginActivity extends AppCompatActivity {
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
+            } finally {
+                progressBar.setVisibility(View.INVISIBLE);
             }
         }
     }
@@ -126,6 +126,7 @@ public class LoginActivity extends AppCompatActivity {
     private class ErrorListener implements Response.ErrorListener {
         @Override
         public void onErrorResponse(VolleyError error) {
+            progressBar.setVisibility(View.INVISIBLE);
             Toast.makeText(
                     LoginActivity.this.getApplicationContext(),
                     error.getMessage(),

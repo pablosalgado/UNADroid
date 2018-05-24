@@ -1,9 +1,8 @@
 package co.edu.unadvirtual.computacion.movil.iam;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -30,7 +29,6 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText editTextPassword;
     private EditText editTextFirstName;
     private EditText editTextLastName;
-    private Button buttonSend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,18 +40,13 @@ public class RegistrationActivity extends AppCompatActivity {
         editTextFirstName = findViewById(R.id.editTextFirstName);
         editTextLastName = findViewById(R.id.editTextLastName);
 
-        buttonSend = findViewById(R.id.buttonSend);
-        buttonSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                registerUser(
-                        editTextEmail.getText().toString(),
-                        editTextPassword.getText().toString(),
-                        editTextFirstName.getText().toString(),
-                        editTextLastName.getText().toString()
-                );
-            }
-        });
+        Button buttonSend = findViewById(R.id.buttonSend);
+        buttonSend.setOnClickListener(v -> registerUser(
+                editTextEmail.getText().toString(),
+                editTextPassword.getText().toString(),
+                editTextFirstName.getText().toString(),
+                editTextLastName.getText().toString()
+        ));
 
     }
 
