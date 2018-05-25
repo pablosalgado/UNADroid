@@ -96,8 +96,8 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(MainActivity.this, VideosActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_campus) {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.campus_url)));
-            startActivity(browserIntent);
+            Intent intent = new Intent(this,WebCampusActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_exit) {
             Intent homeIntent = new Intent(Intent.ACTION_MAIN);
             homeIntent.addCategory( Intent.CATEGORY_HOME );
