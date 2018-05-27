@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import co.edu.unadvirtual.computacion.movil.iam.EditProfileActivity;
 import co.edu.unadvirtual.computacion.movil.videos.VideosActivity;
 
 public class MainActivity extends AppCompatActivity
@@ -86,6 +87,9 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
+        } else if (id == R.id.nav_profile) {
+            Intent intent = new Intent(this, EditProfileActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -93,16 +97,17 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_videos) {
-            Intent intent = new Intent(MainActivity.this, VideosActivity.class);
+            Intent intent = new Intent(this, VideosActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_campus) {
             Intent intent = new Intent(this,WebCampusActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_exit) {
-            Intent homeIntent = new Intent(Intent.ACTION_MAIN);
-            homeIntent.addCategory( Intent.CATEGORY_HOME );
-            homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(homeIntent);
+            //Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+            //homeIntent.addCategory( Intent.CATEGORY_HOME );
+            //homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            //startActivity(homeIntent);
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
