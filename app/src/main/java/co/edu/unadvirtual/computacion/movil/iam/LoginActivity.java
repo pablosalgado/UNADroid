@@ -41,20 +41,24 @@ public class LoginActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
 
         Button buttonLogin = findViewById(R.id.buttonLogin);
-        buttonLogin.setOnClickListener((View view) -> {
-            progressBar.setVisibility(View.VISIBLE);
-            loginUser(
-                    editTextEmail.getText().toString(),
-                    editTextPassword.getText().toString()
-            );
-        });
+        buttonLogin.setOnClickListener(this::loginClicked);
 
         Button buttonRegister = findViewById(R.id.buttonRegister);
-        buttonRegister.setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
-            startActivity(intent);
-            finish();
-        });
+        buttonRegister.setOnClickListener(this::registerClicked);
+    }
+
+    private void loginClicked(View view) {
+        progressBar.setVisibility(View.VISIBLE);
+        loginUser(
+                editTextEmail.getText().toString(),
+                editTextPassword.getText().toString()
+        );
+    }
+
+    private void registerClicked(View view) {
+        Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     /**
@@ -79,8 +83,8 @@ public class LoginActivity extends AppCompatActivity {
                 Request.Method.POST,
                 AppSingleton.UNADROID_SERVER_ENDPOINT + "/login",
                 params,
-                new SuccessListener(),
-                new ErrorListener()
+                this::loginSuccessful,
+                this::loginError
         );
 
         // Enviar la petición a la cola. Los resultados enviados por el servidor serán procesados
@@ -91,47 +95,46 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Procesa la respuesta del servidor. Si las credenciales que el usuario ha ingresado permiten
      * autenticar con éxito, se carga la aplicación
+     *
+     * @param response
      */
-    private class SuccessListener implements Response.Listener<JSONObject> {
-        @Override
-        public void onResponse(JSONObject response) {
-            try {
-                boolean error = !response.isNull("error");
+    private void loginSuccessful(JSONObject response) {
+        try {
+            boolean error = !response.isNull("error");
 
-                if (!error) {
-                    Intent intent = new Intent(
-                            LoginActivity.this,
-                            MainActivity.class);
-                    intent.putExtra("email", response.getString("email"));
-                    startActivity(intent);
-                    finish();
-                } else {
-                    String errorMsg = response.getString("error_msg");
-                    Toast.makeText(
-                            getApplicationContext(),
-                            errorMsg, Toast.LENGTH_LONG
-                    ).show();
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } finally {
-                progressBar.setVisibility(View.INVISIBLE);
+            if (!error) {
+                Intent intent = new Intent(
+                        LoginActivity.this,
+                        MainActivity.class);
+                intent.putExtra("email", response.getString("email"));
+                startActivity(intent);
+                finish();
+            } else {
+                String errorMsg = response.getString("error_msg");
+                Toast.makeText(
+                        getApplicationContext(),
+                        errorMsg, Toast.LENGTH_LONG
+                ).show();
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } finally {
+            progressBar.setVisibility(View.INVISIBLE);
         }
     }
 
     /**
      * Si ocurre algún error, se despliega el mensaje del mismo.
+     *
+     * @param volleyError
      */
-    private class ErrorListener implements Response.ErrorListener {
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            progressBar.setVisibility(View.INVISIBLE);
-            Toast.makeText(
-                    LoginActivity.this.getApplicationContext(),
-                    error.getMessage(),
-                    Toast.LENGTH_LONG
-            ).show();
-        }
+    private void loginError(VolleyError volleyError) {
+        progressBar.setVisibility(View.INVISIBLE);
+        Toast.makeText(
+                LoginActivity.this.getApplicationContext(),
+                volleyError.getMessage(),
+                Toast.LENGTH_LONG
+        ).show();
     }
+
 }

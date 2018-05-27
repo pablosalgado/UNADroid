@@ -7,6 +7,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Modelo de dominio para los objetos de la clase Video.
+ */
 public class Video {
     private int id;
     private String unit;
@@ -14,6 +17,61 @@ public class Video {
     private String description;
     private String url;
     private int order;
+
+    /**
+     * Construye una instancia de Video a partir de un objeto {@link JSONObject}
+     *
+     * @param jsonObject Un objeto {@link JSONObject} con los datos del video.
+     * @return Una instancia de {@link Video}
+     */
+    public static Video fromJSON(JSONObject jsonObject) {
+        // Fail-fast
+        if (jsonObject == null) {
+            throw new IllegalArgumentException("Parameter jsonObject is required");
+        }
+
+        try {
+            Video ret = new Video();
+
+            ret.id = jsonObject.getInt("id");
+            ret.unit = jsonObject.getString("unit");
+            ret.name = jsonObject.getString("name");
+            ret.description = jsonObject.getString("description");
+            ret.url = jsonObject.getString("url");
+            ret.order = jsonObject.getInt("order");
+
+            return ret;
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Construye una lista de {@link Video} a partir de un arreglo de objetos {@link JSONObject} que
+     * se entregan encapsulados en una instancia de {@link JSONArray}
+     *
+     * @param jsonArray La instancia que encapsula los datos de los videos.
+     * @return La lista de {@link Video}
+     */
+    public static List<Video> fromJSON(JSONArray jsonArray) {
+        // Fail-fast
+        if (jsonArray == null) {
+            throw new IllegalArgumentException("Parameter jsonArray is required");
+        }
+
+        try {
+            ArrayList<Video> ret = new ArrayList<>();
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject o = jsonArray.getJSONObject(i);
+                ret.add(Video.fromJSON(o));
+            }
+
+            return ret;
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public int getId() {
         return id;
@@ -42,36 +100,5 @@ public class Video {
     @Override
     public String toString() {
         return name;
-    }
-
-    public static Video fromJSON(JSONObject o) {
-        Video ret = new Video();
-
-        try {
-            ret.id = o.getInt("id");
-            ret.unit = o.getString("unit");
-            ret.name = o.getString("name");
-            ret.description = o.getString("description");
-            ret.url = o.getString("url");
-            ret.order = o.getInt("order");
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-
-        return ret;
-    }
-
-    public static List<Video> fromJSON(JSONArray jsonArray){
-        ArrayList<Video> ret = new ArrayList<>();
-        try {
-            for(int i = 0; i < jsonArray.length(); i++) {
-                JSONObject o = jsonArray.getJSONObject(0);
-                ret.add(Video.fromJSON(o));
-            }
-        } catch (JSONException e){
-            throw new RuntimeException(e);
-        }
-
-        return ret;
     }
 }
