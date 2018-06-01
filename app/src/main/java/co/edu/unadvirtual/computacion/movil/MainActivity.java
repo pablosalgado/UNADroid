@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import co.edu.unadvirtual.computacion.movil.common.MainMenuActivity;
 import co.edu.unadvirtual.computacion.movil.videos.VideosActivity;
 
 public class MainActivity extends AppCompatActivity
@@ -84,8 +85,9 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
+        if (id == R.id.nav_docs) {
+            Intent intent = new Intent(MainActivity.this, MainMenuActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
