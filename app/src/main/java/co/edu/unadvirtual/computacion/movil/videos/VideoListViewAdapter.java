@@ -57,7 +57,7 @@ public class VideoListViewAdapter extends BaseAdapter {
 
         Video video = videoList.get(position);
 
-        holder.title.setText(video.getName());
+        holder.title.setText(video.getUnit() + " - " + video.getName());
         holder.description.setText(video.getDescription());
 
         return rowView;
