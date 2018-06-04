@@ -38,8 +38,7 @@ public class MainMenuActivity extends AppCompatActivity {
         cv_unidad_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Ir a al contenido de la unidad 3", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Snackbar.make(view, "Ir a al contenido de la unidad 3", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
     }
