@@ -26,11 +26,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".WebCampusActivity" android:parentActivityName=".MainActivity"></activity>
+        <activity
+            android:name=".WebCampusActivity"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".iam.LoginActivity" />
         <activity android:name=".iam.EditProfileActivity" />
         <activity android:name=".iam.RegistrationActivity" />
-        <activity android:name=".videos.VideosActivity"></activity>
+        <activity
+            android:name=".videos.VideosActivity"
+            android:parentActivityName=".MainActivity" />
+
+        <activity android:name=".common.MainMenuActivity"  android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>

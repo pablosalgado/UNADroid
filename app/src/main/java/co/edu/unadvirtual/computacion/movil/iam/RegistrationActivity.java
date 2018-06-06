@@ -75,54 +75,54 @@ public class RegistrationActivity extends AppCompatActivity {
                 Request.Method.POST,
                 AppSingleton.UNADROID_SERVER_ENDPOINT + "/register",
                 params,
-                new SuccessListener(),
-                new ErrorListener()
+                this::userRegistedSuccessfully,
+                this::errorRegisteringUser
         );
 
         AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(request, TAG);
     }
 
     /**
-     * Procesa la respuesta del servidor.
+     * Procesa la respuesta del servidor si el usuario se ha podido registrar exitosamente.
+     *
+     * @param response Contiene el usuario recién creado.
      */
-    private class SuccessListener implements Response.Listener<JSONObject> {
-        @Override
-        public void onResponse(JSONObject response) {
-            try {
-                boolean error = !response.isNull("error");
+    private void userRegistedSuccessfully(JSONObject response) {
+        try {
+            boolean error = !response.isNull("error");
 
-                if (!error) {
-                    Intent intent = new Intent(
-                            RegistrationActivity.this,
-                            MainActivity.class);
-                    intent.putExtra("email", response.getString("email"));
-                    startActivity(intent);
-                    finish();
+            if (!error) {
+                Intent intent = new Intent(
+                        RegistrationActivity.this,
+                        MainActivity.class);
+                intent.putExtra("email", response.getString("email"));
+                startActivity(intent);
+                finish();
 
-                } else {
-                    String errorMsg = response.getString("error_msg");
-                    Toast.makeText(
-                            getApplicationContext(),
-                            errorMsg, Toast.LENGTH_LONG
-                    ).show();
-                }
-            } catch (JSONException e){
-                e.printStackTrace();
+            } else {
+                String errorMsg = response.getString("error_msg");
+                Toast.makeText(
+                        getApplicationContext(),
+                        errorMsg, Toast.LENGTH_LONG
+                ).show();
             }
+        } catch (JSONException e){
+            e.printStackTrace();
         }
     }
 
     /**
-     * Si ocurre algún error, se despliega el mensaje del mismo.
+     * Procesa las situaciones de error durante la comunicación con el servidor, mostrando el mensaje
+     * de error.
+     *
+     * @param volleyError El error que se ha generado.
      */
-    private class ErrorListener implements Response.ErrorListener {
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            Toast.makeText(
-                    RegistrationActivity.this.getApplicationContext(),
-                    error.getMessage(),
-                    Toast.LENGTH_LONG
-            ).show();
-        }
+    private void errorRegisteringUser(VolleyError volleyError) {
+        Toast.makeText(
+                RegistrationActivity.this.getApplicationContext(),
+                volleyError.getMessage(),
+                Toast.LENGTH_LONG
+        ).show();
+
     }
 }

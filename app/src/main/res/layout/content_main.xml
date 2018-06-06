@@ -40,7 +40,7 @@
         app:srcCompat="@drawable/unad" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button3"
         style="@style/ButtonText"
         android:layout_width="0dp"
         android:layout_height="72dp"
@@ -53,6 +53,24 @@
         android:onClick="callLoader"
         android:text="Boton 2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button2" />
+
+    <Button
+        android:id="@+id/button4"
+        style="@style/ButtonText"
+        android:layout_width="0dp"
+        android:layout_height="72dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="108dp"
+        android:background="@drawable/base_button"
+        android:onClick="callLoader"
+        android:text="Boton 3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button2" />
 
