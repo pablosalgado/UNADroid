@@ -15,21 +15,22 @@
     </group>
     <group android:checkableBehavior="single" android:id="@+id/grp2">
         <item
-            android:id="@+id/nav_docs"
-            android:icon="@drawable/ic_nav_docs"
-            android:title="Documentación" />
+            android:id="@+id/nav_unit_1"
+            android:icon="@drawable/ic_nav_unit_1"
+            android:title="Unidad 1" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_nav_examples"
-            android:title="Ejemplos" />
+            android:id="@+id/nav_unit_2"
+            android:icon="@drawable/ic_nav_unit_2"
+            android:title="Unidad 2" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_nav_quiz"
-            android:title="Evaluaciones" />
+            android:id="@+id/nav_unit_3"
+            android:icon="@drawable/ic_nav_unit_3"
+            android:title="Unidad 3" />
         <item
             android:id="@+id/nav_videos"
             android:icon="@drawable/ic_nav_videos"
             android:title="Videos" />
+
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_nav_school"

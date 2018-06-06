@@ -85,16 +85,14 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_docs) {
+        if (id == R.id.nav_unit_1) {
             Intent intent = new Intent(MainActivity.this, MainMenuActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_gallery) {
+        }else if(id == R.id.nav_unit_2){
 
-        } else if (id == R.id.nav_slideshow) {
+        }else if(id == R.id.nav_unit_3){
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_videos) {
+        }else if (id == R.id.nav_videos) {
             Intent intent = new Intent(MainActivity.this, VideosActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_campus) {

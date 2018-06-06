@@ -25,7 +25,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:contentDescription="@android:string/no"
-                android:src="@drawable/ic_nav_docs" />
+                android:src="@mipmap/ic_menu_res_doc" />
 
             <TextView
                 android:id="@+id/person_name3"
@@ -74,7 +74,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:contentDescription="@android:string/no"
-                android:src="@drawable/ic_nav_examples" />
+                android:src="@mipmap/ic_menu_res_vid" />
 
             <TextView
                 android:id="@+id/person_name"
