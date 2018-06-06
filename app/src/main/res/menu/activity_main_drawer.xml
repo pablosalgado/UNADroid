@@ -16,16 +16,12 @@
     <group android:checkableBehavior="single" android:id="@+id/grp2">
         <item
             android:id="@+id/nav_unit_1"
-            android:icon="@drawable/ic_nav_unit_1"
-            android:title="Unidad 1" />
+            android:icon="@drawable/ic_nav_units"
+            android:title="Unidades" />
         <item
-            android:id="@+id/nav_unit_2"
-            android:icon="@drawable/ic_nav_unit_2"
-            android:title="Unidad 2" />
-        <item
-            android:id="@+id/nav_unit_3"
-            android:icon="@drawable/ic_nav_unit_3"
-            android:title="Unidad 3" />
+            android:id="@+id/nav_quiz"
+            android:icon="@drawable/ic_nav_quiz"
+            android:title="Examenes" />
         <item
             android:id="@+id/nav_videos"
             android:icon="@drawable/ic_nav_videos"

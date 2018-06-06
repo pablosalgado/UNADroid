@@ -9,12 +9,12 @@ import android.view.View;
 import co.edu.unadvirtual.computacion.movil.R;
 
 
-public class MainMenuActivity extends AppCompatActivity {
+public class ListTopicsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_menu);
+        setContentView(R.layout.activity_list_topics);
 
         /*Lista de CardViews para las unidades de la Documentacion*/
         CardView cv_unidad_1 = findViewById(R.id.cv_unidad_1);
