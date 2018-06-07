@@ -1,77 +1,221 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".MainActivity"
-    tools:showIn="@layout/app_bar_main">
+    android:padding="0dp"
+    android:layout_marginTop="45dp">
+<LinearLayout
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_width="match_parent">
 
-    <Button
-        android:id="@+id/button2"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="0dp"
-        android:layout_height="72dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:drawableLeft="@drawable/ic_nav_docs"
-        android:onClick="meet"
-        android:text="Boton 1"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.552"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="331dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/unad"
+            android:layout_gravity="center_horizontal"/>
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="331dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/unad" />
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_unidad_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            app:cardUseCompatPadding="true">
 
-    <Button
-        android:id="@+id/button3"
-        style="@style/ButtonText"
-        android:layout_width="0dp"
-        android:layout_height="72dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/base_button"
-        android:onClick="callLoader"
-        android:text="Boton 2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
 
-    <Button
-        android:id="@+id/button4"
-        style="@style/ButtonText"
-        android:layout_width="0dp"
-        android:layout_height="72dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="108dp"
-        android:background="@drawable/base_button"
-        android:onClick="callLoader"
-        android:text="Boton 3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+                <ImageView
+                    android:id="@+id/person_photo3"
+                    android:layout_width="62dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:contentDescription="@android:string/no"
+                    android:src="@drawable/ic_nav_unit_1" />
 
-</android.support.constraint.ConstraintLayout>
+                <TextView
+                    android:id="@+id/person_name3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@id/person_photo3"
+                    android:layout_toRightOf="@+id/person_photo3"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="30sp"
+                    android:text="Unidad 1"
+                    />
+
+                <TextView
+                    android:id="@+id/person_age3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/person_name3"
+                    android:layout_toEndOf="@id/person_photo3"
+                    android:layout_toRightOf="@+id/person_photo3"
+                    android:textColor="@color/colorAccent"
+                    android:text="Conceptos basicos" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_unidad_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            app:cardUseCompatPadding="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/person_photo"
+                    android:layout_width="62dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:contentDescription="@android:string/no"
+                    android:src="@drawable/ic_nav_unit_2" />
+
+                <TextView
+                    android:id="@+id/person_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@id/person_photo"
+                    android:layout_toRightOf="@+id/person_photo"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="30sp"
+                    android:text="Unidad 2" />
+
+                <TextView
+                    android:id="@+id/person_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/person_name"
+                    android:layout_toEndOf="@id/person_photo"
+                    android:layout_toRightOf="@+id/person_photo"
+                    android:textColor="@color/colorAccent"
+                    android:text="Conceptos intermedios" />
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_unidad_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            app:cardUseCompatPadding="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/person_photo2"
+                    android:layout_width="62dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:contentDescription="@android:string/no"
+                    android:src="@drawable/ic_nav_unit_3" />
+
+                <TextView
+                    android:id="@+id/person_name2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@id/person_photo2"
+                    android:layout_toRightOf="@+id/person_photo2"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="30sp"
+                    android:text="Unidad 3" />
+
+                <TextView
+                    android:id="@+id/person_age2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/person_name2"
+                    android:layout_toEndOf="@id/person_photo2"
+                    android:layout_toRightOf="@+id/person_photo2"
+                    android:textColor="@color/colorAccent"
+                    android:text="Layouts y Widgets" />
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <Button
+            android:id="@+id/button2"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:drawableLeft="@drawable/ic_nav_docs"
+            android:onClick="meet"
+            android:text="Boton 1"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+
+
+        <Button
+            android:id="@+id/button3"
+            style="@style/ButtonText"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/base_button"
+            android:onClick="callLoader"
+            android:text="Boton 2" />
+
+        <Button
+            android:id="@+id/button4"
+            style="@style/ButtonText"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="108dp"
+            android:background="@drawable/base_button"
+            android:onClick="callLoader"
+            android:text="Boton 3" />
+</LinearLayout>
+    </ScrollView>
+

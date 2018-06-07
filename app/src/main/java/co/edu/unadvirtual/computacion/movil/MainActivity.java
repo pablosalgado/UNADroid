@@ -1,10 +1,10 @@
 package co.edu.unadvirtual.computacion.movil;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,11 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-<<<<<<< HEAD
-import co.edu.unadvirtual.computacion.movil.iam.EditProfileActivity;
-=======
-import co.edu.unadvirtual.computacion.movil.common.MainMenuActivity;
->>>>>>> master
+import co.edu.unadvirtual.computacion.movil.common.ListTopicsActivity;
 import co.edu.unadvirtual.computacion.movil.videos.VideosActivity;
 
 public class MainActivity extends AppCompatActivity
@@ -31,6 +27,18 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        CardView cv_unidad_1 = findViewById(R.id.cv_unidad_1);
+
+        cv_unidad_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               // Snackbar.make(view, "Ir a al contenido de la unidad 1", Snackbar.LENGTH_LONG)
+                 //       .setAction("Action", null).show();
+                Intent intent = new Intent(MainActivity.this, ListTopicsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -89,32 +97,20 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_profile) {
-            Intent intent = new Intent(this, EditProfileActivity.class);
-        }else if (id == R.id.nav_docs) {
-            Intent intent = new Intent(MainActivity.this, MainMenuActivity.class);
+        if (id == R.id.nav_unit_1) {
+            Intent intent = new Intent(MainActivity.this, MainActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_videos) {
-            Intent intent = new Intent(this, VideosActivity.class);
+        }else if (id == R.id.nav_videos) {
+            Intent intent = new Intent(MainActivity.this, VideosActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_campus) {
             Intent intent = new Intent(this,WebCampusActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_exit) {
-            //Intent homeIntent = new Intent(Intent.ACTION_MAIN);
-            //homeIntent.addCategory( Intent.CATEGORY_HOME );
-            //homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            //startActivity(homeIntent);
-            finish();
+            Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+            homeIntent.addCategory( Intent.CATEGORY_HOME );
+            homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(homeIntent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
