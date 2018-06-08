@@ -1,31 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="0dp"
-    android:layout_marginTop="45dp">
-<LinearLayout
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:id="@+id/units_container">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="45dp"
+    android:padding="0dp">
+
+    <LinearLayout
+        android:id="@+id/units_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="331dp"
             android:layout_height="64dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
-            android:src="@drawable/unad"
-            android:layout_gravity="center_horizontal"/>
+            android:src="@drawable/unad" />
 
         <android.support.v7.widget.CardView
             android:id="@+id/cv_unidad_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
             app:cardUseCompatPadding="true">
 
             <RelativeLayout
@@ -52,10 +53,9 @@
                     android:layout_alignParentTop="true"
                     android:layout_toEndOf="@id/person_photo3"
                     android:layout_toRightOf="@+id/person_photo3"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="30sp"
                     android:text="Unidad 1"
-                    />
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/person_age3"
@@ -64,112 +64,11 @@
                     android:layout_below="@+id/person_name3"
                     android:layout_toEndOf="@id/person_photo3"
                     android:layout_toRightOf="@+id/person_photo3"
-                    android:textColor="@color/colorAccent"
-                    android:text="Conceptos basicos" />
+                    android:text="Conceptos basicos"
+                    android:textColor="@color/colorAccent" />
 
             </RelativeLayout>
-
         </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/cv_unidad_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            app:cardUseCompatPadding="true">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp">
-
-                <ImageView
-                    android:id="@+id/person_photo"
-                    android:layout_width="62dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
-                    android:contentDescription="@android:string/no"
-                    android:src="@drawable/ic_nav_unit_2" />
-
-                <TextView
-                    android:id="@+id/person_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@id/person_photo"
-                    android:layout_toRightOf="@+id/person_photo"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="30sp"
-                    android:text="Unidad 2" />
-
-                <TextView
-                    android:id="@+id/person_age"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/person_name"
-                    android:layout_toEndOf="@id/person_photo"
-                    android:layout_toRightOf="@+id/person_photo"
-                    android:textColor="@color/colorAccent"
-                    android:text="Conceptos intermedios" />
-            </RelativeLayout>
-
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/cv_unidad_3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            app:cardUseCompatPadding="true">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp">
-
-                <ImageView
-                    android:id="@+id/person_photo2"
-                    android:layout_width="62dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
-                    android:contentDescription="@android:string/no"
-                    android:src="@drawable/ic_nav_unit_3" />
-
-                <TextView
-                    android:id="@+id/person_name2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@id/person_photo2"
-                    android:layout_toRightOf="@+id/person_photo2"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="30sp"
-                    android:text="Unidad 3" />
-
-                <TextView
-                    android:id="@+id/person_age2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/person_name2"
-                    android:layout_toEndOf="@id/person_photo2"
-                    android:layout_toRightOf="@+id/person_photo2"
-                    android:textColor="@color/colorAccent"
-                    android:text="Layouts y Widgets" />
-            </RelativeLayout>
-
-        </android.support.v7.widget.CardView>
-</LinearLayout>
-    </ScrollView>
+    </LinearLayout>
+</ScrollView>
 

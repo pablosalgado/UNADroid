@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity
 
 
     private void requestError(VolleyError volleyError) {
-        Log.d("Arsensys - >",volleyError.getMessage());
+        Log.d("Arsensys - >", volleyError.getMessage());
         Toast.makeText(this.getApplicationContext(), volleyError.getMessage(), Toast.LENGTH_LONG).show();
 
     }
@@ -207,74 +207,93 @@ public class MainActivity extends AppCompatActivity
     private void drawUnits(JSONArray response) {
         /*se agrgan las unidades de la base de datos*/
 
-       LinearLayout units_container = findViewById(R.id.units_container);
-        LayoutParams cardParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        FrameLayout.LayoutParams relativeLayoutParams = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        RelativeLayout.LayoutParams imageParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
-        RelativeLayout.LayoutParams mainTextParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout units_container = findViewById(R.id.units_container);
+        LayoutParams cardParams;
+        FrameLayout.LayoutParams relativeLayoutParams ;
+        RelativeLayout.LayoutParams imageParams ;
+        RelativeLayout.LayoutParams mainTextParams;
+        RelativeLayout.LayoutParams subTextParams;
         CardView card;
-        TextView tv;
+        TextView mainText;
+        TextView subText;
         JSONObject jsonobject;
         String unitName;
+        String unitDescr;
         String unitIcon;
         RelativeLayout relativeLayout;
         ImageView imageView;
         try {
 
 
+            for (int i = 0; i < response.length(); i++) {
 
-            for(int i=0; i < response.length(); i++) {
+                 cardParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+                relativeLayoutParams = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+                 imageParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                 mainTextParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                 subTextParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
                 relativeLayout = new RelativeLayout(this);
                 jsonobject = response.getJSONObject(i);
-                 unitName    = jsonobject.getString("name");
-                 unitIcon    = jsonobject.getString("iconname");
+                unitName = jsonobject.getString("name");
+                unitDescr = jsonobject.getString("description");
+                unitIcon = jsonobject.getString("iconname");
                 card = new CardView(getApplicationContext());
 
                 cardParams.setMargins(25, 25, 25, 25);
                 card.setLayoutParams(cardParams);
-                card.setPadding(25, 25, 25, 25);
-                card.setId(i+6000);
+                card.setPadding(10, 10, 10, 10);
+                card.setId(i + 6000);
                 card.setCardBackgroundColor(Color.WHITE);
                 card.setRadius(7);
                 card.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        // Snackbar.make(view, "Ir a al contenido de la unidad 1", Snackbar.LENGTH_LONG)
-                        //       .setAction("Action", null).show();
                         Intent intent = new Intent(MainActivity.this, ListTopicsActivity.class);
                         startActivity(intent);
                     }
                 });
 
                 relativeLayout.setLayoutParams(relativeLayoutParams);
-                relativeLayout.setPadding(25, 25, 25, 25);
+                //relativeLayout.setPadding(getDpUnit(16), getDpUnit(16), getDpUnit(16), getDpUnit(16));
 
-                imageView = new ImageView(this) ;
-                imageView.setId(i+7000);
-                imageView.setImageResource(getResources().getIdentifier( unitIcon, "drawable", getPackageName()));
+                imageView = new ImageView(this);
+                imageView.setId(i + 7000);
+                imageView.setImageResource(getResources().getIdentifier(unitIcon, "drawable", getPackageName()));
                 imageParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
                 imageParams.addRule(RelativeLayout.ALIGN_PARENT_START, RelativeLayout.TRUE);
                 imageParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
-                imageParams.setMargins(25,25,25,0);
+                imageParams.setMargins(getDpUnit(16), getDpUnit(16), getDpUnit(16), 0);
                 imageView.setLayoutParams(imageParams);
-                imageView.getLayoutParams().width = getDpUnit(60);
-                imageView.getLayoutParams().height = getDpUnit(60);
-                relativeLayout.addView(imageView,0);
+                imageView.getLayoutParams().width = getDpUnit(50);
+                imageView.getLayoutParams().height = getDpUnit(50);
+                relativeLayout.addView(imageView, 0);
 
-                tv = new TextView(this);
+                mainText = new TextView(this);
+                mainText.setId(i + 8000);
                 mainTextParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
-                mainTextParams.addRule(RelativeLayout.END_OF,imageView.getId());
-                mainTextParams.addRule(RelativeLayout.RIGHT_OF,imageView.getId());
-                mainTextParams.setMargins(15,25,0,0);
-                tv.setLayoutParams(mainTextParams);
-                tv.setText(unitName);
-                tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
-                tv.setTextColor(getResources().getColor(R.color.colorPrimary));
+                mainTextParams.addRule(RelativeLayout.END_OF, imageView.getId());
+                mainTextParams.addRule(RelativeLayout.RIGHT_OF, imageView.getId());
+                mainTextParams.setMargins(15, 25, 0, 0);
+                mainText.setLayoutParams(mainTextParams);
+                mainText.setText(unitName);
+                mainText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+                mainText.setTextColor(getResources().getColor(R.color.colorPrimary));
+                relativeLayout.addView(mainText, 1);
 
-                // Put the TextView in CardView
+                subText = new TextView(this);
+                subText.setId(i + 9000);
+                subTextParams.addRule(RelativeLayout.BELOW, mainText.getId());
+                subTextParams.addRule(RelativeLayout.END_OF, imageView.getId());
+                subTextParams.addRule(RelativeLayout.RIGHT_OF, imageView.getId());
+                subTextParams.setMargins(getDpUnit(1), getDpUnit(1), getDpUnit(1), 25);
+                subText.setLayoutParams(subTextParams);
+                subText.setText(unitDescr);
+                subText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
+                subText.setTextColor(getResources().getColor(R.color.colorAccent));
+                relativeLayout.addView(subText, 2);
 
-                relativeLayout.addView(tv,1);
+
                 card.addView(relativeLayout);
                 // Finally, add the CardView in root layout
                 units_container.addView(card);
@@ -285,8 +304,8 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    private int getDpUnit(int dp){
+    private int getDpUnit(int dp) {
         final float scale = getResources().getDisplayMetrics().density;
-        return  ((int) (dp * scale + 0.5f));
+        return ((int) (dp * scale + 0.5f));
     }
 }
