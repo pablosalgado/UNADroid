@@ -19,7 +19,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".LoaderActivity"
-            android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,8 +36,10 @@
         <activity
             android:name=".videos.VideosActivity"
             android:parentActivityName=".MainActivity" />
-
-        <activity android:name=".common.ListTopicsActivity"  android:parentActivityName=".MainActivity"></activity>
+        <activity
+            android:name=".common.ListTopicsActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".common.StandarActivity"></activity>
     </application>
 
 </manifest>

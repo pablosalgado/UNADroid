@@ -19,7 +19,7 @@ public class LoaderActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                        Intent intent = new Intent(LoaderActivity.this, LoginActivity.class);
-                        // Intent intent = new Intent(LoaderActivity.this, MainActivity.class);
+                       // Intent intent = new Intent(LoaderActivity.this, MainActivity.class);
                         LoaderActivity.this.startActivity(intent);
                         LoaderActivity.this.finish();
                     }
