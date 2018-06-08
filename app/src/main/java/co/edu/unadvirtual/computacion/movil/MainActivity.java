@@ -206,7 +206,6 @@ public class MainActivity extends AppCompatActivity
     @SuppressLint("ResourceType")
     private void drawUnits(JSONArray response) {
         /*se agrgan las unidades de la base de datos*/
-
         LinearLayout units_container = findViewById(R.id.units_container);
         LayoutParams cardParams;
         FrameLayout.LayoutParams relativeLayoutParams ;
