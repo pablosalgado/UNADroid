@@ -107,6 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                         LoginActivity.this,
                         MainActivity.class);
                 intent.putExtra("email", response.getString("email"));
+                intent.putExtra("id", response.getString("id"));
                 startActivity(intent);
                 finish();
             } else {

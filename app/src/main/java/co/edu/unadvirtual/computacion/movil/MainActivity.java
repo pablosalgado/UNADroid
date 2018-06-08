@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import co.edu.unadvirtual.computacion.movil.common.ListTopicsActivity;
+import co.edu.unadvirtual.computacion.movil.iam.EditProfileActivity;
 import co.edu.unadvirtual.computacion.movil.videos.VideosActivity;
 
 public class MainActivity extends AppCompatActivity
@@ -111,6 +112,9 @@ public class MainActivity extends AppCompatActivity
             homeIntent.addCategory( Intent.CATEGORY_HOME );
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
+        }else if (id == R.id.nav_profile) {
+            Intent intent = new Intent(this,EditProfileActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

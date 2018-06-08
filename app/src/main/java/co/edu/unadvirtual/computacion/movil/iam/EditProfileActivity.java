@@ -20,6 +20,7 @@ import co.edu.unadvirtual.computacion.movil.MainActivity;
 import co.edu.unadvirtual.computacion.movil.R;
 
 
+
 /**
  * Permite editar los datos básicos del usuario y los envia al servidor.
  */
@@ -29,11 +30,15 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText editTextEmail;
     private EditText editTextFirstName;
     private EditText editTextLastName;
+    private int user_id;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
+
+        getUser();
 
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextFirstName = findViewById(R.id.editTextFirstName);
@@ -63,13 +68,14 @@ public class EditProfileActivity extends AppCompatActivity {
             params.put("email", email);
             params.put("firstName", firstName);
             params.put("lastName", lastName);
+            params.put("id",user_id);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                AppSingleton.UNADROID_SERVER_ENDPOINT + "/update",
+                AppSingleton.UNADROID_SERVER_ENDPOINT + "/userUpdate",
                 params,
                 new EditProfileActivity.SuccessListener(),
                 new EditProfileActivity.ErrorListener()
@@ -120,5 +126,67 @@ public class EditProfileActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG
             ).show();
         }
+    }
+
+    public void getUser(){
+        JSONObject params = new JSONObject();
+
+        try {
+            params.put("email","jsebascalle@gmail.com");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        // Se construye la ruta al endpoint de UNADroid server para obtener la lista de videos:
+        // https://unadroid.tk/api/user
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                AppSingleton.UNADROID_SERVER_ENDPOINT + "/user",
+                params,
+                this::successGetUser,
+                this::errorGetUser
+        );
+
+        // Se envia la petición a la cola
+        AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(request, TAG);
+    }
+
+
+    private void successGetUser(JSONObject response) {
+        editTextEmail = findViewById(R.id.editTextEmail);
+        editTextFirstName = findViewById(R.id.editTextFirstName);
+        editTextLastName = findViewById(R.id.editTextLastName);
+
+        try {
+            boolean error = !response.isNull("error");
+            if (!error) {
+                user_id = Integer.parseInt(response.getString("id"));
+                editTextEmail.setText(response.getString("email"));
+                editTextFirstName.setText(response.getString("firstName"));
+                editTextLastName.setText(response.getString("lastName"));
+
+            } else {
+                String errorMsg = response.getString("error_msg");
+                Toast.makeText(
+                        getApplicationContext(),
+                        errorMsg, Toast.LENGTH_LONG
+                ).show();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            //progressBar.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private void errorGetUser(VolleyError volleyError) {
+        //progressBar.setVisibility(View.INVISIBLE);
+
+        Toast.makeText(
+                this.getApplicationContext(),
+                volleyError.getMessage(),
+                Toast.LENGTH_LONG
+        ).show();
+
     }
 }

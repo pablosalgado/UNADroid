@@ -13,7 +13,7 @@ public class AppSingleton {
     /**
      * Endpoint para las peticiones REST al servidor de UNADroid
      */
-    public final static String UNADROID_SERVER_ENDPOINT = "https://unadroid.tk/api";
+    public final static String UNADROID_SERVER_ENDPOINT = "http://unadroid.tk:3002/api";
 
     private static AppSingleton instance;
     private RequestQueue requestQueue;
