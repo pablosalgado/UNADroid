@@ -256,7 +256,6 @@ public class MainActivity extends AppCompatActivity
 
                 relativeLayout.setLayoutParams(relativeLayoutParams);
                 //relativeLayout.setPadding(getDpUnit(16), getDpUnit(16), getDpUnit(16), getDpUnit(16));
-
                 imageView = new ImageView(this);
                 imageView.setId(i + 7000);
                 imageView.setImageResource(getResources().getIdentifier(unitIcon, "drawable", getPackageName()));
