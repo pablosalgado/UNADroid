@@ -20,4 +20,6 @@
     <string name="iam_first_name">Nombres</string>
     <string name="iam_last_name">Apellidos</string>
     <string name="iam_send">Enviar</string>
+    <string name="connection_error">Sin acceso a Internet</string>
+    <string name="try_again">Reintentar</string>
 </resources>

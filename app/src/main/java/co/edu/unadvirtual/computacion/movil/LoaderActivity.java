@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
+import co.edu.unadvirtual.computacion.movil.common.Utilities;
 import co.edu.unadvirtual.computacion.movil.iam.LoginActivity;
 
 public class LoaderActivity extends AppCompatActivity {
@@ -18,8 +19,13 @@ public class LoaderActivity extends AppCompatActivity {
                 new Runnable() {
                     @Override
                     public void run() {
-                       Intent intent = new Intent(LoaderActivity.this, LoginActivity.class);
-                       // Intent intent = new Intent(LoaderActivity.this, MainActivity.class);
+                        Intent intent;
+                        if (Utilities.connectionExist(getApplicationContext())) {
+                            intent = new Intent(LoaderActivity.this, LoginActivity.class);
+                        } else {
+                            intent = new Intent(LoaderActivity.this, ConnectionErrorActivity.class);
+                        }
+
                         LoaderActivity.this.startActivity(intent);
                         LoaderActivity.this.finish();
                     }
