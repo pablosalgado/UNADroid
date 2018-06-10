@@ -1,4 +1,4 @@
-package co.edu.unadvirtual.computacion.movil.videos;
+package co.edu.unadvirtual.computacion.movil.domain;
 
 import org.json.JSONArray;
 import org.json.JSONException;

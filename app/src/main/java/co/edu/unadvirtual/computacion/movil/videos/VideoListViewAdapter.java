@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import co.edu.unadvirtual.computacion.movil.R;
+import co.edu.unadvirtual.computacion.movil.domain.Video;
 
 public class VideoListViewAdapter extends BaseAdapter {
     private final List<Video> videoList;
