@@ -22,4 +22,5 @@
     <string name="iam_send">Enviar</string>
     <string name="connection_error">Sin acceso a Internet</string>
     <string name="try_again">Reintentar</string>
+    <string name="unit_list_title">Lista de Unidades</string>
 </resources>

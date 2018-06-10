@@ -25,6 +25,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +42,7 @@ import org.json.JSONObject;
 import java.util.Iterator;
 
 import co.edu.unadvirtual.computacion.movil.common.ListTopicsActivity;
+import co.edu.unadvirtual.computacion.movil.common.Utilities;
 import co.edu.unadvirtual.computacion.movil.iam.EditProfileActivity;
 import co.edu.unadvirtual.computacion.movil.videos.VideosActivity;
 
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "MainActivity";
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,28 +58,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        CardView cv_unidad_1 = findViewById(R.id.cv_unidad_1);
-
-        cv_unidad_1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Snackbar.make(view, "Ir a al contenido de la unidad 1", Snackbar.LENGTH_LONG)
-                //       .setAction("Action", null).show();
-                Intent intent = new Intent(MainActivity.this, ListTopicsActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -85,7 +66,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        progressBar = findViewById(R.id.progressBarUnits);
         callUnitList();
 
     }
@@ -153,30 +134,23 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    public void meet(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-
-    }
-
-    public void callLoader(View view) {
-        Intent intent = new Intent(this, LoaderActivity.class);
-        startActivity(intent);
-
-    }
-
 
     private void callUnitList() {
+        if (Utilities.connectionExist(getApplicationContext())) {
+            JsonArrayRequest request = new JsonArrayRequest(
+                    Request.Method.POST,
+                    AppSingleton.UNADROID_SERVER_ENDPOINT + "/getUnits",
+                    null,
+                    this::requestOk,
+                    this::requestError
+            );
 
-        JsonArrayRequest request = new JsonArrayRequest(
-                Request.Method.POST,
-                AppSingleton.UNADROID_SERVER_ENDPOINT + "/getUnits",
-                null,
-                this::requestOk,
-                this::requestError
-        );
-
-        AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(request, TAG);
+            AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(request, TAG);
+        }else {
+            Intent intent = new Intent(MainActivity.this, ConnectionErrorActivity.class);
+            intent.putExtra("CONN_INTENT_CLASS",MainActivity.this.getClass().getName());
+            startActivity(intent);
+        }
     }
 
     /**
@@ -187,7 +161,7 @@ public class MainActivity extends AppCompatActivity
     private void requestOk(JSONArray response) {
         try {
 
-
+progressBar.setVisibility(View.GONE);
             if (!response.isNull(0)) {
 
                 drawUnits(response);
@@ -202,6 +176,7 @@ public class MainActivity extends AppCompatActivity
 
 
     private void requestError(VolleyError volleyError) {
+        progressBar.setVisibility(View.GONE);
         Log.d("Arsensys - >", volleyError.getMessage());
         Toast.makeText(this.getApplicationContext(), volleyError.getMessage(), Toast.LENGTH_LONG).show();
 
