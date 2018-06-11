@@ -42,6 +42,7 @@ import java.util.Iterator;
 
 import co.edu.unadvirtual.computacion.movil.common.ListTopicsActivity;
 import co.edu.unadvirtual.computacion.movil.iam.EditProfileActivity;
+import co.edu.unadvirtual.computacion.movil.iam.LoginActivity;
 import co.edu.unadvirtual.computacion.movil.videos.VideosActivity;
 
 public class MainActivity extends AppCompatActivity
@@ -138,10 +139,12 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this, WebCampusActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_exit) {
-            Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            /*Intent homeIntent = new Intent(Intent.ACTION_MAIN);
             homeIntent.addCategory(Intent.CATEGORY_HOME);
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(homeIntent);
+            startActivity(homeIntent);*/
         }else if (id == R.id.nav_profile) {
             Intent intent = new Intent(this,EditProfileActivity.class);
             startActivity(intent);

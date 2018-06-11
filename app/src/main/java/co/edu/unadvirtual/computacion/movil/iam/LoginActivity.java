@@ -115,6 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString("email", response.getString("email"));
                 editor.putString("firstName", response.getString("firstName"));
                 editor.putString("lastName", response.getString("lastName"));
+                editor.commit();
 
                 startActivity(intent);
                 //finish();
