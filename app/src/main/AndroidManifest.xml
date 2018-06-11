@@ -31,7 +31,7 @@
             android:name=".WebCampusActivity"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".iam.LoginActivity" />
-        <activity android:name=".iam.EditProfileActivity" />
+        <activity android:name=".iam.EditProfileActivity" android:parentActivityName=".MainActivity" />
         <activity android:name=".iam.RegistrationActivity" />
         <activity
             android:name=".videos.VideosActivity"

@@ -1,6 +1,8 @@
 package co.edu.unadvirtual.computacion.movil.iam;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
@@ -130,9 +132,10 @@ public class EditProfileActivity extends AppCompatActivity {
 
     public void getUser(){
         JSONObject params = new JSONObject();
+        SharedPreferences user_auth = getSharedPreferences("user_auth_preferences", Context.MODE_PRIVATE);
 
         try {
-            params.put("email","jsebascalle@gmail.com");
+            params.put("id",user_auth.getInt("id",0));
         } catch (JSONException e) {
             e.printStackTrace();
         }
