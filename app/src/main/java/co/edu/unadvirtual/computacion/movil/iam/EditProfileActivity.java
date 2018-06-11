@@ -75,8 +75,8 @@ public class EditProfileActivity extends AppCompatActivity {
         }
 
         JsonObjectRequest request = new JsonObjectRequest(
-                Request.Method.POST,
-                AppSingleton.UNADROID_SERVER_ENDPOINT + "/userUpdate",
+                Request.Method.PUT,
+                AppSingleton.UNADROID_SERVER_ENDPOINT + "/user",
                 params,
                 new EditProfileActivity.SuccessListener(),
                 new EditProfileActivity.ErrorListener()
@@ -142,7 +142,7 @@ public class EditProfileActivity extends AppCompatActivity {
         // Se construye la ruta al endpoint de UNADroid server para obtener la lista de videos:
         // https://unadroid.tk/api/user
         JsonObjectRequest request = new JsonObjectRequest(
-                Request.Method.POST,
+                Request.Method.GET,
                 AppSingleton.UNADROID_SERVER_ENDPOINT + "/user",
                 params,
                 this::successGetUser,
