@@ -1,8 +1,6 @@
 package co.edu.unadvirtual.computacion.movil.iam;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
@@ -20,8 +18,8 @@ import org.json.JSONObject;
 import co.edu.unadvirtual.computacion.movil.AppSingleton;
 import co.edu.unadvirtual.computacion.movil.MainActivity;
 import co.edu.unadvirtual.computacion.movil.R;
-
-
+import co.edu.unadvirtual.computacion.movil.common.Session;
+import co.edu.unadvirtual.computacion.movil.domain.User;
 
 /**
  * Permite editar los datos básicos del usuario y los envia al servidor.
@@ -33,13 +31,14 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText editTextFirstName;
     private EditText editTextLastName;
     private int user_id;
-    SharedPreferences user_auth;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
+
+        getUser();
+
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextFirstName = findViewById(R.id.editTextFirstName);
         editTextLastName = findViewById(R.id.editTextLastName);
@@ -50,9 +49,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 editTextFirstName.getText().toString(),
                 editTextLastName.getText().toString()
         ));
-        getUser();
     }
-
 
     /**
      * Método para hacer la edición del usuario
@@ -69,7 +66,7 @@ public class EditProfileActivity extends AppCompatActivity {
             params.put("email", email);
             params.put("firstName", firstName);
             params.put("lastName", lastName);
-            params.put("id",user_id);
+            params.put("id", user_id);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -83,6 +80,53 @@ public class EditProfileActivity extends AppCompatActivity {
         );
 
         AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(request, TAG);
+    }
+
+    public void getUser() {
+        JSONObject params = new JSONObject();
+
+        String email = Session.getUserEmail(getApplicationContext());
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.GET,
+                AppSingleton.UNADROID_SERVER_ENDPOINT + "/user/" + email,
+                params,
+                this::successGetUser,
+                this::errorGetUser
+        );
+
+        // Se envia la petición a la cola
+        AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(request, TAG);
+    }
+
+    private void successGetUser(JSONObject response) {
+        editTextEmail = findViewById(R.id.editTextEmail);
+        editTextFirstName = findViewById(R.id.editTextFirstName);
+        editTextLastName = findViewById(R.id.editTextLastName);
+
+        try {
+            User user = User.fromJSON(response);
+
+            user_id = user.getId();
+            editTextEmail.setText(user.getEmail());
+            editTextFirstName.setText(user.getFirstName());
+            editTextLastName.setText(user.getLastName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            //progressBar.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private void errorGetUser(VolleyError volleyError) {
+        //progressBar.setVisibility(View.INVISIBLE);
+
+        Toast.makeText(
+                this.getApplicationContext(),
+                volleyError.getMessage(),
+                Toast.LENGTH_LONG
+        ).show();
+
     }
 
     /**
@@ -109,7 +153,7 @@ public class EditProfileActivity extends AppCompatActivity {
                             errorMsg, Toast.LENGTH_LONG
                     ).show();
                 }
-            } catch (JSONException e){
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
@@ -127,69 +171,5 @@ public class EditProfileActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG
             ).show();
         }
-    }
-
-    public void getUser(){
-        JSONObject params = new JSONObject();
-        SharedPreferences user_auth = getSharedPreferences("user_auth_preferences", Context.MODE_PRIVATE);
-        user_id = user_auth.getInt("id",0);
-
-        try {
-            params.put("id",user_id);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        // Se construye la ruta al endpoint de UNADroid server para obtener la lista de videos:
-        // https://unadroid.tk/api/user
-        JsonObjectRequest request = new JsonObjectRequest(
-                Request.Method.GET,
-                AppSingleton.UNADROID_SERVER_ENDPOINT + "/user",
-                params,
-                this::successGetUser,
-                this::errorGetUser
-        );
-
-        // Se envia la petición a la cola
-        AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(request, TAG);
-    }
-
-
-    private void successGetUser(JSONObject response) {
-        editTextEmail = findViewById(R.id.editTextEmail);
-        editTextFirstName = findViewById(R.id.editTextFirstName);
-        editTextLastName = findViewById(R.id.editTextLastName);
-
-        try {
-            boolean error = !response.isNull("error");
-            if (!error) {
-
-                editTextEmail.setText(response.getString("email"));
-                editTextFirstName.setText(response.getString("firstName"));
-                editTextLastName.setText(response.getString("lastName"));
-
-            } else {
-                String errorMsg = response.getString("error_msg");
-                Toast.makeText(
-                        getApplicationContext(),
-                        errorMsg, Toast.LENGTH_LONG
-                ).show();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            //progressBar.setVisibility(View.INVISIBLE);
-        }
-    }
-
-    private void errorGetUser(VolleyError volleyError) {
-        //progressBar.setVisibility(View.INVISIBLE);
-
-        Toast.makeText(
-                this.getApplicationContext(),
-                volleyError.getMessage(),
-                Toast.LENGTH_LONG
-        ).show();
-
     }
 }
