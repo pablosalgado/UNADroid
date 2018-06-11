@@ -2,10 +2,8 @@ package co.edu.unadvirtual.computacion.movil;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -39,8 +37,10 @@ import org.json.JSONObject;
 import java.util.List;
 
 import co.edu.unadvirtual.computacion.movil.common.ListTopicsActivity;
+import co.edu.unadvirtual.computacion.movil.common.Session;
 import co.edu.unadvirtual.computacion.movil.domain.Unit;
 import co.edu.unadvirtual.computacion.movil.iam.EditProfileActivity;
+import co.edu.unadvirtual.computacion.movil.iam.LoginActivity;
 import co.edu.unadvirtual.computacion.movil.videos.VideosActivity;
 
 public class MainActivity extends AppCompatActivity
@@ -58,62 +58,51 @@ public class MainActivity extends AppCompatActivity
     protected void onStart() {
         super.onStart();
 
-        checkSession();
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         CardView cv_unidad_1 = findViewById(R.id.cv_unidad_1);
 
-        cv_unidad_1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Snackbar.make(view, "Ir a al contenido de la unidad 1", Snackbar.LENGTH_LONG)
-                //       .setAction("Action", null).show();
-                Intent intent = new Intent(MainActivity.this, ListTopicsActivity.class);
-                startActivity(intent);
-            }
+        cv_unidad_1.setOnClickListener(view -> {
+            // Snackbar.make(view, "Ir a al contenido de la unidad 1", Snackbar.LENGTH_LONG)
+            //       .setAction("Action", null).show();
+            Intent intent = new Intent(MainActivity.this, ListTopicsActivity.class);
+            startActivity(intent);
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show());
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         callUnitList();
 
     }
 
-    private void checkSession() {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor editor = settings.edit();
-
-        settings.getString("email", null);
-    }
-
     private void signOut() {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString("username", "");
-        editor.remove("username");
+        Session.logOut(getApplicationContext());
+
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+
+//        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+//        homeIntent.addCategory(Intent.CATEGORY_HOME);
+//        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        startActivity(homeIntent);
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -159,16 +148,13 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this, WebCampusActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_exit) {
-            Intent homeIntent = new Intent(Intent.ACTION_MAIN);
-            homeIntent.addCategory(Intent.CATEGORY_HOME);
-            homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(homeIntent);
+            signOut();
         } else if (id == R.id.nav_profile) {
             Intent intent = new Intent(this, EditProfileActivity.class);
             startActivity(intent);
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -177,7 +163,6 @@ public class MainActivity extends AppCompatActivity
     public void meet(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-
     }
 
     public void callLoader(View view) {

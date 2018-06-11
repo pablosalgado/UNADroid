@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 
+import co.edu.unadvirtual.computacion.movil.common.Session;
 import co.edu.unadvirtual.computacion.movil.common.Utilities;
 import co.edu.unadvirtual.computacion.movil.iam.LoginActivity;
 
@@ -20,8 +21,7 @@ public class LoaderActivity extends AppCompatActivity {
         new Handler().postDelayed(() -> {
             Intent intent;
 
-            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            Boolean session = !settings.getString("email", "").isEmpty();
+            Boolean session = Session.isLoggedIn(getApplicationContext());
             Boolean connection = Utilities.connectionExist(getApplicationContext());
 
             if (connection && !session) {
