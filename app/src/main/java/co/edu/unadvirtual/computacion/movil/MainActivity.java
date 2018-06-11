@@ -3,21 +3,24 @@ package co.edu.unadvirtual.computacion.movil;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.CardView;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.View;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,15 +32,15 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.List;
+import java.util.Iterator;
 
 import co.edu.unadvirtual.computacion.movil.common.ListTopicsActivity;
-import co.edu.unadvirtual.computacion.movil.domain.Unit;
 import co.edu.unadvirtual.computacion.movil.iam.EditProfileActivity;
 import co.edu.unadvirtual.computacion.movil.videos.VideosActivity;
 
@@ -139,8 +142,8 @@ public class MainActivity extends AppCompatActivity
             homeIntent.addCategory(Intent.CATEGORY_HOME);
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
-        } else if (id == R.id.nav_profile) {
-            Intent intent = new Intent(this, EditProfileActivity.class);
+        }else if (id == R.id.nav_profile) {
+            Intent intent = new Intent(this,EditProfileActivity.class);
             startActivity(intent);
         }
 
@@ -183,101 +186,25 @@ public class MainActivity extends AppCompatActivity
      */
     private void requestOk(JSONArray response) {
         try {
-            drawUnits(Unit.fromJSON(response));
 
-//            if (!response.isNull(0)) {
-//
-//                drawUnits(response);
-//
-//            } else {
-//                Toast.makeText(getApplicationContext(), "No Units enabled", Toast.LENGTH_LONG).show();
-//            }
+
+            if (!response.isNull(0)) {
+
+                drawUnits(response);
+
+            } else {
+                Toast.makeText(getApplicationContext(), "No Units enabled", Toast.LENGTH_LONG).show();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void drawUnits(List<Unit> units) {
-        /*se agrgan las unidades de la base de datos*/
-        LinearLayout units_container = findViewById(R.id.units_container);
-        LayoutParams cardParams;
-        FrameLayout.LayoutParams relativeLayoutParams;
-        RelativeLayout.LayoutParams imageParams;
-        RelativeLayout.LayoutParams mainTextParams;
-        RelativeLayout.LayoutParams subTextParams;
-        CardView card;
-        TextView mainText;
-        TextView subText;
-        RelativeLayout relativeLayout;
-        ImageView imageView;
-
-        for (Unit unit : units) {
-            cardParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-            relativeLayoutParams = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-            imageParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            mainTextParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            subTextParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            relativeLayout = new RelativeLayout(this);
-            cardParams.setMargins(25, 25, 25, 25);
-
-            card = new CardView(getApplicationContext());
-            card.setLayoutParams(cardParams);
-            card.setPadding(10, 10, 10, 10);
-            card.setId(unit.getId() + 6000);
-            card.setCardBackgroundColor(Color.WHITE);
-            card.setRadius(7);
-            card.setOnClickListener(view -> {
-                Intent intent = new Intent(MainActivity.this, ListTopicsActivity.class);
-                startActivity(intent);
-            });
-
-            relativeLayout.setLayoutParams(relativeLayoutParams);
-            //relativeLayout.setPadding(getDpUnit(16), getDpUnit(16), getDpUnit(16), getDpUnit(16));
-            imageView = new ImageView(this);
-            imageView.setId(unit.getId() + 7000);
-            imageView.setImageResource(getResources().getIdentifier(unit.getIconName(), "drawable", getPackageName()));
-            imageParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
-            imageParams.addRule(RelativeLayout.ALIGN_PARENT_START, RelativeLayout.TRUE);
-            imageParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
-            imageParams.setMargins(getDpUnit(16), getDpUnit(16), getDpUnit(16), 0);
-            imageView.setLayoutParams(imageParams);
-            imageView.getLayoutParams().width = getDpUnit(50);
-            imageView.getLayoutParams().height = getDpUnit(50);
-            relativeLayout.addView(imageView, 0);
-
-            mainText = new TextView(this);
-            mainText.setId(unit.getId() + 8000);
-            mainTextParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
-            mainTextParams.addRule(RelativeLayout.END_OF, imageView.getId());
-            mainTextParams.addRule(RelativeLayout.RIGHT_OF, imageView.getId());
-            mainTextParams.setMargins(15, 25, 0, 0);
-            mainText.setLayoutParams(mainTextParams);
-            mainText.setText(unit.getName());
-            mainText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
-            mainText.setTextColor(getResources().getColor(R.color.colorPrimary));
-            relativeLayout.addView(mainText, 1);
-
-            subText = new TextView(this);
-            subText.setId(unit.getId() + 9000);
-            subTextParams.addRule(RelativeLayout.BELOW, mainText.getId());
-            subTextParams.addRule(RelativeLayout.END_OF, imageView.getId());
-            subTextParams.addRule(RelativeLayout.RIGHT_OF, imageView.getId());
-            subTextParams.setMargins(getDpUnit(1), getDpUnit(1), getDpUnit(1), 25);
-            subText.setLayoutParams(subTextParams);
-            subText.setText(unit.getDescription());
-            subText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
-            subText.setTextColor(getResources().getColor(R.color.colorAccent));
-            relativeLayout.addView(subText, 2);
-
-            card.addView(relativeLayout);
-            // Finally, add the CardView in root layout
-            units_container.addView(card);
-        }
-    }
 
     private void requestError(VolleyError volleyError) {
         Log.d("Arsensys - >", volleyError.getMessage());
         Toast.makeText(this.getApplicationContext(), volleyError.getMessage(), Toast.LENGTH_LONG).show();
+
     }
 
     @SuppressLint("ResourceType")
@@ -285,8 +212,8 @@ public class MainActivity extends AppCompatActivity
         /*se agrgan las unidades de la base de datos*/
         LinearLayout units_container = findViewById(R.id.units_container);
         LayoutParams cardParams;
-        FrameLayout.LayoutParams relativeLayoutParams;
-        RelativeLayout.LayoutParams imageParams;
+        FrameLayout.LayoutParams relativeLayoutParams ;
+        RelativeLayout.LayoutParams imageParams ;
         RelativeLayout.LayoutParams mainTextParams;
         RelativeLayout.LayoutParams subTextParams;
         CardView card;
@@ -303,17 +230,17 @@ public class MainActivity extends AppCompatActivity
 
             for (int i = 0; i < response.length(); i++) {
 
-                cardParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+                 cardParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
                 relativeLayoutParams = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-                imageParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                mainTextParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                subTextParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                 imageParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                 mainTextParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                 subTextParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
                 relativeLayout = new RelativeLayout(this);
                 jsonobject = response.getJSONObject(i);
                 unitName = jsonobject.getString("name");
                 unitDescr = jsonobject.getString("description");
-                unitIcon = jsonobject.getString("iconName");
+                unitIcon = jsonobject.getString("iconname");
                 card = new CardView(getApplicationContext());
 
                 cardParams.setMargins(25, 25, 25, 25);
@@ -368,6 +295,7 @@ public class MainActivity extends AppCompatActivity
                 subText.setTextColor(getResources().getColor(R.color.colorAccent));
                 relativeLayout.addView(subText, 2);
 
+
                 card.addView(relativeLayout);
                 // Finally, add the CardView in root layout
                 units_container.addView(card);
@@ -376,6 +304,7 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
         }
     }
+
 
     private int getDpUnit(int dp) {
         final float scale = getResources().getDisplayMetrics().density;

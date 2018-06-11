@@ -1,5 +1,6 @@
 package co.edu.unadvirtual.computacion.movil.iam;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
+import android.content.SharedPreferences;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
@@ -106,10 +107,18 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(
                         LoginActivity.this,
                         MainActivity.class);
+
                 intent.putExtra("email", response.getString("email"));
-                intent.putExtra("id", response.getString("id"));
+                SharedPreferences user_auth = getSharedPreferences("user_auth_preferences", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = user_auth.edit();
+                editor.putInt("id", Integer.parseInt(response.getString("id")));
+                editor.putString("email", response.getString("email"));
+                editor.putString("firstName", response.getString("firstName"));
+                editor.putString("lastName", response.getString("lastName"));
+                editor.commit();
+
                 startActivity(intent);
-                finish();
+                //finish();
             } else {
                 String errorMsg = response.getString("error_msg");
                 Toast.makeText(
