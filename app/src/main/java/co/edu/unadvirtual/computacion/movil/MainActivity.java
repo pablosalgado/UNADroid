@@ -240,7 +240,7 @@ public class MainActivity extends AppCompatActivity
                 jsonobject = response.getJSONObject(i);
                 unitName = jsonobject.getString("name");
                 unitDescr = jsonobject.getString("description");
-                unitIcon = jsonobject.getString("iconname");
+                unitIcon = jsonobject.getString("iconName");
                 card = new CardView(getApplicationContext());
 
                 cardParams.setMargins(25, 25, 25, 25);

@@ -7,39 +7,33 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Modelo de dominio para los objetos de la clase Video.
- */
-public class Video {
+public class Topic {
     private int id;
     private String name;
     private String description;
-    private String url;
     private int order;
     private int unitId;
-    private String unitName;
 
     /**
-     * Construye una instancia de Video a partir de un objeto {@link JSONObject}
+     * Construye una instancia de Topic a partir de un objeto {@link JSONObject}
      *
-     * @param jsonObject Un objeto {@link JSONObject} con los datos del video.
-     * @return Una instancia de {@link Video}
+     * @param jsonObject Un objeto {@link JSONObject} con los datos del topic.
+     * @return Una instancia de {@link Topic}
      */
-    public static Video fromJSON(JSONObject jsonObject) {
+    public static Topic fromJSON(JSONObject jsonObject) {
         // Fail-fast
         if (jsonObject == null) {
             throw new IllegalArgumentException("Parameter jsonObject is required");
         }
 
         try {
-            Video ret = new Video();
+            Topic ret = new Topic();
 
             ret.id = jsonObject.getInt("id");
-            ret.unitName = jsonObject.getString("unitName");
             ret.name = jsonObject.getString("name");
             ret.description = jsonObject.getString("description");
-            ret.url = jsonObject.getString("url");
             ret.order = jsonObject.getInt("order");
+            ret.unitId = jsonObject.getInt("unitId");
 
             return ret;
         } catch (JSONException e) {
@@ -48,24 +42,24 @@ public class Video {
     }
 
     /**
-     * Construye una lista de {@link Video} a partir de un arreglo de objetos {@link JSONObject} que
+     * Construye una lista de {@link Topic} a partir de un arreglo de objetos {@link JSONObject} que
      * se entregan encapsulados en una instancia de {@link JSONArray}
      *
-     * @param jsonArray La instancia que encapsula los datos de los videos.
-     * @return La lista de {@link Video}
+     * @param jsonArray La instancia que encapsula los datos de los topics.
+     * @return La lista de {@link Topic}
      */
-    public static List<Video> fromJSON(JSONArray jsonArray) {
+    public static List<Topic> fromJSON(JSONArray jsonArray) {
         // Fail-fast
         if (jsonArray == null) {
             throw new IllegalArgumentException("Parameter jsonArray is required");
         }
 
         try {
-            ArrayList<Video> ret = new ArrayList<>();
+            ArrayList<Topic> ret = new ArrayList<>();
 
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject o = jsonArray.getJSONObject(i);
-                ret.add(Video.fromJSON(o));
+                ret.add(Topic.fromJSON(o));
             }
 
             return ret;
@@ -86,10 +80,6 @@ public class Video {
         return description;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
     public int getOrder() {
         return order;
     }
@@ -98,16 +88,12 @@ public class Video {
         return unitId;
     }
 
-    public String getUnitName() {
-        return unitName;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Video video = (Video) o;
-        return id == video.id;
+        Topic topic = (Topic) o;
+        return id == topic.id;
     }
 
     @Override
@@ -117,6 +103,8 @@ public class Video {
 
     @Override
     public String toString() {
-        return name;
+        return "Topic{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }
