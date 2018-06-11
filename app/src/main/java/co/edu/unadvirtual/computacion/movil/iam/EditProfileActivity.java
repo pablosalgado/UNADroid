@@ -33,15 +33,13 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText editTextFirstName;
     private EditText editTextLastName;
     private int user_id;
+    SharedPreferences user_auth;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
-
-        getUser();
-
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextFirstName = findViewById(R.id.editTextFirstName);
         editTextLastName = findViewById(R.id.editTextLastName);
@@ -52,6 +50,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 editTextFirstName.getText().toString(),
                 editTextLastName.getText().toString()
         ));
+        getUser();
     }
 
 
@@ -133,9 +132,10 @@ public class EditProfileActivity extends AppCompatActivity {
     public void getUser(){
         JSONObject params = new JSONObject();
         SharedPreferences user_auth = getSharedPreferences("user_auth_preferences", Context.MODE_PRIVATE);
+        user_id = user_auth.getInt("id",0);
 
         try {
-            params.put("id",user_auth.getInt("id",0));
+            params.put("id",user_id);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -162,7 +162,7 @@ public class EditProfileActivity extends AppCompatActivity {
         try {
             boolean error = !response.isNull("error");
             if (!error) {
-                user_id = Integer.parseInt(response.getString("id"));
+
                 editTextEmail.setText(response.getString("email"));
                 editTextFirstName.setText(response.getString("firstName"));
                 editTextLastName.setText(response.getString("lastName"));
