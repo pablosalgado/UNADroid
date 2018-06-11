@@ -1,7 +1,9 @@
 package co.edu.unadvirtual.computacion.movil.iam;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +22,7 @@ import org.json.JSONObject;
 import co.edu.unadvirtual.computacion.movil.AppSingleton;
 import co.edu.unadvirtual.computacion.movil.MainActivity;
 import co.edu.unadvirtual.computacion.movil.R;
+import co.edu.unadvirtual.computacion.movil.domain.User;
 
 /**
  * Captura las credenciales del usuario y las valida contra el servidor
@@ -100,27 +103,25 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void loginSuccessful(JSONObject response) {
         try {
-            boolean error = !response.isNull("error");
+            User user = User.fromJSON(response);
 
-            if (!error) {
-                Intent intent = new Intent(
-                        LoginActivity.this,
-                        MainActivity.class);
-                intent.putExtra("email", response.getString("email"));
-                intent.putExtra("id", response.getString("id"));
-                startActivity(intent);
-                finish();
-            } else {
-                String errorMsg = response.getString("error_msg");
-                Toast.makeText(
-                        getApplicationContext(),
-                        errorMsg, Toast.LENGTH_LONG
-                ).show();
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putString("email", user.getEmail());
+            editor.apply();
+
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+
+        } catch (Exception e) {
+            Toast.makeText(
+                    getApplicationContext(),
+                    e.getMessage(), Toast.LENGTH_LONG
+            ).show();
         } finally {
             progressBar.setVisibility(View.INVISIBLE);
+
         }
     }
 
