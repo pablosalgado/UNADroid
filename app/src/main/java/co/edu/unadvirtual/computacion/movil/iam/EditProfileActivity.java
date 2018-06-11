@@ -19,8 +19,6 @@ import co.edu.unadvirtual.computacion.movil.AppSingleton;
 import co.edu.unadvirtual.computacion.movil.MainActivity;
 import co.edu.unadvirtual.computacion.movil.R;
 
-
-
 /**
  * Permite editar los datos básicos del usuario y los envia al servidor.
  */
@@ -31,7 +29,6 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText editTextFirstName;
     private EditText editTextLastName;
     private int user_id;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +49,6 @@ public class EditProfileActivity extends AppCompatActivity {
         ));
     }
 
-
     /**
      * Método para hacer la edición del usuario
      *
@@ -68,14 +64,14 @@ public class EditProfileActivity extends AppCompatActivity {
             params.put("email", email);
             params.put("firstName", firstName);
             params.put("lastName", lastName);
-            params.put("id",user_id);
+            params.put("id", user_id);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         JsonObjectRequest request = new JsonObjectRequest(
-                Request.Method.POST,
-                AppSingleton.UNADROID_SERVER_ENDPOINT + "/userUpdate",
+                Request.Method.PUT,
+                AppSingleton.UNADROID_SERVER_ENDPOINT + "/user",
                 params,
                 new EditProfileActivity.SuccessListener(),
                 new EditProfileActivity.ErrorListener()
@@ -84,55 +80,11 @@ public class EditProfileActivity extends AppCompatActivity {
         AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(request, TAG);
     }
 
-    /**
-     * Procesa la respuesta del servidor.
-     */
-    private class SuccessListener implements Response.Listener<JSONObject> {
-        @Override
-        public void onResponse(JSONObject response) {
-            try {
-                boolean error = !response.isNull("error");
-
-                if (!error) {
-                    Intent intent = new Intent(
-                            EditProfileActivity.this,
-                            MainActivity.class);
-                    intent.putExtra("email", response.getString("email"));
-                    startActivity(intent);
-                    finish();
-
-                } else {
-                    String errorMsg = response.getString("error_msg");
-                    Toast.makeText(
-                            getApplicationContext(),
-                            errorMsg, Toast.LENGTH_LONG
-                    ).show();
-                }
-            } catch (JSONException e){
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
-     * Si ocurre algún error, se despliega el mensaje del mismo.
-     */
-    private class ErrorListener implements Response.ErrorListener {
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            Toast.makeText(
-                    EditProfileActivity.this.getApplicationContext(),
-                    error.getMessage(),
-                    Toast.LENGTH_LONG
-            ).show();
-        }
-    }
-
-    public void getUser(){
+    public void getUser() {
         JSONObject params = new JSONObject();
 
         try {
-            params.put("email","jsebascalle@gmail.com");
+            params.put("email", "jsebascalle@gmail.com");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -149,7 +101,6 @@ public class EditProfileActivity extends AppCompatActivity {
         // Se envia la petición a la cola
         AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(request, TAG);
     }
-
 
     private void successGetUser(JSONObject response) {
         editTextEmail = findViewById(R.id.editTextEmail);
@@ -188,5 +139,49 @@ public class EditProfileActivity extends AppCompatActivity {
                 Toast.LENGTH_LONG
         ).show();
 
+    }
+
+    /**
+     * Procesa la respuesta del servidor.
+     */
+    private class SuccessListener implements Response.Listener<JSONObject> {
+        @Override
+        public void onResponse(JSONObject response) {
+            try {
+                boolean error = !response.isNull("error");
+
+                if (!error) {
+                    Intent intent = new Intent(
+                            EditProfileActivity.this,
+                            MainActivity.class);
+                    intent.putExtra("email", response.getString("email"));
+                    startActivity(intent);
+                    finish();
+
+                } else {
+                    String errorMsg = response.getString("error_msg");
+                    Toast.makeText(
+                            getApplicationContext(),
+                            errorMsg, Toast.LENGTH_LONG
+                    ).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Si ocurre algún error, se despliega el mensaje del mismo.
+     */
+    private class ErrorListener implements Response.ErrorListener {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            Toast.makeText(
+                    EditProfileActivity.this.getApplicationContext(),
+                    error.getMessage(),
+                    Toast.LENGTH_LONG
+            ).show();
+        }
     }
 }
