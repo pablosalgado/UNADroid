@@ -18,6 +18,8 @@ import org.json.JSONObject;
 import co.edu.unadvirtual.computacion.movil.AppSingleton;
 import co.edu.unadvirtual.computacion.movil.MainActivity;
 import co.edu.unadvirtual.computacion.movil.R;
+import co.edu.unadvirtual.computacion.movil.common.Session;
+import co.edu.unadvirtual.computacion.movil.domain.User;
 
 /**
  * Permite editar los datos básicos del usuario y los envia al servidor.
@@ -83,16 +85,11 @@ public class EditProfileActivity extends AppCompatActivity {
     public void getUser() {
         JSONObject params = new JSONObject();
 
-        try {
-            params.put("email", "jsebascalle@gmail.com");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        // Se construye la ruta al endpoint de UNADroid server para obtener la lista de videos:
-        // https://unadroid.tk/api/user
+        String email = Session.getUserEmail(getApplicationContext());
+
         JsonObjectRequest request = new JsonObjectRequest(
-                Request.Method.POST,
-                AppSingleton.UNADROID_SERVER_ENDPOINT + "/user",
+                Request.Method.GET,
+                AppSingleton.UNADROID_SERVER_ENDPOINT + "/user/" + email,
                 params,
                 this::successGetUser,
                 this::errorGetUser
@@ -108,21 +105,12 @@ public class EditProfileActivity extends AppCompatActivity {
         editTextLastName = findViewById(R.id.editTextLastName);
 
         try {
-            boolean error = !response.isNull("error");
-            if (!error) {
-                user_id = Integer.parseInt(response.getString("id"));
-                editTextEmail.setText(response.getString("email"));
-                editTextFirstName.setText(response.getString("firstName"));
-                editTextLastName.setText(response.getString("lastName"));
+            User user = User.fromJSON(response);
 
-            } else {
-                String errorMsg = response.getString("error_msg");
-                Toast.makeText(
-                        getApplicationContext(),
-                        errorMsg, Toast.LENGTH_LONG
-                ).show();
-            }
-
+            user_id = user.getId();
+            editTextEmail.setText(user.getEmail());
+            editTextFirstName.setText(user.getFirstName());
+            editTextLastName.setText(user.getLastName());
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
