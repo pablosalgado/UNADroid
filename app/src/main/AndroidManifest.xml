@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="co.edu.unadvirtual.computacion.movil">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -31,15 +32,18 @@
             android:name=".WebCampusActivity"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".iam.LoginActivity" />
-        <activity android:name=".iam.EditProfileActivity" android:parentActivityName=".MainActivity" />
-        <activity android:name=".iam.RegistrationActivity" />
+        <activity android:name=".iam.EditProfileActivity"  android:parentActivityName=".MainActivity"  />
+        <activity
+            android:name=".iam.RegistrationActivity"
+            android:parentActivityName=".iam.LoginActivity" />
         <activity
             android:name=".videos.VideosActivity"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".common.ListTopicsActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".common.StandarActivity"></activity>
+        <activity android:name=".common.StandarActivity" />
+        <activity android:name=".ConnectionErrorActivity" />
     </application>
 
 </manifest>

@@ -169,8 +169,8 @@ public class MainActivity extends AppCompatActivity
     private void callUnitList() {
 
         JsonArrayRequest request = new JsonArrayRequest(
-                Request.Method.POST,
-                AppSingleton.UNADROID_SERVER_ENDPOINT + "/getUnits",
+                Request.Method.GET,
+                AppSingleton.UNADROID_SERVER_ENDPOINT + "/units",
                 null,
                 this::requestOk,
                 this::requestError

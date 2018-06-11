@@ -19,8 +19,9 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="C:\Users\desarrollo7wg\Pictures\icons_android\359367-android-app\png\201-video-camera.png" />
-                                      <entry key="outputName" value="ic_menu_res_vid" />
+                                      <entry key="iconShape" value="CIRCLE" />
+                                      <entry key="imageAsset" value="C:\Users\desarrollo7wg\Desktop\wifi.png" />
+                                      <entry key="outputName" value="wifi_icon" />
                                     </map>
                                   </option>
                                 </PersistentState>
