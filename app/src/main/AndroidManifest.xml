@@ -43,7 +43,7 @@
             android:name=".common.ListTopicsActivity"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".common.StandarActivity" />
-        <activity android:name=".ConnectionErrorActivity"></activity>
+        <activity android:name=".ConnectionErrorActivity"  android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
