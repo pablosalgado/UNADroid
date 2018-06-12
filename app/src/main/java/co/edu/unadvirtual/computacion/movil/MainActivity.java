@@ -3,14 +3,8 @@ package co.edu.unadvirtual.computacion.movil;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -29,18 +23,12 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Iterator;
-
 import co.edu.unadvirtual.computacion.movil.common.ListTopicsActivity;
 import co.edu.unadvirtual.computacion.movil.common.Utilities;
 import co.edu.unadvirtual.computacion.movil.iam.EditProfileActivity;
@@ -68,7 +56,6 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         progressBar = findViewById(R.id.progressBarUnits);
         callUnitList();
-
     }
 
     @Override
@@ -123,8 +110,8 @@ public class MainActivity extends AppCompatActivity
             homeIntent.addCategory(Intent.CATEGORY_HOME);
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
-        }else if (id == R.id.nav_profile) {
-            Intent intent = new Intent(this,EditProfileActivity.class);
+        } else if (id == R.id.nav_profile) {
+            Intent intent = new Intent(this, EditProfileActivity.class);
             startActivity(intent);
         }
 
@@ -134,21 +121,20 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
     private void callUnitList() {
         if (Utilities.connectionExist(getApplicationContext())) {
             JsonArrayRequest request = new JsonArrayRequest(
-                    Request.Method.POST,
-                    AppSingleton.UNADROID_SERVER_ENDPOINT + "/getUnits",
+                    Request.Method.GET,
+                    AppSingleton.UNADROID_SERVER_ENDPOINT + "/units",
                     null,
                     this::requestOk,
                     this::requestError
             );
 
             AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(request, TAG);
-        }else {
+        } else {
             Intent intent = new Intent(MainActivity.this, ConnectionErrorActivity.class);
-            intent.putExtra("CONN_INTENT_CLASS",MainActivity.this.getClass().getName());
+            intent.putExtra("CONN_INTENT_CLASS", MainActivity.this.getClass().getName());
             startActivity(intent);
         }
     }
@@ -161,7 +147,7 @@ public class MainActivity extends AppCompatActivity
     private void requestOk(JSONArray response) {
         try {
 
-progressBar.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
             if (!response.isNull(0)) {
 
                 drawUnits(response);
@@ -177,7 +163,6 @@ progressBar.setVisibility(View.GONE);
 
     private void requestError(VolleyError volleyError) {
         progressBar.setVisibility(View.GONE);
-        Log.d("Arsensys - >", volleyError.getMessage());
         Toast.makeText(this.getApplicationContext(), volleyError.getMessage(), Toast.LENGTH_LONG).show();
 
     }
@@ -187,8 +172,8 @@ progressBar.setVisibility(View.GONE);
         /*se agrgan las unidades de la base de datos*/
         LinearLayout units_container = findViewById(R.id.units_container);
         LayoutParams cardParams;
-        FrameLayout.LayoutParams relativeLayoutParams ;
-        RelativeLayout.LayoutParams imageParams ;
+        FrameLayout.LayoutParams relativeLayoutParams;
+        RelativeLayout.LayoutParams imageParams;
         RelativeLayout.LayoutParams mainTextParams;
         RelativeLayout.LayoutParams subTextParams;
         CardView card;
@@ -205,11 +190,11 @@ progressBar.setVisibility(View.GONE);
 
             for (int i = 0; i < response.length(); i++) {
 
-                 cardParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+                cardParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
                 relativeLayoutParams = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-                 imageParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                 mainTextParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                 subTextParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                imageParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                mainTextParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                subTextParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
                 relativeLayout = new RelativeLayout(this);
                 jsonobject = response.getJSONObject(i);
@@ -233,7 +218,6 @@ progressBar.setVisibility(View.GONE);
                 });
 
                 relativeLayout.setLayoutParams(relativeLayoutParams);
-                //relativeLayout.setPadding(getDpUnit(16), getDpUnit(16), getDpUnit(16), getDpUnit(16));
                 imageView = new ImageView(this);
                 imageView.setId(i + 7000);
                 imageView.setImageResource(getResources().getIdentifier(unitIcon, "drawable", getPackageName()));
@@ -270,9 +254,7 @@ progressBar.setVisibility(View.GONE);
                 subText.setTextColor(getResources().getColor(R.color.colorAccent));
                 relativeLayout.addView(subText, 2);
 
-
                 card.addView(relativeLayout);
-                // Finally, add the CardView in root layout
                 units_container.addView(card);
             }
         } catch (JSONException e) {
