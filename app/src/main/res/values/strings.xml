@@ -9,7 +9,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">UNADroid</string>
-    <string name="nav_header_subtitle">Computación Móbil</string>
+    <string name="nav_header_subtitle">Computación Móvil</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="campus_url">https://www.unad.edu.co/</string>
@@ -22,4 +22,5 @@
     <string name="iam_send">Enviar</string>
     <string name="connection_error">Sin acceso a Internet</string>
     <string name="try_again">Reintentar</string>
+    <string name="unit_list_title">Lista de Unidades</string>
 </resources>

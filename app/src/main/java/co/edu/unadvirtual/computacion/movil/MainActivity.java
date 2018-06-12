@@ -7,6 +7,10 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.CardView;
+import android.util.TypedValue;
+import android.view.View;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -22,10 +26,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
@@ -37,6 +41,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 import co.edu.unadvirtual.computacion.movil.common.ListTopicsActivity;
+import co.edu.unadvirtual.computacion.movil.common.Utilities;
 import co.edu.unadvirtual.computacion.movil.common.Session;
 import co.edu.unadvirtual.computacion.movil.domain.Unit;
 import co.edu.unadvirtual.computacion.movil.iam.EditProfileActivity;
@@ -47,6 +52,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "MainActivity";
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,21 +66,7 @@ public class MainActivity extends AppCompatActivity
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        CardView cv_unidad_1 = findViewById(R.id.cv_unidad_1);
-
-        cv_unidad_1.setOnClickListener(view -> {
-            // Snackbar.make(view, "Ir a al contenido de la unidad 1", Snackbar.LENGTH_LONG)
-            //       .setAction("Action", null).show();
-            Intent intent = new Intent(MainActivity.this, ListTopicsActivity.class);
-            startActivity(intent);
-        });
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -82,9 +74,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        progressBar = findViewById(R.id.progressBarUnits);
         callUnitList();
-
     }
 
     private void signOut() {
@@ -160,29 +151,22 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    public void meet(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
-
-    public void callLoader(View view) {
-        Intent intent = new Intent(this, LoaderActivity.class);
-        startActivity(intent);
-
-    }
-
-
     private void callUnitList() {
+        if (Utilities.connectionExist(getApplicationContext())) {
+            JsonArrayRequest request = new JsonArrayRequest(
+                    Request.Method.GET,
+                    AppSingleton.UNADROID_SERVER_ENDPOINT + "/units",
+                    null,
+                    this::requestOk,
+                    this::requestError
+            );
 
-        JsonArrayRequest request = new JsonArrayRequest(
-                Request.Method.GET,
-                AppSingleton.UNADROID_SERVER_ENDPOINT + "/units",
-                null,
-                this::requestOk,
-                this::requestError
-        );
-
-        AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(request, TAG);
+            AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(request, TAG);
+        } else {
+            Intent intent = new Intent(MainActivity.this, ConnectionErrorActivity.class);
+            intent.putExtra("CONN_INTENT_CLASS", MainActivity.this.getClass().getName());
+            startActivity(intent);
+        }
     }
 
     /**
@@ -192,6 +176,15 @@ public class MainActivity extends AppCompatActivity
      */
     private void requestOk(JSONArray response) {
         try {
+
+            progressBar.setVisibility(View.GONE);
+            if (!response.isNull(0)) {
+
+                drawUnits(response);
+
+            } else {
+                Toast.makeText(getApplicationContext(), "No Units enabled", Toast.LENGTH_LONG).show();
+            }
             drawUnits(Unit.fromJSON(response));
 
 //            if (!response.isNull(0)) {
@@ -285,7 +278,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void requestError(VolleyError volleyError) {
-        Log.d("Arsensys - >", volleyError.getMessage());
+        progressBar.setVisibility(View.GONE);
         Toast.makeText(this.getApplicationContext(), volleyError.getMessage(), Toast.LENGTH_LONG).show();
     }
 
@@ -340,7 +333,6 @@ public class MainActivity extends AppCompatActivity
                 });
 
                 relativeLayout.setLayoutParams(relativeLayoutParams);
-                //relativeLayout.setPadding(getDpUnit(16), getDpUnit(16), getDpUnit(16), getDpUnit(16));
                 imageView = new ImageView(this);
                 imageView.setId(i + 7000);
                 imageView.setImageResource(getResources().getIdentifier(unitIcon, "drawable", getPackageName()));
@@ -378,7 +370,6 @@ public class MainActivity extends AppCompatActivity
                 relativeLayout.addView(subText, 2);
 
                 card.addView(relativeLayout);
-                // Finally, add the CardView in root layout
                 units_container.addView(card);
             }
         } catch (JSONException e) {
