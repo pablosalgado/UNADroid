@@ -179,21 +179,10 @@ public class MainActivity extends AppCompatActivity
 
             progressBar.setVisibility(View.GONE);
             if (!response.isNull(0)) {
-
-                drawUnits(response);
-
+                drawUnits(Unit.fromJSON(response));
             } else {
                 Toast.makeText(getApplicationContext(), "No Units enabled", Toast.LENGTH_LONG).show();
             }
-            drawUnits(Unit.fromJSON(response));
-
-//            if (!response.isNull(0)) {
-//
-//                drawUnits(response);
-//
-//            } else {
-//                Toast.makeText(getApplicationContext(), "No Units enabled", Toast.LENGTH_LONG).show();
-//            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -212,6 +201,7 @@ public class MainActivity extends AppCompatActivity
         TextView subText;
         RelativeLayout relativeLayout;
         ImageView imageView;
+        int iconId = 0;
 
         for (Unit unit : units) {
             cardParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -230,6 +220,7 @@ public class MainActivity extends AppCompatActivity
             card.setRadius(7);
             card.setOnClickListener(view -> {
                 Intent intent = new Intent(MainActivity.this, ListTopicsActivity.class);
+                intent.putExtra("MAINACTIVITY_PARAMS_UNIT_ID",unit.getId());
                 startActivity(intent);
             });
 
@@ -237,7 +228,17 @@ public class MainActivity extends AppCompatActivity
             //relativeLayout.setPadding(getDpUnit(16), getDpUnit(16), getDpUnit(16), getDpUnit(16));
             imageView = new ImageView(this);
             imageView.setId(unit.getId() + 7000);
-            imageView.setImageResource(getResources().getIdentifier(unit.getIconName(), "drawable", getPackageName()));
+
+            try{
+                iconId = getResources().getIdentifier(unit.getIconName(), "drawable", getPackageName());
+            }catch(Exception ie){
+
+            }finally {
+                if(iconId==0){
+                    iconId = getResources().getIdentifier("ic_nav_unit_def", "drawable", getPackageName());
+                }
+            }
+            imageView.setImageResource(iconId);
             imageParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
             imageParams.addRule(RelativeLayout.ALIGN_PARENT_START, RelativeLayout.TRUE);
             imageParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
@@ -280,101 +281,6 @@ public class MainActivity extends AppCompatActivity
     private void requestError(VolleyError volleyError) {
         progressBar.setVisibility(View.GONE);
         Toast.makeText(this.getApplicationContext(), volleyError.getMessage(), Toast.LENGTH_LONG).show();
-    }
-
-    @SuppressLint("ResourceType")
-    private void drawUnits(JSONArray response) {
-        /*se agrgan las unidades de la base de datos*/
-        LinearLayout units_container = findViewById(R.id.units_container);
-        LayoutParams cardParams;
-        FrameLayout.LayoutParams relativeLayoutParams;
-        RelativeLayout.LayoutParams imageParams;
-        RelativeLayout.LayoutParams mainTextParams;
-        RelativeLayout.LayoutParams subTextParams;
-        CardView card;
-        TextView mainText;
-        TextView subText;
-        JSONObject jsonobject;
-        String unitName;
-        String unitDescr;
-        String unitIcon;
-        RelativeLayout relativeLayout;
-        ImageView imageView;
-        try {
-
-
-            for (int i = 0; i < response.length(); i++) {
-
-                cardParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-                relativeLayoutParams = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-                imageParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                mainTextParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                subTextParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-
-                relativeLayout = new RelativeLayout(this);
-                jsonobject = response.getJSONObject(i);
-                unitName = jsonobject.getString("name");
-                unitDescr = jsonobject.getString("description");
-                unitIcon = jsonobject.getString("iconName");
-                card = new CardView(getApplicationContext());
-
-                cardParams.setMargins(25, 25, 25, 25);
-                card.setLayoutParams(cardParams);
-                card.setPadding(10, 10, 10, 10);
-                card.setId(i + 6000);
-                card.setCardBackgroundColor(Color.WHITE);
-                card.setRadius(7);
-                card.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(MainActivity.this, ListTopicsActivity.class);
-                        startActivity(intent);
-                    }
-                });
-
-                relativeLayout.setLayoutParams(relativeLayoutParams);
-                imageView = new ImageView(this);
-                imageView.setId(i + 7000);
-                imageView.setImageResource(getResources().getIdentifier(unitIcon, "drawable", getPackageName()));
-                imageParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
-                imageParams.addRule(RelativeLayout.ALIGN_PARENT_START, RelativeLayout.TRUE);
-                imageParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
-                imageParams.setMargins(getDpUnit(16), getDpUnit(16), getDpUnit(16), 0);
-                imageView.setLayoutParams(imageParams);
-                imageView.getLayoutParams().width = getDpUnit(50);
-                imageView.getLayoutParams().height = getDpUnit(50);
-                relativeLayout.addView(imageView, 0);
-
-                mainText = new TextView(this);
-                mainText.setId(i + 8000);
-                mainTextParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
-                mainTextParams.addRule(RelativeLayout.END_OF, imageView.getId());
-                mainTextParams.addRule(RelativeLayout.RIGHT_OF, imageView.getId());
-                mainTextParams.setMargins(15, 25, 0, 0);
-                mainText.setLayoutParams(mainTextParams);
-                mainText.setText(unitName);
-                mainText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
-                mainText.setTextColor(getResources().getColor(R.color.colorPrimary));
-                relativeLayout.addView(mainText, 1);
-
-                subText = new TextView(this);
-                subText.setId(i + 9000);
-                subTextParams.addRule(RelativeLayout.BELOW, mainText.getId());
-                subTextParams.addRule(RelativeLayout.END_OF, imageView.getId());
-                subTextParams.addRule(RelativeLayout.RIGHT_OF, imageView.getId());
-                subTextParams.setMargins(getDpUnit(1), getDpUnit(1), getDpUnit(1), 25);
-                subText.setLayoutParams(subTextParams);
-                subText.setText(unitDescr);
-                subText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
-                subText.setTextColor(getResources().getColor(R.color.colorAccent));
-                relativeLayout.addView(subText, 2);
-
-                card.addView(relativeLayout);
-                units_container.addView(card);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 
     private int getDpUnit(int dp) {
