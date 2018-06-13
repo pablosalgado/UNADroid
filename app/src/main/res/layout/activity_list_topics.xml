@@ -1,154 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="8dp"
-    android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:padding="0dp">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/cv_unidad_1"
+    <LinearLayout
+        android:id="@+id/topics_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp" app:cardUseCompatPadding="true">
+        android:orientation="vertical">
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/titleUnit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
+            android:text="Unidad x"
+            android:textColor="@color/colorAccent"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/person_photo3"
-                android:layout_width="62dp"
-                android:layout_height="50dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:contentDescription="@android:string/no"
-                android:src="@mipmap/ic_menu_res_doc" />
-
-            <TextView
-                android:id="@+id/person_name3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@id/person_photo3"
-                android:layout_toRightOf="@+id/person_photo3"
-                android:textColor="@color/colorPrimary"
-                android:textSize="30sp"
-                android:text="Unidad 1"
-                />
-
-            <TextView
-                android:id="@+id/person_age3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/person_name3"
-                android:layout_toEndOf="@id/person_photo3"
-                android:layout_toRightOf="@+id/person_photo3"
-                android:textColor="@color/colorAccent"
-                android:text="Conceptos basicos" />
-
-        </RelativeLayout>
-
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/cv_unidad_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:cardUseCompatPadding="true">
-
-        <RelativeLayout
+        <TextView
+            android:id="@+id/titleTopicsUnit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:layout_marginTop="12dp"
+            android:gravity="left"
+            android:text="@string/topics_list_title"
+            android:textColor="@color/colorPrimary"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:paddingLeft="10dp" />
 
-            <ImageView
-                android:id="@+id/person_photo"
-                android:layout_width="62dp"
-                android:layout_height="50dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:contentDescription="@android:string/no"
-                android:src="@mipmap/ic_menu_res_vid" />
-
-            <TextView
-                android:id="@+id/person_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@id/person_photo"
-                android:layout_toRightOf="@+id/person_photo"
-                android:textColor="@color/colorPrimary"
-                android:textSize="30sp"
-                android:text="Unidad 2" />
-
-            <TextView
-                android:id="@+id/person_age"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/person_name"
-                android:layout_toEndOf="@id/person_photo"
-                android:layout_toRightOf="@+id/person_photo"
-                android:textColor="@color/colorAccent"
-                android:text="Conceptos intermedios" />
-        </RelativeLayout>
-
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/cv_unidad_3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:cardUseCompatPadding="true">
-
-        <RelativeLayout
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_unidad_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:layout_marginTop="8dp" app:cardUseCompatPadding="true">
 
-            <ImageView
-                android:id="@+id/person_photo2"
-                android:layout_width="62dp"
-                android:layout_height="50dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:contentDescription="@android:string/no"
-                android:src="@drawable/ic_nav_quiz" />
-
-            <TextView
-                android:id="@+id/person_name2"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@id/person_photo2"
-                android:layout_toRightOf="@+id/person_photo2"
-                android:textColor="@color/colorPrimary"
-                android:textSize="30sp"
-                android:text="Unidad 3" />
+                android:padding="16dp">
 
-            <TextView
-                android:id="@+id/person_age2"
-                android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/person_photo3"
+                    android:layout_width="62dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:contentDescription="@android:string/no"
+                    android:src="@mipmap/ic_menu_res_doc" />
+
+                <TextView
+                    android:id="@+id/person_name3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@id/person_photo3"
+                    android:layout_toRightOf="@+id/person_photo3"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="30sp"
+                    android:text="Unidad 1"
+                    />
+
+                <TextView
+                    android:id="@+id/person_age3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/person_name3"
+                    android:layout_toEndOf="@id/person_photo3"
+                    android:layout_toRightOf="@+id/person_photo3"
+                    android:text="Conceptos basicos"
+                    android:textColor="@color/colorAccent" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_unidad_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:cardUseCompatPadding="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/person_name2"
-                android:layout_toEndOf="@id/person_photo2"
-                android:layout_toRightOf="@+id/person_photo2"
-                android:textColor="@color/colorAccent"
-                android:text="Layouts y Widgets" />
-        </RelativeLayout>
+                android:padding="16dp">
 
-    </android.support.v7.widget.CardView>
+                <ImageView
+                    android:id="@+id/person_photo"
+                    android:layout_width="62dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:contentDescription="@android:string/no"
+                    android:src="@mipmap/ic_menu_res_vid" />
 
-</LinearLayout>
+                <TextView
+                    android:id="@+id/person_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@id/person_photo"
+                    android:layout_toRightOf="@+id/person_photo"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="30sp"
+                    android:text="Unidad 2" />
+
+                <TextView
+                    android:id="@+id/person_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/person_name"
+                    android:layout_toEndOf="@id/person_photo"
+                    android:layout_toRightOf="@+id/person_photo"
+                    android:textColor="@color/colorAccent"
+                    android:text="Conceptos intermedios" />
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_unidad_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:cardUseCompatPadding="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/person_photo2"
+                    android:layout_width="62dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:contentDescription="@android:string/no"
+                    android:src="@drawable/ic_nav_quiz" />
+
+                <TextView
+                    android:id="@+id/person_name2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@id/person_photo2"
+                    android:layout_toRightOf="@+id/person_photo2"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="30sp"
+                    android:text="Unidad 3" />
+
+                <TextView
+                    android:id="@+id/person_age2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/person_name2"
+                    android:layout_toEndOf="@id/person_photo2"
+                    android:layout_toRightOf="@+id/person_photo2"
+                    android:textColor="@color/colorAccent"
+                    android:text="Layouts y Widgets" />
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+        <ProgressBar
+            android:id="@+id/progressBarTopics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:visibility="visible" />
+
+
+    </LinearLayout>
+</ScrollView>
