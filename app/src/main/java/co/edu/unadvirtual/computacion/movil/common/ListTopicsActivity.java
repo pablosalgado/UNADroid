@@ -38,17 +38,17 @@ import co.edu.unadvirtual.computacion.movil.domain.Unit;
 
 public class ListTopicsActivity extends AppCompatActivity  {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "ListTopicsActivity";
     private ProgressBar progressBar;
-
+    private int unit_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_topics);
-        //Intent intent = getIntent();
-        //Bundle data = intent.getExtras();
-        //int unit_id = data.getInt("MAINACTIVITY_PARAMS_UNIT_ID");
+        Intent intent = getIntent();
+        Bundle data = intent.getExtras();
+        unit_id = data.getInt("MAINACTIVITY_PARAMS_UNIT_ID");
 
         callTopicsList();
     }
@@ -58,7 +58,7 @@ public class ListTopicsActivity extends AppCompatActivity  {
         if (Utilities.connectionExist(getApplicationContext())) {
             JsonArrayRequest request = new JsonArrayRequest(
                     Request.Method.GET,
-                    AppSingleton.UNADROID_SERVER_ENDPOINT + "/unit/"+1+"/topics",
+                    AppSingleton.UNADROID_SERVER_ENDPOINT + "/unit/"+unit_id+"/topics",
                     null,
                     this::requestOk,
                     this::requestError
@@ -66,16 +66,16 @@ public class ListTopicsActivity extends AppCompatActivity  {
 
             AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(request, TAG);
         } else {
-            //Intent intent = new Intent(MainActivity.this, ConnectionErrorActivity.class);
-            //intent.putExtra("CONN_INTENT_CLASS", MainActivity.this.getClass().getName());
-            //startActivity(intent);
+            Intent intent = new Intent(ListTopicsActivity.this, ConnectionErrorActivity.class);
+            intent.putExtra("CONN_INTENT_CLASS", ListTopicsActivity.this.getClass().getName());
+            startActivity(intent);
         }
     }
 
     private void requestOk(JSONArray response) {
 
         try {
-            //progressBar.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
             if (!response.isNull(0)) {
                 drawTopics(Topic.fromJSON(response));
             } else {
@@ -87,16 +87,14 @@ public class ListTopicsActivity extends AppCompatActivity  {
     }
 
     private void requestError(VolleyError volleyError) {
-        //progressBar.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
         Toast.makeText(this.getApplicationContext(), volleyError.getMessage(), Toast.LENGTH_LONG).show();
     }
 
 
 
     private void drawTopics(List<Topic> topics) {
-
-        Toast.makeText(getApplicationContext(), "No Topics enabled", Toast.LENGTH_LONG).show();
-        /*se agrgan las unidades de la base de datos*/
+        /*se agregan los temas de la unidad de la base de datos*/
         LinearLayout topics_container = findViewById(R.id.topics_container);
         LinearLayout.LayoutParams cardParams;
         FrameLayout.LayoutParams relativeLayoutParams;
