@@ -24,6 +24,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -31,7 +32,9 @@
             android:name=".WebCampusActivity"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".iam.LoginActivity" />
-        <activity android:name=".iam.EditProfileActivity"  android:parentActivityName=".MainActivity"  />
+        <activity
+            android:name=".iam.EditProfileActivity"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".iam.RegistrationActivity"
             android:parentActivityName=".iam.LoginActivity" />
@@ -42,7 +45,10 @@
             android:name=".common.ListTopicsActivity"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".common.StandarActivity" />
-        <activity android:name=".ConnectionErrorActivity"  android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".ConnectionErrorActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".unadroid.EvaluationListActivity" android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>

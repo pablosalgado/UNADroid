@@ -46,6 +46,7 @@ import co.edu.unadvirtual.computacion.movil.common.Session;
 import co.edu.unadvirtual.computacion.movil.domain.Unit;
 import co.edu.unadvirtual.computacion.movil.iam.EditProfileActivity;
 import co.edu.unadvirtual.computacion.movil.iam.LoginActivity;
+import co.edu.unadvirtual.computacion.movil.unadroid.EvaluationListActivity;
 import co.edu.unadvirtual.computacion.movil.videos.VideosActivity;
 
 public class MainActivity extends AppCompatActivity
@@ -135,6 +136,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_videos) {
             Intent intent = new Intent(MainActivity.this, VideosActivity.class);
             startActivity(intent);
+        } else if (id == R.id.nav_quiz) {
+            Intent intent = new Intent(MainActivity.this, EvaluationListActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_campus) {
             Intent intent = new Intent(this, WebCampusActivity.class);
             startActivity(intent);
@@ -170,9 +174,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     * Procesa la respuesta del servidor si el usuario se ha podido registrar exitosamente.
+     * Realiza una llamada al servidor para listar las unidades disponibles
      *
-     * @param response Contiene el usuario recién creado.
+     * @param response el resultado de la consulta.
      */
     private void requestOk(JSONArray response) {
         try {
@@ -181,7 +185,7 @@ public class MainActivity extends AppCompatActivity
             if (!response.isNull(0)) {
                 drawUnits(Unit.fromJSON(response));
             } else {
-                Toast.makeText(getApplicationContext(), "No Units enabled", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "No hay Unidades disponibles", Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -265,7 +269,7 @@ public class MainActivity extends AppCompatActivity
             subTextParams.addRule(RelativeLayout.BELOW, mainText.getId());
             subTextParams.addRule(RelativeLayout.END_OF, imageView.getId());
             subTextParams.addRule(RelativeLayout.RIGHT_OF, imageView.getId());
-            subTextParams.setMargins(getDpUnit(1), getDpUnit(1), getDpUnit(1), 25);
+            subTextParams.setMargins(getDpUnit(1), getDpUnit(1), getDpUnit(1), 32);
             subText.setLayoutParams(subTextParams);
             subText.setText(unit.getDescription());
             subText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
