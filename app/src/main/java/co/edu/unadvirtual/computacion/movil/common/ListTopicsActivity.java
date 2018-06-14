@@ -49,7 +49,7 @@ public class ListTopicsActivity extends AppCompatActivity  {
         Intent intent = getIntent();
         Bundle data = intent.getExtras();
         unit_id = data.getInt("MAINACTIVITY_PARAMS_UNIT_ID");
-
+        progressBar = findViewById(R.id.progressBarTopics);
         callTopicsList();
     }
 
