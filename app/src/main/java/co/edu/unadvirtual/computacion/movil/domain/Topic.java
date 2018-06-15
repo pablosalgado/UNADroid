@@ -12,7 +12,7 @@ public class Topic {
     private String name;
     private String description;
     private int order;
-    private int unitId;
+    private int unit_id;
 
     /**
      * Construye una instancia de Topic a partir de un objeto {@link JSONObject}
@@ -33,7 +33,7 @@ public class Topic {
             ret.name = jsonObject.getString("name");
             ret.description = jsonObject.getString("description");
             ret.order = jsonObject.getInt("order");
-            ret.unitId = jsonObject.getInt("unitId");
+            ret.unit_id = jsonObject.getInt("unit_id");
 
             return ret;
         } catch (JSONException e) {
@@ -85,7 +85,7 @@ public class Topic {
     }
 
     public int getUnitId() {
-        return unitId;
+        return unit_id;
     }
 
     @Override

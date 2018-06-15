@@ -23,5 +23,6 @@
     <string name="connection_error">Sin acceso a Internet</string>
     <string name="try_again">Reintentar</string>
     <string name="unit_list_title">Lista de Unidades</string>
+    <string name="topics_list_title">Temáticas de la Unidad</string>
     <string name="quiz_list_title">Lista de Evaluaciones</string>
 </resources>
