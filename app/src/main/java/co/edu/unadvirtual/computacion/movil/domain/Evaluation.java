@@ -10,6 +10,7 @@ import java.util.List;
 public class Evaluation {
     private int id;
     private int unitId;
+    private String name;
     private String description;
     private String createdAt;
     private String updatedAt;
@@ -17,6 +18,8 @@ public class Evaluation {
     public int getId() {
         return id;
     }
+
+    public String getName() {return name;}
 
     public int getUnitId() {
         return unitId;
@@ -51,6 +54,7 @@ public class Evaluation {
 
             e.id = jsonObject.getInt("id");
             e.unitId = jsonObject.getInt("unit_id");
+            e.name = jsonObject.getString("name");
             e.description = jsonObject.getString("description");
             e.createdAt = jsonObject.getString("createdAt");
             e.updatedAt = jsonObject.getString("updatedAt");

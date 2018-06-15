@@ -153,9 +153,9 @@ public class EvaluationListActivity extends AppCompatActivity {
             mainTextParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
             mainTextParams.addRule(RelativeLayout.END_OF, imageView.getId());
             mainTextParams.addRule(RelativeLayout.RIGHT_OF, imageView.getId());
-            mainTextParams.setMargins(15, 25, 0, 0);
+            mainTextParams.setMargins(5, 25, 0, 0);
             mainText.setLayoutParams(mainTextParams);
-            mainText.setText(eval.getDescription());
+            mainText.setText(eval.getName());
             mainText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
             mainText.setTextColor(getResources().getColor(R.color.colorPrimary));
             relativeLayout.addView(mainText, 1);
@@ -165,7 +165,7 @@ public class EvaluationListActivity extends AppCompatActivity {
             subTextParams.addRule(RelativeLayout.BELOW, mainText.getId());
             subTextParams.addRule(RelativeLayout.END_OF, imageView.getId());
             subTextParams.addRule(RelativeLayout.RIGHT_OF, imageView.getId());
-            subTextParams.setMargins(getDpUnit(1), getDpUnit(1), getDpUnit(1), 32);
+            subTextParams.setMargins(5, 5, 0, 48);
             subText.setLayoutParams(subTextParams);
             subText.setText(eval.getDescription());
             subText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);

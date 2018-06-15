@@ -239,7 +239,7 @@ public class MainActivity extends AppCompatActivity
 
             }finally {
                 if(iconId==0){
-                    iconId = getResources().getIdentifier("ic_nav_unit_def", "drawable", getPackageName());
+                    iconId = getResources().getIdentifier("unit_def_icon", "drawable", getPackageName());
                 }
             }
             imageView.setImageResource(iconId);
@@ -257,7 +257,7 @@ public class MainActivity extends AppCompatActivity
             mainTextParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
             mainTextParams.addRule(RelativeLayout.END_OF, imageView.getId());
             mainTextParams.addRule(RelativeLayout.RIGHT_OF, imageView.getId());
-            mainTextParams.setMargins(15, 25, 0, 0);
+            mainTextParams.setMargins(5, 25, 0, 0);
             mainText.setLayoutParams(mainTextParams);
             mainText.setText(unit.getName());
             mainText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
@@ -269,7 +269,7 @@ public class MainActivity extends AppCompatActivity
             subTextParams.addRule(RelativeLayout.BELOW, mainText.getId());
             subTextParams.addRule(RelativeLayout.END_OF, imageView.getId());
             subTextParams.addRule(RelativeLayout.RIGHT_OF, imageView.getId());
-            subTextParams.setMargins(getDpUnit(1), getDpUnit(1), getDpUnit(1), 32);
+            subTextParams.setMargins(5,5,0, 48);
             subText.setLayoutParams(subTextParams);
             subText.setText(unit.getDescription());
             subText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
