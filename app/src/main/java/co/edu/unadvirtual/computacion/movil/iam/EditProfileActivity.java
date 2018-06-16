@@ -113,20 +113,15 @@ public class EditProfileActivity extends AppCompatActivity {
             editTextLastName.setText(user.getLastName());
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            //progressBar.setVisibility(View.INVISIBLE);
         }
     }
 
     private void errorGetUser(VolleyError volleyError) {
-        //progressBar.setVisibility(View.INVISIBLE);
-
         Toast.makeText(
                 this.getApplicationContext(),
                 volleyError.getMessage(),
                 Toast.LENGTH_LONG
         ).show();
-
     }
 
     /**

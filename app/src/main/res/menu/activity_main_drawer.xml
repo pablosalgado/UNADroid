@@ -12,6 +12,10 @@
                 android:id="@+id/nav_profile"
                 android:icon="@drawable/ic_nav_account"
                 android:title="Mi perfil" />
+            <item
+            android:id="@+id/nav_password"
+            android:icon="@drawable/ic_nav_key"
+            android:title="Cambiar contraseña" />
     </group>
     <group android:checkableBehavior="single" android:id="@+id/grp2">
         <item

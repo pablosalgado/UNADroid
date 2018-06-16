@@ -36,6 +36,9 @@
             android:name=".iam.EditProfileActivity"
             android:parentActivityName=".MainActivity" />
         <activity
+            android:name=".iam.EditPasswordActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
             android:name=".iam.RegistrationActivity"
             android:parentActivityName=".iam.LoginActivity" />
         <activity

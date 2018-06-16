@@ -44,6 +44,7 @@ import co.edu.unadvirtual.computacion.movil.common.ListTopicsActivity;
 import co.edu.unadvirtual.computacion.movil.common.Utilities;
 import co.edu.unadvirtual.computacion.movil.common.Session;
 import co.edu.unadvirtual.computacion.movil.domain.Unit;
+import co.edu.unadvirtual.computacion.movil.iam.EditPasswordActivity;
 import co.edu.unadvirtual.computacion.movil.iam.EditProfileActivity;
 import co.edu.unadvirtual.computacion.movil.iam.LoginActivity;
 import co.edu.unadvirtual.computacion.movil.unadroid.EvaluationListActivity;
@@ -146,6 +147,9 @@ public class MainActivity extends AppCompatActivity
             signOut();
         } else if (id == R.id.nav_profile) {
             Intent intent = new Intent(this, EditProfileActivity.class);
+            startActivity(intent);
+        }else if (id == R.id.nav_password) {
+            Intent intent = new Intent(this, EditPasswordActivity.class);
             startActivity(intent);
         }
 
