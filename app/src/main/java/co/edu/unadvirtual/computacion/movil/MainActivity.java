@@ -1,27 +1,19 @@
 package co.edu.unadvirtual.computacion.movil;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.util.TypedValue;
 import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -33,14 +25,10 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.List;
-
 import co.edu.unadvirtual.computacion.movil.common.ListTopicsActivity;
+import co.edu.unadvirtual.computacion.movil.common.StandarActivity;
 import co.edu.unadvirtual.computacion.movil.common.Utilities;
 import co.edu.unadvirtual.computacion.movil.common.Session;
 import co.edu.unadvirtual.computacion.movil.domain.Unit;
@@ -141,6 +129,9 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         } else if (id == R.id.nav_campus) {
             Intent intent = new Intent(this, WebCampusActivity.class);
+            startActivity(intent);
+        }else if (id == R.id.nav_course_info) {
+            Intent intent = new Intent(this, StandarActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_exit) {
             signOut();
@@ -280,6 +271,8 @@ public class MainActivity extends AppCompatActivity
             // Finally, add the CardView in root layout
             units_container.addView(card);
         }
+
+        showPdf("http://www.pdf995.com/samples/pdf.pdf");
     }
 
     private void requestError(VolleyError volleyError) {
@@ -290,5 +283,11 @@ public class MainActivity extends AppCompatActivity
     private int getDpUnit(int dp) {
         final float scale = getResources().getDisplayMetrics().density;
         return ((int) (dp * scale + 0.5f));
+    }
+
+    private void showPdf(String pdf_url){
+        //Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(pdf_url));
+        //startActivity(browserIntent);
+
     }
 }
