@@ -3,6 +3,7 @@ package co.edu.unadvirtual.computacion.movil.iam;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +13,9 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
+import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,6 +36,9 @@ public class LoginActivity extends AppCompatActivity {
     private EditText editTextEmail;
     private ProgressBar progressBar;
 
+    //defining AwesomeValidation object
+    private AwesomeValidation awesomeValidation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +48,12 @@ public class LoginActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextPassword);
         progressBar = findViewById(R.id.progressBar);
 
+        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
+
+        awesomeValidation.addValidation(this, R.id.editTextEmail, Patterns.EMAIL_ADDRESS, R.string.validate_invalid_email);
+        awesomeValidation.addValidation(this, R.id.editTextEmail, RegexTemplate.NOT_EMPTY, R.string.validate_email_required);
+        awesomeValidation.addValidation(this, R.id.editTextPassword, RegexTemplate.NOT_EMPTY, R.string.validate_password_required);
+
         Button buttonLogin = findViewById(R.id.buttonLogin);
         buttonLogin.setOnClickListener(this::loginClicked);
 
@@ -49,6 +62,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginClicked(View view) {
+        //Validar
+        awesomeValidation.validate();
         progressBar.setVisibility(View.VISIBLE);
         loginUser(
                 editTextEmail.getText().toString(),
