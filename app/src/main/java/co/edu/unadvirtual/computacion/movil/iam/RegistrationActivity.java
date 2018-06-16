@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -12,6 +13,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
+import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,6 +37,9 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText editTextFirstName;
     private EditText editTextLastName;
 
+    //defining AwesomeValidation object
+    private AwesomeValidation awesomeValidation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +49,14 @@ public class RegistrationActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextFirstName = findViewById(R.id.editTextFirstName);
         editTextLastName = findViewById(R.id.editTextLastName);
+
+        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
+
+        awesomeValidation.addValidation(this, R.id.editTextEmail, Patterns.EMAIL_ADDRESS, R.string.validate_invalid_email);
+        awesomeValidation.addValidation(this, R.id.editTextEmail, RegexTemplate.NOT_EMPTY, R.string.validate_email_required);
+        awesomeValidation.addValidation(this, R.id.editTextFirstName, RegexTemplate.NOT_EMPTY, R.string.validate_firstname_required);
+        awesomeValidation.addValidation(this, R.id.editTextLastName, RegexTemplate.NOT_EMPTY, R.string.validate_lastname_required);
+        awesomeValidation.addValidation(this, R.id.editTextPassword, RegexTemplate.NOT_EMPTY, R.string.validate_password_required);
 
         Button buttonSend = findViewById(R.id.buttonSend);
         buttonSend.setOnClickListener(v -> registerUser(
@@ -62,6 +77,9 @@ public class RegistrationActivity extends AppCompatActivity {
      * @param lastName  Apellidos
      */
     private void registerUser(String email, String password, String firstName, String lastName) {
+        //Validar
+        awesomeValidation.validate();
+
         // Los datos del usuario para ser enviadas al servidor en formato JSON
         JSONObject params = new JSONObject();
 

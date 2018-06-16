@@ -3,6 +3,7 @@ package co.edu.unadvirtual.computacion.movil.iam;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -11,6 +12,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
+import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,6 +36,9 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText editTextLastName;
     private int user_id;
 
+    //defining AwesomeValidation object
+    private AwesomeValidation awesomeValidation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +49,13 @@ public class EditProfileActivity extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextFirstName = findViewById(R.id.editTextFirstName);
         editTextLastName = findViewById(R.id.editTextLastName);
+
+        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
+
+        awesomeValidation.addValidation(this, R.id.editTextEmail, Patterns.EMAIL_ADDRESS, R.string.validate_invalid_email);
+        awesomeValidation.addValidation(this, R.id.editTextEmail, RegexTemplate.NOT_EMPTY, R.string.validate_email_required);
+        awesomeValidation.addValidation(this, R.id.editTextFirstName, RegexTemplate.NOT_EMPTY, R.string.validate_firstname_required);
+        awesomeValidation.addValidation(this, R.id.editTextLastName, RegexTemplate.NOT_EMPTY, R.string.validate_lastname_required);
 
         Button buttonSend = findViewById(R.id.buttonSend);
         buttonSend.setOnClickListener(v -> editUser(
@@ -59,6 +73,8 @@ public class EditProfileActivity extends AppCompatActivity {
      * @param lastName  Apellidos
      */
     private void editUser(String email, String firstName, String lastName) {
+        //Validar
+        awesomeValidation.validate();
         // Los datos del usuario para ser enviadas al servidor en formato JSON
         JSONObject params = new JSONObject();
 

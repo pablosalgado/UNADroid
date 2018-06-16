@@ -32,4 +32,6 @@
     <string name="validate_password_repeat_required">Las contraseñas no coinciden</string>
     <string name="validate_email_required">Debe ingresar un correo</string>
     <string name="validate_invalid_email">Debe ingresar un correo valido</string>
+    <string name="validate_firstname_required">Debe agregar el nombre</string>
+    <string name="validate_lastname_required">Debe agregar los apellidos</string>
 </resources>
