@@ -47,11 +47,14 @@
         <activity
             android:name=".common.ListTopicsActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".common.StandarActivity" />
+        <activity android:name=".common.StandarActivity" android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ConnectionErrorActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".unadroid.EvaluationListActivity" android:parentActivityName=".MainActivity"></activity>
+        <activity
+            android:name=".unadroid.EvaluationListActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".ViewResourceActivity" android:parentActivityName=".common.StandarActivity"></activity>
     </application>
 
 </manifest>

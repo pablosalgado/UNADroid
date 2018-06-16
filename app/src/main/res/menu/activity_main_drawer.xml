@@ -32,7 +32,7 @@
             android:title="Videos" />
 
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_course_info"
             android:icon="@drawable/ic_nav_school"
             android:title="Sobre el curso" />
     </group>
