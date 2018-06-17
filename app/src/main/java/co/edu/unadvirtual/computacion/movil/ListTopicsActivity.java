@@ -1,19 +1,12 @@
-package co.edu.unadvirtual.computacion.movil.common;
+package co.edu.unadvirtual.computacion.movil;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.Toolbar;
-import android.util.TypedValue;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,12 +23,8 @@ import org.json.JSONArray;
 
 import java.util.List;
 
-import co.edu.unadvirtual.computacion.movil.AppSingleton;
-import co.edu.unadvirtual.computacion.movil.ConnectionErrorActivity;
-import co.edu.unadvirtual.computacion.movil.MainActivity;
-import co.edu.unadvirtual.computacion.movil.R;
+import co.edu.unadvirtual.computacion.movil.common.Utilities;
 import co.edu.unadvirtual.computacion.movil.domain.Topic;
-import co.edu.unadvirtual.computacion.movil.domain.Unit;
 
 
 public class ListTopicsActivity extends AppCompatActivity  {
@@ -52,11 +41,16 @@ public class ListTopicsActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_list_topics);
         Intent intent = getIntent();
         Bundle data = intent.getExtras();
-        unit_id = data.getInt("MAINACTIVITY_PARAMS_UNIT_ID");
+        unit_id = data.getInt("ACTIVITY_PARAMS_UNIT_ID");
         progressBar = findViewById(R.id.progressBarTopics);
         titleUnit = findViewById(R.id.titleUnit);
         titleUnit.setText("Unidad "+unit_id);
         callTopicsList();
+    }
+
+    public void callUnits(View view){
+        Intent intent = new Intent(ListTopicsActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 
 
@@ -119,7 +113,6 @@ public class ListTopicsActivity extends AppCompatActivity  {
             relativeLayoutParams = new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             imageParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             mainTextParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            subTextParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             relativeLayout = new RelativeLayout(this);
             cardParams.setMargins(25, 5, 25, 5);
 
@@ -131,9 +124,10 @@ public class ListTopicsActivity extends AppCompatActivity  {
             card.setRadius(7);
 
             card.setOnClickListener(view -> {
-                /*Intent intent = new Intent( ListTopicsActivity.class, ListResourceActivity.this);
-                intent.putExtra("MAINACTIVITY_PARAMS_TOPIC_ID",topic.getId());
-                startActivity(intent);*/
+                Intent intent = new Intent( ListTopicsActivity.this, ListResourcesActivity.class);
+                intent.putExtra("ACTIVITY_PARAMS_UNIT_ID",topic.getUnitId());
+                intent.putExtra("ACTIVITY_PARAMS_TOPIC_ID",topic.getId());
+                startActivity(intent);
             });
 
             relativeLayout.setLayoutParams(relativeLayoutParams);
@@ -143,7 +137,7 @@ public class ListTopicsActivity extends AppCompatActivity  {
             imageParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
             imageParams.addRule(RelativeLayout.ALIGN_PARENT_START, RelativeLayout.TRUE);
             imageParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
-            imageParams.setMargins(5, 5, getDpTopic(16), 0);
+            imageParams.setMargins(5, 5, 0, 0);
             imageView.setLayoutParams(imageParams);
             imageView.getLayoutParams().width = getDpTopic(62);
             imageView.getLayoutParams().height = getDpTopic(50);
@@ -156,7 +150,7 @@ public class ListTopicsActivity extends AppCompatActivity  {
             mainTextParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
             mainTextParams.addRule(RelativeLayout.END_OF, imageView.getId());
             mainTextParams.addRule(RelativeLayout.RIGHT_OF, imageView.getId());
-            mainTextParams.setMargins(10, 10, 0, 10);
+            mainTextParams.setMargins(5, 10, 0, 10);
             mainText.setLayoutParams(mainTextParams);
             mainText.setText(topic.getName());
             mainText.setTextSize(18);

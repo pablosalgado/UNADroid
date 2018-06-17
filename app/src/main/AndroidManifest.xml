@@ -44,17 +44,19 @@
         <activity
             android:name=".videos.VideosActivity"
             android:parentActivityName=".MainActivity" />
+        <activity android:name=".ListTopicsActivity"/>
         <activity
-            android:name=".common.ListTopicsActivity"
+            android:name=".common.StandarActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".common.StandarActivity" android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ConnectionErrorActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".unadroid.EvaluationListActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".ViewResourceActivity" android:parentActivityName=".common.StandarActivity"></activity>
+        <activity
+            android:name=".ViewResourceActivity"/>
+        <activity android:name=".ListResourcesActivity"></activity>
     </application>
 
 </manifest>

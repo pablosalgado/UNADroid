@@ -1,12 +1,9 @@
 package co.edu.unadvirtual.computacion.movil;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-
 import co.edu.unadvirtual.computacion.movil.common.Session;
 import co.edu.unadvirtual.computacion.movil.common.Utilities;
 import co.edu.unadvirtual.computacion.movil.iam.LoginActivity;

@@ -6,34 +6,36 @@ import android.os.Bundle;
 import android.view.View;
 import android.webkit.GeolocationPermissions;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
-
-import co.edu.unadvirtual.computacion.movil.common.StandarActivity;
 
 public class ViewResourceActivity extends AppCompatActivity {
 
     private int unit_id = 0;
     private int topic_id = 0;
+    private String resource_url = "https://www.unad.edu.co/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_resource);
 
-        unit_id = getIntent().getIntExtra("unit_id",0);
-        topic_id = getIntent().getIntExtra("topic_id",0);
+        unit_id = getIntent().getIntExtra("ACTIVITY_PARAMS_UNIT_ID",0);
+        topic_id = getIntent().getIntExtra("ACTIVITY_PARAMS_TOPIC_ID",0);
+        resource_url = getIntent().getStringExtra("ACTIVITY_PARAMS_URL");
 
-        Toast.makeText(getApplicationContext(), "Unit: "+unit_id+" Topic: "+topic_id, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), resource_url, Toast.LENGTH_LONG).show();
         WebView webView = findViewById(R.id.resource_webview);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setAppCacheEnabled(true);
         webView.getSettings().setDomStorageEnabled(true);
         webView.getSettings().setDatabaseEnabled(true);
         webView.getSettings().setGeolocationEnabled(true);
-        webView.loadUrl(getString(R.string.campus_url));
-
+        webView.loadUrl(resource_url);
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setPluginState(WebSettings.PluginState.ON);
         webView.setWebChromeClient(new WebChromeClient(){
             @Override
             public void onReceivedTitle(WebView view, String title) {
@@ -58,9 +60,9 @@ public class ViewResourceActivity extends AppCompatActivity {
 
 
     public void callStander(View view){
-        Intent intent = new Intent(ViewResourceActivity.this, StandarActivity.class);
-        intent.putExtra("unit_id",unit_id);
-        intent.putExtra("topic_id",topic_id);
+        Intent intent = new Intent(ViewResourceActivity.this, ListResourcesActivity.class);
+        intent.putExtra("ACTIVITY_PARAMS_UNIT_ID",unit_id);
+        intent.putExtra("ACTIVITY_PARAMS_TOPIC_ID",topic_id);
         startActivity(intent);
     }
 }

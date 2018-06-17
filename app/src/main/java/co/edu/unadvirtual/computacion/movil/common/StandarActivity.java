@@ -23,8 +23,8 @@ public class StandarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_standar);
 
-        unit_id = getIntent().getIntExtra("unit_id", 0);
-        topic_id = getIntent().getIntExtra("topic_id", 0);
+        unit_id = getIntent().getIntExtra("ACTIVITY_PARAMS_UNIT_ID", 0);
+        topic_id = getIntent().getIntExtra("ACTIVITY_PARAMS_TOPIC_ID", 0);
         Toast.makeText(getApplicationContext(), "Unit: " + unit_id + " Topic: " + topic_id, Toast.LENGTH_LONG).show();
     }
 
@@ -33,8 +33,8 @@ public class StandarActivity extends AppCompatActivity {
         unit_id = (r.nextInt(100 - 1) + 1);
         topic_id = (r.nextInt(100 - 1) + 1);
         Intent intent = new Intent(StandarActivity.this, ViewResourceActivity.class);
-        intent.putExtra("unit_id", unit_id);
-        intent.putExtra("topic_id", topic_id);
+        intent.putExtra("ACTIVITY_PARAMS_UNIT_ID", unit_id);
+        intent.putExtra("ACTIVITY_PARAMS_TOPIC_ID", topic_id);
         startActivity(intent);
     }
 }

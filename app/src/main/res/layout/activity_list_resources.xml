@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="co.edu.unadvirtual.computacion.movil.ListTopicsActivity">
+    tools:context="co.edu.unadvirtual.computacion.movil.ListResourcesActivity">
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:padding="0dp">
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/button6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/topics_container"
+            android:id="@+id/resources_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <ImageView
+                android:id="@+id/app_logo"
+                android:layout_width="331dp"
+                android:layout_height="64dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:contentDescription="@android:string/no"
+                android:src="@drawable/unad" />
+
             <TextView
-                android:id="@+id/titleUnit"
+                android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="12dp"
                 android:gravity="center_horizontal"
-                android:text="Unidad x"
-                android:textColor="@color/colorAccent"
+                android:text="@string/resource_list_title"
+                android:textColor="@color/colorPrimary"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/titleTopicsUnit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:gravity="center_vertical|center"
-                android:paddingLeft="10dp"
-                android:text="@string/topics_list_title"
-                android:textColor="@color/colorPrimary"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
             <ProgressBar
-                android:id="@+id/progressBarTopics"
+                android:id="@+id/progressBarRes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -51,19 +51,18 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="24dp"
                 android:visibility="visible" />
-
-
         </LinearLayout>
+
     </ScrollView>
 
     <Button
         android:id="@+id/button6"
-        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="368dp"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:onClick="callTopics"
         android:text="@string/resource_list_return"
-        android:onClick="callUnits"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

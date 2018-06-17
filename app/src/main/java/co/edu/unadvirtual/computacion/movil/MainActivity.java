@@ -27,7 +27,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import org.json.JSONArray;
 import java.util.List;
-import co.edu.unadvirtual.computacion.movil.common.ListTopicsActivity;
+
 import co.edu.unadvirtual.computacion.movil.common.StandarActivity;
 import co.edu.unadvirtual.computacion.movil.common.Utilities;
 import co.edu.unadvirtual.computacion.movil.common.Session;
@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        progressBar = findViewById(R.id.progressBarUnits);
+        callUnitList();
     }
 
     @Override
@@ -64,8 +66,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        progressBar = findViewById(R.id.progressBarUnits);
-        callUnitList();
     }
 
     private void signOut() {
@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity
             card.setRadius(7);
             card.setOnClickListener(view -> {
                 Intent intent = new Intent(MainActivity.this, ListTopicsActivity.class);
-                intent.putExtra("MAINACTIVITY_PARAMS_UNIT_ID",unit.getId());
+                intent.putExtra("ACTIVITY_PARAMS_UNIT_ID",unit.getId());
                 startActivity(intent);
             });
 
@@ -267,7 +267,7 @@ public class MainActivity extends AppCompatActivity
             subTextParams.setMargins(5,5,0, 48);
             subText.setLayoutParams(subTextParams);
             subText.setText(unit.getDescription());
-            subText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
+            subText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
             subText.setTextColor(getResources().getColor(R.color.colorAccent));
             relativeLayout.addView(subText, 2);
 
@@ -275,8 +275,6 @@ public class MainActivity extends AppCompatActivity
             // Finally, add the CardView in root layout
             units_container.addView(card);
         }
-
-        showPdf("http://www.pdf995.com/samples/pdf.pdf");
     }
 
     private void requestError(VolleyError volleyError) {
@@ -287,11 +285,5 @@ public class MainActivity extends AppCompatActivity
     private int getDpUnit(int dp) {
         final float scale = getResources().getDisplayMetrics().density;
         return ((int) (dp * scale + 0.5f));
-    }
-
-    private void showPdf(String pdf_url){
-        //Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(pdf_url));
-        //startActivity(browserIntent);
-
     }
 }
