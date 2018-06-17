@@ -122,6 +122,7 @@ public class ListResourcesActivity extends AppCompatActivity {
                 Intent intent = new Intent(ListResourcesActivity.this, ViewResourceActivity.class);
                 intent.putExtra("ACTIVITY_PARAMS_UNIT_ID", unit_id);
                 intent.putExtra("ACTIVITY_PARAMS_TOPIC_ID", topic_id);
+                intent.putExtra("ACTIVITY_PARAMS_RESOURCE_TYPE", res.getResourceTypeId());
                 intent.putExtra("ACTIVITY_PARAMS_URL", res.getUrl());
                 startActivity(intent);
             });
@@ -158,7 +159,7 @@ public class ListResourcesActivity extends AppCompatActivity {
             mainTextParams.setMargins(5, 25, 0, 0);
             mainText.setLayoutParams(mainTextParams);
             mainText.setText(res.getName());
-            mainText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+            mainText.setTextSize(20);
             mainText.setTextColor(getResources().getColor(R.color.colorPrimary));
             relativeLayout.addView(mainText, 1);
 

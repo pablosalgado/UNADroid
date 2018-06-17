@@ -15,6 +15,7 @@ public class ViewResourceActivity extends AppCompatActivity {
 
     private int unit_id = 0;
     private int topic_id = 0;
+    private int resource_type = 0;
     private String resource_url = "https://www.unad.edu.co/";
 
     @Override
@@ -25,7 +26,11 @@ public class ViewResourceActivity extends AppCompatActivity {
         unit_id = getIntent().getIntExtra("ACTIVITY_PARAMS_UNIT_ID",0);
         topic_id = getIntent().getIntExtra("ACTIVITY_PARAMS_TOPIC_ID",0);
         resource_url = getIntent().getStringExtra("ACTIVITY_PARAMS_URL");
+        resource_type = getIntent().getIntExtra("ACTIVITY_PARAMS_RESOURCE_TYPE",3);
 
+        if(resource_type ==1){
+            resource_url = "http://www.youtube.com/embed/" + resource_url + "?autoplay=1&vq=small";
+        }
         //Toast.makeText(getApplicationContext(), resource_url, Toast.LENGTH_LONG).show();
         WebView webView = findViewById(R.id.resource_webview);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -36,6 +41,7 @@ public class ViewResourceActivity extends AppCompatActivity {
         webView.loadUrl(resource_url);
         WebSettings webSettings = webView.getSettings();
         webSettings.setPluginState(WebSettings.PluginState.ON);
+        webSettings.setJavaScriptEnabled(true);
         webView.setWebChromeClient(new WebChromeClient(){
             @Override
             public void onReceivedTitle(WebView view, String title) {

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -137,7 +138,7 @@ public class ListTopicsActivity extends AppCompatActivity  {
             imageParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
             imageParams.addRule(RelativeLayout.ALIGN_PARENT_START, RelativeLayout.TRUE);
             imageParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
-            imageParams.setMargins(5, 5, 0, 0);
+            imageParams.setMargins(5, 20, 0, 20);
             imageView.setLayoutParams(imageParams);
             imageView.getLayoutParams().width = getDpTopic(62);
             imageView.getLayoutParams().height = getDpTopic(50);
@@ -147,11 +148,13 @@ public class ListTopicsActivity extends AppCompatActivity  {
 
             mainText = new TextView(this);
             mainText.setId(topic.getId() + 8000);
-            mainTextParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
+            mainTextParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
             mainTextParams.addRule(RelativeLayout.END_OF, imageView.getId());
             mainTextParams.addRule(RelativeLayout.RIGHT_OF, imageView.getId());
-            mainTextParams.setMargins(5, 10, 0, 10);
+            mainTextParams.addRule(RelativeLayout.CENTER_VERTICAL, imageView.getId());
+            mainTextParams.setMargins(5, 0, 0, 0);
             mainText.setLayoutParams(mainTextParams);
+            mainText.setGravity(Gravity.CENTER_VERTICAL);
             mainText.setText(topic.getName());
             mainText.setTextSize(18);
             mainText.setTextColor(getResources().getColor(R.color.colorPrimary));
