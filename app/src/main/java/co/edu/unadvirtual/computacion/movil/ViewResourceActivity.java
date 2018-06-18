@@ -29,7 +29,7 @@ public class ViewResourceActivity extends AppCompatActivity {
         resource_type = getIntent().getIntExtra("ACTIVITY_PARAMS_RESOURCE_TYPE",3);
 
         if(resource_type ==1){
-            resource_url = "http://www.youtube.com/embed/" + resource_url + "?autoplay=1&vq=small";
+            resource_url = "https://www.youtube.com/embed/" + resource_url + "?autoplay=1&vq=small";
         }
         //Toast.makeText(getApplicationContext(), resource_url, Toast.LENGTH_LONG).show();
         WebView webView = findViewById(R.id.resource_webview);
