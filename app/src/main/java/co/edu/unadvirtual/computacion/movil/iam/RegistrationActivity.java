@@ -3,14 +3,12 @@ package co.edu.unadvirtual.computacion.movil.iam;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
@@ -20,11 +18,11 @@ import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Map;
-
 import co.edu.unadvirtual.computacion.movil.AppSingleton;
 import co.edu.unadvirtual.computacion.movil.MainActivity;
 import co.edu.unadvirtual.computacion.movil.R;
+import co.edu.unadvirtual.computacion.movil.common.Session;
+import co.edu.unadvirtual.computacion.movil.domain.User;
 
 /**
  * Captura los datos básicos del usuario y los envia al servidor.
@@ -112,22 +110,24 @@ public class RegistrationActivity extends AppCompatActivity {
         try {
             boolean error = !response.isNull("error");
 
-            if (!error) {
-                Intent intent = new Intent(
-                        RegistrationActivity.this,
-                        MainActivity.class);
-                intent.putExtra("email", response.getString("email"));
-                startActivity(intent);
-                finish();
-
-            } else {
+            if (error) {
                 String errorMsg = response.getString("error_msg");
                 Toast.makeText(
                         getApplicationContext(),
                         errorMsg, Toast.LENGTH_LONG
                 ).show();
+
+                return;
             }
-        } catch (JSONException e){
+
+            User user = User.fromJSON(response);
+
+            Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
+            Session.putUserEmail(getApplicationContext(), user.getEmail());
+            startActivity(intent);
+            finish();
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -146,4 +146,5 @@ public class RegistrationActivity extends AppCompatActivity {
         ).show();
 
     }
+
 }

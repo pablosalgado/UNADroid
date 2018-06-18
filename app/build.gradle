@@ -23,6 +23,10 @@ android {
     buildToolsVersion '27.0.3'
 }
 
+repositories {
+    jcenter()
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
