@@ -3,6 +3,7 @@ package co.edu.unadvirtual.computacion.movil.iam;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,15 +14,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
-import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import co.edu.unadvirtual.computacion.movil.AppSingleton;
 import co.edu.unadvirtual.computacion.movil.MainActivity;
 import co.edu.unadvirtual.computacion.movil.R;
 import co.edu.unadvirtual.computacion.movil.common.Session;
+import co.edu.unadvirtual.computacion.movil.common.Utilities;
 import co.edu.unadvirtual.computacion.movil.domain.User;
 
 /**
@@ -34,8 +34,6 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText editTextPassword;
     private EditText editTextFirstName;
     private EditText editTextLastName;
-
-    //defining AwesomeValidation object
     private AwesomeValidation awesomeValidation;
 
     @Override
@@ -48,13 +46,12 @@ public class RegistrationActivity extends AppCompatActivity {
         editTextFirstName = findViewById(R.id.editTextFirstName);
         editTextLastName = findViewById(R.id.editTextLastName);
 
+        // Validaciones del formulaio de registro
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
-
         awesomeValidation.addValidation(this, R.id.editTextEmail, Patterns.EMAIL_ADDRESS, R.string.validate_invalid_email);
-        awesomeValidation.addValidation(this, R.id.editTextEmail, RegexTemplate.NOT_EMPTY, R.string.validate_email_required);
-        awesomeValidation.addValidation(this, R.id.editTextFirstName, RegexTemplate.NOT_EMPTY, R.string.validate_firstname_required);
-        awesomeValidation.addValidation(this, R.id.editTextLastName, RegexTemplate.NOT_EMPTY, R.string.validate_lastname_required);
-        awesomeValidation.addValidation(this, R.id.editTextPassword, RegexTemplate.NOT_EMPTY, R.string.validate_password_required);
+        awesomeValidation.addValidation(this, R.id.editTextFirstName, Utilities.namesRegex(), R.string.validate_firstname_required);
+        awesomeValidation.addValidation(this, R.id.editTextLastName, Utilities.namesRegex(), R.string.validate_lastname_required);
+        awesomeValidation.addValidation(this, R.id.editTextPassword, Utilities.passwordRegex(), R.string.validate_password_policy);
 
         Button buttonSend = findViewById(R.id.buttonSend);
         buttonSend.setOnClickListener(v -> registerUser(
@@ -75,30 +72,41 @@ public class RegistrationActivity extends AppCompatActivity {
      * @param lastName  Apellidos
      */
     private void registerUser(String email, String password, String firstName, String lastName) {
-        //Validar
-        awesomeValidation.validate();
-
-        // Los datos del usuario para ser enviadas al servidor en formato JSON
-        JSONObject params = new JSONObject();
+        if (!awesomeValidation.validate()) {
+            return;
+        }
 
         try {
+            // Los datos del usuario para ser enviadas al servidor en formato JSON
+            JSONObject params = new JSONObject();
             params.put("email", email);
             params.put("password", password);
             params.put("firstName", firstName);
             params.put("lastName", lastName);
-        } catch (JSONException e) {
-            e.printStackTrace();
+
+            JsonObjectRequest request = new JsonObjectRequest(
+                    Request.Method.POST,
+                    AppSingleton.UNADROID_SERVER_ENDPOINT + "/register",
+                    params,
+                    this::userRegistedSuccessfully,
+                    this::errorRegisteringUser
+            );
+
+            AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(request, TAG);
+        } catch (Exception e) {
+            Toast.makeText(
+                    getApplicationContext(),
+                    R.string.iam_registration_error,
+                    Toast.LENGTH_LONG
+            ).show();
+
+            Log.e(
+                    TAG,
+                    e.getMessage(),
+                    e
+            );
         }
 
-        JsonObjectRequest request = new JsonObjectRequest(
-                Request.Method.POST,
-                AppSingleton.UNADROID_SERVER_ENDPOINT + "/register",
-                params,
-                this::userRegistedSuccessfully,
-                this::errorRegisteringUser
-        );
-
-        AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(request, TAG);
     }
 
     /**
@@ -114,7 +122,8 @@ public class RegistrationActivity extends AppCompatActivity {
                 String errorMsg = response.getString("error_msg");
                 Toast.makeText(
                         getApplicationContext(),
-                        errorMsg, Toast.LENGTH_LONG
+                        errorMsg,
+                        Toast.LENGTH_LONG
                 ).show();
 
                 return;
@@ -126,9 +135,18 @@ public class RegistrationActivity extends AppCompatActivity {
             Session.putUserEmail(getApplicationContext(), user.getEmail());
             startActivity(intent);
             finish();
-
         } catch (Exception e) {
-            e.printStackTrace();
+            Toast.makeText(
+                    getApplicationContext(),
+                    R.string.iam_registration_error,
+                    Toast.LENGTH_LONG
+            ).show();
+
+            Log.e(
+                    TAG,
+                    e.getMessage(),
+                    e
+            );
         }
     }
 
@@ -140,11 +158,16 @@ public class RegistrationActivity extends AppCompatActivity {
      */
     private void errorRegisteringUser(VolleyError volleyError) {
         Toast.makeText(
-                RegistrationActivity.this.getApplicationContext(),
-                volleyError.getMessage(),
+                getApplicationContext(),
+                R.string.iam_registration_error,
                 Toast.LENGTH_LONG
         ).show();
 
+        Log.e(
+                TAG,
+                volleyError.getMessage(),
+                volleyError
+        );
     }
 
 }
