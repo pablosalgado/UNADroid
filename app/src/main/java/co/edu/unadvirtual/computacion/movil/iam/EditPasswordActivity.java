@@ -22,14 +22,13 @@ import co.edu.unadvirtual.computacion.movil.AppSingleton;
 import co.edu.unadvirtual.computacion.movil.MainActivity;
 import co.edu.unadvirtual.computacion.movil.R;
 import co.edu.unadvirtual.computacion.movil.common.Session;
+import co.edu.unadvirtual.computacion.movil.common.Utilities;
 
 public class EditPasswordActivity extends AppCompatActivity {
 
     private static final String TAG = "EditPasswordActivity";
     private EditText editTextPasswordAEP1;
     private EditText editTextPasswordAEP2;
-
-    //defining AwesomeValidation object
     private AwesomeValidation awesomeValidation;
 
     @Override
@@ -42,7 +41,7 @@ public class EditPasswordActivity extends AppCompatActivity {
 
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
 
-        awesomeValidation.addValidation(this, R.id.editTextPasswordAEP1, RegexTemplate.NOT_EMPTY, R.string.validate_password_required);
+        awesomeValidation.addValidation(this, R.id.editTextPasswordAEP1, Utilities.passwordRegex(), R.string.validate_password_policy);
         awesomeValidation.addValidation(this, R.id.editTextPasswordAEP2, R.id.editTextPasswordAEP1, R.string.validate_password_repeat_required);
 
         Button buttonSend = findViewById(R.id.buttonSendAEP);
@@ -50,9 +49,12 @@ public class EditPasswordActivity extends AppCompatActivity {
                 editTextPasswordAEP1.getText().toString()
         ));
     }
+
     private void editPassword(String password) {
-        //Validar
-        awesomeValidation.validate();
+        if (!awesomeValidation.validate()) {
+            return;
+        }
+
         String email = Session.getUserEmail(getApplicationContext());
         JSONObject params = new JSONObject();
         try {
@@ -115,7 +117,6 @@ public class EditPasswordActivity extends AppCompatActivity {
             ).show();
         }
     }
-
 
 
 }
