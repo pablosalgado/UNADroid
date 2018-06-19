@@ -179,7 +179,7 @@ public class LoginActivity extends AppCompatActivity {
         progressBar.setVisibility(View.INVISIBLE);
 
         Toast.makeText(
-                LoginActivity.this.getApplicationContext(),
+                getApplicationContext(),
                 volleyError.getMessage(),
                 Toast.LENGTH_LONG
         ).show();

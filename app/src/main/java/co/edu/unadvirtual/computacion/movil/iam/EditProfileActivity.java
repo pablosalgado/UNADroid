@@ -3,13 +3,15 @@ package co.edu.unadvirtual.computacion.movil.iam;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.Patterns;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
@@ -23,6 +25,7 @@ import co.edu.unadvirtual.computacion.movil.AppSingleton;
 import co.edu.unadvirtual.computacion.movil.MainActivity;
 import co.edu.unadvirtual.computacion.movil.R;
 import co.edu.unadvirtual.computacion.movil.common.Session;
+import co.edu.unadvirtual.computacion.movil.common.Utilities;
 import co.edu.unadvirtual.computacion.movil.domain.User;
 
 /**
@@ -35,6 +38,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText editTextFirstName;
     private EditText editTextLastName;
     private int user_id;
+    private ProgressBar progressBar;
 
     //defining AwesomeValidation object
     private AwesomeValidation awesomeValidation;
@@ -44,18 +48,15 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
-        getUser();
-
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextFirstName = findViewById(R.id.editTextFirstName);
         editTextLastName = findViewById(R.id.editTextLastName);
+        progressBar = findViewById(R.id.progressBar);
 
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
-
         awesomeValidation.addValidation(this, R.id.editTextEmail, Patterns.EMAIL_ADDRESS, R.string.validate_invalid_email);
-        awesomeValidation.addValidation(this, R.id.editTextEmail, RegexTemplate.NOT_EMPTY, R.string.validate_email_required);
-        awesomeValidation.addValidation(this, R.id.editTextFirstName, RegexTemplate.NOT_EMPTY, R.string.validate_firstname_required);
-        awesomeValidation.addValidation(this, R.id.editTextLastName, RegexTemplate.NOT_EMPTY, R.string.validate_lastname_required);
+        awesomeValidation.addValidation(this, R.id.editTextFirstName, Utilities.namesRegex(), R.string.validate_firstname_required);
+        awesomeValidation.addValidation(this, R.id.editTextLastName, Utilities.namesRegex(), R.string.validate_lastname_required);
 
         Button buttonSend = findViewById(R.id.buttonSend);
         buttonSend.setOnClickListener(v -> editUser(
@@ -65,54 +66,45 @@ public class EditProfileActivity extends AppCompatActivity {
         ));
     }
 
-    /**
-     * Método para hacer la edición del usuario
-     *
-     * @param email     Correo electrónico del usuario.
-     * @param firstName Nombres
-     * @param lastName  Apellidos
-     */
-    private void editUser(String email, String firstName, String lastName) {
-        //Validar
-        awesomeValidation.validate();
-        // Los datos del usuario para ser enviadas al servidor en formato JSON
-        JSONObject params = new JSONObject();
+    @Override
+    protected void onStart() {
+        super.onStart();
 
-        try {
-            params.put("email", email);
-            params.put("firstName", firstName);
-            params.put("lastName", lastName);
-            params.put("id", user_id);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        JsonObjectRequest request = new JsonObjectRequest(
-                Request.Method.PUT,
-                AppSingleton.UNADROID_SERVER_ENDPOINT + "/user",
-                params,
-                new EditProfileActivity.SuccessListener(),
-                new EditProfileActivity.ErrorListener()
-        );
-
-        AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(request, TAG);
+        getUser();
     }
 
-    public void getUser() {
-        JSONObject params = new JSONObject();
+    private void getUser() {
+        try {
+            progressBar.setVisibility(View.VISIBLE);
 
-        String email = Session.getUserEmail(getApplicationContext());
+            String email = Session.getUserEmail(getApplicationContext());
 
-        JsonObjectRequest request = new JsonObjectRequest(
-                Request.Method.GET,
-                AppSingleton.UNADROID_SERVER_ENDPOINT + "/user/" + email,
-                params,
-                this::successGetUser,
-                this::errorGetUser
-        );
+            JsonObjectRequest request = new JsonObjectRequest(
+                    Request.Method.GET,
+                    AppSingleton.UNADROID_SERVER_ENDPOINT + "/user/" + email,
+                    null,
+                    this::successGetUser,
+                    this::errorGetUser
+            );
 
-        // Se envia la petición a la cola
-        AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(request, TAG);
+            // Se envia la petición a la cola
+            AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(request, TAG);
+        } catch (Exception e) {
+            progressBar.setVisibility(View.INVISIBLE);
+
+            Toast.makeText(
+                    getApplicationContext(),
+                    R.string.iam_profile_error,
+                    Toast.LENGTH_LONG
+            ).show();
+
+            Log.e(
+                    TAG,
+                    e.getMessage(),
+                    e
+            );
+
+        }
     }
 
     private void successGetUser(JSONObject response) {
@@ -129,10 +121,15 @@ public class EditProfileActivity extends AppCompatActivity {
             editTextLastName.setText(user.getLastName());
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            progressBar.setVisibility(View.INVISIBLE);
+
         }
     }
 
     private void errorGetUser(VolleyError volleyError) {
+        progressBar.setVisibility(View.INVISIBLE);
+
         Toast.makeText(
                 this.getApplicationContext(),
                 volleyError.getMessage(),
@@ -141,46 +138,103 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     /**
-     * Procesa la respuesta del servidor.
+     * Método para hacer la edición del usuario
+     *
+     * @param email     Correo electrónico del usuario.
+     * @param firstName Nombres
+     * @param lastName  Apellidos
      */
-    private class SuccessListener implements Response.Listener<JSONObject> {
-        @Override
-        public void onResponse(JSONObject response) {
-            try {
-                boolean error = !response.isNull("error");
-
-                if (!error) {
-                    Intent intent = new Intent(
-                            EditProfileActivity.this,
-                            MainActivity.class);
-                    intent.putExtra("email", response.getString("email"));
-                    startActivity(intent);
-                    finish();
-
-                } else {
-                    String errorMsg = response.getString("error_msg");
-                    Toast.makeText(
-                            getApplicationContext(),
-                            errorMsg, Toast.LENGTH_LONG
-                    ).show();
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+    private void editUser(String email, String firstName, String lastName) {
+        if(!awesomeValidation.validate()) {
+            return;
         }
-    }
 
-    /**
-     * Si ocurre algún error, se despliega el mensaje del mismo.
-     */
-    private class ErrorListener implements Response.ErrorListener {
-        @Override
-        public void onErrorResponse(VolleyError error) {
+        try {
+            progressBar.setVisibility(View.VISIBLE);
+
+            // Los datos del usuario para ser enviadas al servidor en formato JSON
+            JSONObject params = new JSONObject();
+            params.put("email", email);
+            params.put("firstName", firstName);
+            params.put("lastName", lastName);
+            params.put("id", user_id);
+
+            JsonObjectRequest request = new JsonObjectRequest(
+                    Request.Method.PUT,
+                    AppSingleton.UNADROID_SERVER_ENDPOINT + "/user",
+                    params,
+                    this::updateSuccess,
+                    this::updateError
+            );
+
+            AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(request, TAG);
+        } catch (Exception e) {
+            progressBar.setVisibility(View.INVISIBLE);
+
             Toast.makeText(
-                    EditProfileActivity.this.getApplicationContext(),
-                    error.getMessage(),
+                    getApplicationContext(),
+                    R.string.iam_profile_error,
                     Toast.LENGTH_LONG
             ).show();
+
+            Log.e(
+                    TAG,
+                    e.getMessage(),
+                    e
+            );
         }
     }
+
+    private void updateSuccess(JSONObject jsonObject) {
+        try {
+            boolean error = !jsonObject.isNull("error");
+
+            if (!error) {
+                Intent intent = new Intent(
+                        EditProfileActivity.this,
+                        MainActivity.class);
+                intent.putExtra("email", jsonObject.getString("email"));
+                startActivity(intent);
+                finish();
+
+            } else {
+                String errorMsg = jsonObject.getString("error_msg");
+                Toast.makeText(
+                        getApplicationContext(),
+                        errorMsg, Toast.LENGTH_LONG
+                ).show();
+            }
+        } catch (JSONException e) {
+            Toast.makeText(
+                    getApplicationContext(),
+                    R.string.iam_profile_error,
+                    Toast.LENGTH_LONG
+            ).show();
+
+            Log.e(
+                    TAG,
+                    e.getMessage(),
+                    e
+            );
+        } finally {
+            progressBar.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private void updateError(VolleyError volleyError) {
+        progressBar.setVisibility(View.INVISIBLE);
+
+        Toast.makeText(
+                getApplicationContext(),
+                volleyError.getMessage(),
+                Toast.LENGTH_LONG
+        ).show();
+
+        Log.e(
+                TAG,
+                volleyError.getMessage(),
+                volleyError
+        );
+    }
+
 }
