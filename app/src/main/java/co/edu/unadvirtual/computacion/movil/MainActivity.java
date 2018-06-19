@@ -35,7 +35,6 @@ import co.edu.unadvirtual.computacion.movil.domain.Unit;
 import co.edu.unadvirtual.computacion.movil.iam.EditPasswordActivity;
 import co.edu.unadvirtual.computacion.movil.iam.EditProfileActivity;
 import co.edu.unadvirtual.computacion.movil.iam.LoginActivity;
-import co.edu.unadvirtual.computacion.movil.unadroid.EvaluationListActivity;
 import co.edu.unadvirtual.computacion.movil.videos.VideosActivity;
 
 public class MainActivity extends AppCompatActivity

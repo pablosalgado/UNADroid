@@ -1,4 +1,4 @@
-package co.edu.unadvirtual.computacion.movil.unadroid;
+package co.edu.unadvirtual.computacion.movil;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -23,10 +23,6 @@ import org.json.JSONArray;
 
 import java.util.List;
 
-import co.edu.unadvirtual.computacion.movil.AppSingleton;
-import co.edu.unadvirtual.computacion.movil.ConnectionErrorActivity;
-import co.edu.unadvirtual.computacion.movil.MainActivity;
-import co.edu.unadvirtual.computacion.movil.R;
 import co.edu.unadvirtual.computacion.movil.common.Utilities;
 import co.edu.unadvirtual.computacion.movil.domain.Evaluation;
 

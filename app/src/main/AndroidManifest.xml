@@ -53,7 +53,7 @@
             android:name=".ConnectionErrorActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".unadroid.EvaluationListActivity"
+            android:name=".EvaluationListActivity"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".ViewResourceActivity" />
         <activity android:name=".ListResourcesActivity" />
