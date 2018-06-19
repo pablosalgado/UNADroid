@@ -40,4 +40,7 @@
     <string name="validate_firstname_required">Debe ingresar su(s) nombre(s)</string>
     <string name="validate_lastname_required">Debe ingresar su(s) apellido(s)</string>
     <string name="validate_password_policy">Por favor digite su contraseña. Debe tener una letra minúscula, una letra mayúscula, un dígito y ser mayor o igual a 8 caracteres</string>
+    <string name="iam_button_recovery">Recuperar</string>
+    <string name="iam_recovery_error">Ha ocurrido un error que no permite recuperar el acceso. Intente de nuevo. Si el problema persiste, contacte a soporte</string>
+    <string name="iam_recover_message">Te hemos enviado un correo electrónico a la dirección registrada con las instrucciones para recuperar el acceso</string>
 </resources>

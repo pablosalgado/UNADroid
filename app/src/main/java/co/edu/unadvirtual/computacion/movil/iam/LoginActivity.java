@@ -37,8 +37,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText editTextPassword;
     private EditText editTextEmail;
     private ProgressBar progressBar;
-
-    //defining AwesomeValidation object
     private AwesomeValidation awesomeValidation;
 
     @Override
@@ -51,7 +49,6 @@ public class LoginActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
 
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
-
         awesomeValidation.addValidation(this, R.id.editTextEmail, Patterns.EMAIL_ADDRESS, R.string.validate_invalid_email);
         awesomeValidation.addValidation(this, R.id.editTextPassword, Utilities.passwordRegex(), R.string.validate_password_policy);
 
@@ -60,6 +57,9 @@ public class LoginActivity extends AppCompatActivity {
 
         Button buttonRegister = findViewById(R.id.buttonRegister);
         buttonRegister.setOnClickListener(this::registerClicked);
+
+        Button buttonRecovery = findViewById(R.id.buttonRecovery);
+        buttonRecovery.setOnClickListener(this::recoveryClicked);
     }
 
     private void loginClicked(View view) {
@@ -180,7 +180,7 @@ public class LoginActivity extends AppCompatActivity {
 
         Toast.makeText(
                 getApplicationContext(),
-                volleyError.getMessage(),
+                R.string.iam_login_error,
                 Toast.LENGTH_LONG
         ).show();
 
@@ -190,5 +190,12 @@ public class LoginActivity extends AppCompatActivity {
                 volleyError
         );
     }
+
+    private void recoveryClicked(View view) {
+        Intent intent = new Intent(this, PasswordRecoveryActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 
 }
