@@ -31,6 +31,7 @@
     <string name="iam_title_edit_profile">Editar Perfil</string>
     <string name="iam_title_edit_password">Cambiar contraseña</string>
     <string name="iam_registration_error">Ha ocurrido un error que no permite el registro. Intente de nuevo. Si el problema persiste, contacte a soporte</string>
+    <string name="iam_login_error">Ha ocurrido un error que no permite el ingreso. Intente de nuevo. Si el problema persiste, contacte a soporte</string>
     <string name="validate_password_required">Debe ingresar una contraseña</string>
     <string name="validate_password_repeat_required">Las contraseñas no coinciden</string>
     <string name="validate_email_required">Debe ingresar un correo</string>

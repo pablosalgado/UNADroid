@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -35,6 +37,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText editTextFirstName;
     private EditText editTextLastName;
     private AwesomeValidation awesomeValidation;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,7 @@ public class RegistrationActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextFirstName = findViewById(R.id.editTextFirstName);
         editTextLastName = findViewById(R.id.editTextLastName);
+        progressBar = findViewById(R.id.progressBar);
 
         // Validaciones del formulaio de registro
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
@@ -54,13 +58,16 @@ public class RegistrationActivity extends AppCompatActivity {
         awesomeValidation.addValidation(this, R.id.editTextPassword, Utilities.passwordRegex(), R.string.validate_password_policy);
 
         Button buttonSend = findViewById(R.id.buttonSend);
-        buttonSend.setOnClickListener(v -> registerUser(
+        buttonSend.setOnClickListener(this::sendClicked);
+    }
+
+    private void sendClicked(View view) {
+        registerUser(
                 editTextEmail.getText().toString(),
                 editTextPassword.getText().toString(),
                 editTextFirstName.getText().toString(),
                 editTextLastName.getText().toString()
-        ));
-
+        );
     }
 
     /**
@@ -77,6 +84,8 @@ public class RegistrationActivity extends AppCompatActivity {
         }
 
         try {
+            progressBar.setVisibility(View.VISIBLE);
+
             // Los datos del usuario para ser enviadas al servidor en formato JSON
             JSONObject params = new JSONObject();
             params.put("email", email);
@@ -88,12 +97,14 @@ public class RegistrationActivity extends AppCompatActivity {
                     Request.Method.POST,
                     AppSingleton.UNADROID_SERVER_ENDPOINT + "/register",
                     params,
-                    this::userRegistedSuccessfully,
-                    this::errorRegisteringUser
+                    this::registrationSuccess,
+                    this::registrationError
             );
 
             AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(request, TAG);
         } catch (Exception e) {
+            progressBar.setVisibility(View.INVISIBLE);
+
             Toast.makeText(
                     getApplicationContext(),
                     R.string.iam_registration_error,
@@ -114,7 +125,7 @@ public class RegistrationActivity extends AppCompatActivity {
      *
      * @param response Contiene el usuario recién creado.
      */
-    private void userRegistedSuccessfully(JSONObject response) {
+    private void registrationSuccess(JSONObject response) {
         try {
             boolean error = !response.isNull("error");
 
@@ -147,6 +158,8 @@ public class RegistrationActivity extends AppCompatActivity {
                     e.getMessage(),
                     e
             );
+        } finally {
+            progressBar.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -156,7 +169,9 @@ public class RegistrationActivity extends AppCompatActivity {
      *
      * @param volleyError El error que se ha generado.
      */
-    private void errorRegisteringUser(VolleyError volleyError) {
+    private void registrationError(VolleyError volleyError) {
+        progressBar.setVisibility(View.INVISIBLE);
+
         Toast.makeText(
                 getApplicationContext(),
                 R.string.iam_registration_error,

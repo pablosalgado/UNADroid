@@ -3,6 +3,7 @@ package co.edu.unadvirtual.computacion.movil.iam;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +25,7 @@ import co.edu.unadvirtual.computacion.movil.AppSingleton;
 import co.edu.unadvirtual.computacion.movil.MainActivity;
 import co.edu.unadvirtual.computacion.movil.R;
 import co.edu.unadvirtual.computacion.movil.common.Session;
+import co.edu.unadvirtual.computacion.movil.common.Utilities;
 import co.edu.unadvirtual.computacion.movil.domain.User;
 
 /**
@@ -51,8 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
 
         awesomeValidation.addValidation(this, R.id.editTextEmail, Patterns.EMAIL_ADDRESS, R.string.validate_invalid_email);
-        awesomeValidation.addValidation(this, R.id.editTextEmail, RegexTemplate.NOT_EMPTY, R.string.validate_email_required);
-        awesomeValidation.addValidation(this, R.id.editTextPassword, RegexTemplate.NOT_EMPTY, R.string.validate_password_required);
+        awesomeValidation.addValidation(this, R.id.editTextPassword, Utilities.passwordRegex(), R.string.validate_password_policy);
 
         Button buttonLogin = findViewById(R.id.buttonLogin);
         buttonLogin.setOnClickListener(this::loginClicked);
@@ -62,9 +63,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginClicked(View view) {
-        //Validar
-        awesomeValidation.validate();
-        progressBar.setVisibility(View.VISIBLE);
+        if (!awesomeValidation.validate()) {
+            return;
+        }
+
         loginUser(
                 editTextEmail.getText().toString(),
                 editTextPassword.getText().toString()
@@ -80,32 +82,46 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Método para llevar a cabo la autenticación del usuario.
      *
-     * @param email El nombre de usuario.
+     * @param email    El nombre de usuario.
      * @param password La contraseña del usuario.
      */
     private void loginUser(final String email, final String password) {
-        // Las credenciales del usuario para ser enviadas al servidor en formato JSON
-        JSONObject params = new JSONObject();
-
         try {
+            progressBar.setVisibility(View.VISIBLE);
+
+            // Las credenciales del usuario para ser enviadas al servidor en formato JSON
+            JSONObject params = new JSONObject();
             params.put("email", email);
             params.put("password", password);
-        } catch (JSONException e) {
-            e.printStackTrace();
+
+            // Se hace una petición POST al servidor con las credenciales de acceso del usuario.
+            JsonObjectRequest request = new JsonObjectRequest(
+                    Request.Method.POST,
+                    AppSingleton.UNADROID_SERVER_ENDPOINT + "/login",
+                    params,
+                    this::loginSuccessful,
+                    this::loginError
+            );
+
+            // Enviar la petición a la cola. Los resultados enviados por el servidor serán procesados
+            // por los Listener asociados en el momento que la respuesta arrive al dispositivo.
+            AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(request, TAG);
+        } catch (Exception e) {
+            progressBar.setVisibility(View.INVISIBLE);
+
+            Toast.makeText(
+                    getApplicationContext(),
+                    R.string.iam_login_error,
+                    Toast.LENGTH_LONG
+            ).show();
+
+            Log.e(
+                    TAG,
+                    e.getMessage(),
+                    e
+            );
         }
 
-        // Se hace una petición POST al servidor con las credenciales de acceso del usuario.
-        JsonObjectRequest request = new JsonObjectRequest(
-                Request.Method.POST,
-                AppSingleton.UNADROID_SERVER_ENDPOINT + "/login",
-                params,
-                this::loginSuccessful,
-                this::loginError
-        );
-
-        // Enviar la petición a la cola. Los resultados enviados por el servidor serán procesados
-        // por los Listener asociados en el momento que la respuesta arrive al dispositivo.
-        AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(request, TAG);
     }
 
     /**
@@ -116,6 +132,19 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void loginSuccessful(JSONObject response) {
         try {
+            boolean error = !response.isNull("error");
+
+            if (error) {
+                String errorMsg = response.getString("error_msg");
+                Toast.makeText(
+                        getApplicationContext(),
+                        errorMsg,
+                        Toast.LENGTH_LONG
+                ).show();
+
+                return;
+            }
+
             User user = User.fromJSON(response);
 
             Session.putUserEmail(getApplicationContext(), user.getEmail());
@@ -123,12 +152,18 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
-
         } catch (Exception e) {
             Toast.makeText(
                     getApplicationContext(),
-                    e.getMessage(), Toast.LENGTH_LONG
+                    R.string.iam_login_error,
+                    Toast.LENGTH_LONG
             ).show();
+
+            Log.e(
+                    TAG,
+                    e.getMessage(),
+                    e
+            );
         } finally {
             progressBar.setVisibility(View.INVISIBLE);
 
@@ -142,11 +177,18 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void loginError(VolleyError volleyError) {
         progressBar.setVisibility(View.INVISIBLE);
+
         Toast.makeText(
                 LoginActivity.this.getApplicationContext(),
                 volleyError.getMessage(),
                 Toast.LENGTH_LONG
         ).show();
+
+        Log.e(
+                TAG,
+                volleyError.getMessage(),
+                volleyError
+        );
     }
 
 }
