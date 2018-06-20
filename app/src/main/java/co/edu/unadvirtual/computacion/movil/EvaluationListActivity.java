@@ -23,6 +23,7 @@ import org.json.JSONArray;
 
 import java.util.List;
 
+import co.edu.unadvirtual.computacion.movil.common.StandarActivity;
 import co.edu.unadvirtual.computacion.movil.common.Utilities;
 import co.edu.unadvirtual.computacion.movil.domain.Evaluation;
 
@@ -78,7 +79,7 @@ public class EvaluationListActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "No hay Unidades disponibles", Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Toast.makeText(getApplicationContext(), "Sin acceso al servidor de datos.", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -89,88 +90,92 @@ public class EvaluationListActivity extends AppCompatActivity {
      */
     private void requestError(VolleyError volleyError) {
         progressBar.setVisibility(View.GONE);
-        Toast.makeText(this.getApplicationContext(), volleyError.getMessage(), Toast.LENGTH_LONG).show();
+        Toast.makeText(this.getApplicationContext(), "No es posible cargar las unidades.", Toast.LENGTH_LONG).show();
     }
 
     private void drawUnits(List<Evaluation> evals) {
         /*se agrgan las unidades de la base de datos*/
-        LinearLayout units_container = findViewById(R.id.evals_container);
-        LinearLayout.LayoutParams cardParams;
-        FrameLayout.LayoutParams relativeLayoutParams;
-        RelativeLayout.LayoutParams imageParams;
-        RelativeLayout.LayoutParams mainTextParams;
-        RelativeLayout.LayoutParams subTextParams;
-        CardView card;
-        TextView mainText;
-        TextView subText;
-        RelativeLayout relativeLayout;
-        ImageView imageView;
-        int iconId = 0;
+        if(evals.size() > 0) {
+            LinearLayout units_container = findViewById(R.id.evals_container);
+            LinearLayout.LayoutParams cardParams;
+            FrameLayout.LayoutParams relativeLayoutParams;
+            RelativeLayout.LayoutParams imageParams;
+            RelativeLayout.LayoutParams mainTextParams;
+            RelativeLayout.LayoutParams subTextParams;
+            CardView card;
+            TextView mainText;
+            TextView subText;
+            RelativeLayout relativeLayout;
+            ImageView imageView;
+            int iconId = 0;
 
-        for (Evaluation eval : evals) {
-            cardParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            relativeLayoutParams = new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            imageParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            mainTextParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            subTextParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            relativeLayout = new RelativeLayout(this);
-            cardParams.setMargins(25, 25, 25, 25);
+            for (Evaluation eval : evals) {
+                cardParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                relativeLayoutParams = new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                imageParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                mainTextParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                subTextParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                relativeLayout = new RelativeLayout(this);
+                cardParams.setMargins(25, 25, 25, 25);
 
-            card = new CardView(getApplicationContext());
-            card.setLayoutParams(cardParams);
-            card.setPadding(10, 10, 10, 10);
-            card.setId(eval.getId() + 6000);
-            card.setCardBackgroundColor(Color.WHITE);
-            card.setRadius(7);
-            card.setOnClickListener(view -> {
-                Intent intent = new Intent(EvaluationListActivity.this, MainActivity.class);
-                intent.putExtra("EVALUATIONSLISTACTIVITY_PARAMS_QUIZ_ID", eval.getId());
-                startActivity(intent);
-            });
+                card = new CardView(getApplicationContext());
+                card.setLayoutParams(cardParams);
+                card.setPadding(10, 10, 10, 10);
+                card.setId(eval.getId() + 6000);
+                card.setCardBackgroundColor(Color.WHITE);
+                card.setRadius(7);
+                card.setOnClickListener(view -> {
+                    Intent intent = new Intent(EvaluationListActivity.this, StartEvaluationActivity.class);
+                    intent.putExtra("ACTIVITY_PARAMS_QUIZ_ID", eval.getId());
+                    startActivity(intent);
+                });
 
-            relativeLayout.setLayoutParams(relativeLayoutParams);
-            //relativeLayout.setPadding(getDpUnit(16), getDpUnit(16), getDpUnit(16), getDpUnit(16));
-            imageView = new ImageView(this);
-            imageView.setId(eval.getId() + 7000);
-            iconId = getResources().getIdentifier("quiz_icon", "drawable", getPackageName());
+                relativeLayout.setLayoutParams(relativeLayoutParams);
+                //relativeLayout.setPadding(getDpUnit(16), getDpUnit(16), getDpUnit(16), getDpUnit(16));
+                imageView = new ImageView(this);
+                imageView.setId(eval.getId() + 7000);
+                iconId = getResources().getIdentifier("quiz_icon", "drawable", getPackageName());
 
-            imageView.setImageResource(iconId);
-            imageParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
-            imageParams.addRule(RelativeLayout.ALIGN_PARENT_START, RelativeLayout.TRUE);
-            imageParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
-            imageParams.setMargins(getDpUnit(16), getDpUnit(16), getDpUnit(16), 0);
-            imageView.setLayoutParams(imageParams);
-            imageView.getLayoutParams().width = getDpUnit(50);
-            imageView.getLayoutParams().height = getDpUnit(50);
-            relativeLayout.addView(imageView, 0);
+                imageView.setImageResource(iconId);
+                imageParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
+                imageParams.addRule(RelativeLayout.ALIGN_PARENT_START, RelativeLayout.TRUE);
+                imageParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
+                imageParams.setMargins(getDpUnit(16), getDpUnit(16), getDpUnit(16), 0);
+                imageView.setLayoutParams(imageParams);
+                imageView.getLayoutParams().width = getDpUnit(50);
+                imageView.getLayoutParams().height = getDpUnit(50);
+                relativeLayout.addView(imageView, 0);
 
-            mainText = new TextView(this);
-            mainText.setId(eval.getId() + 8000);
-            mainTextParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
-            mainTextParams.addRule(RelativeLayout.END_OF, imageView.getId());
-            mainTextParams.addRule(RelativeLayout.RIGHT_OF, imageView.getId());
-            mainTextParams.setMargins(5, 25, 0, 0);
-            mainText.setLayoutParams(mainTextParams);
-            mainText.setText(eval.getName());
-            mainText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
-            mainText.setTextColor(getResources().getColor(R.color.colorPrimary));
-            relativeLayout.addView(mainText, 1);
+                mainText = new TextView(this);
+                mainText.setId(eval.getId() + 8000);
+                mainTextParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
+                mainTextParams.addRule(RelativeLayout.END_OF, imageView.getId());
+                mainTextParams.addRule(RelativeLayout.RIGHT_OF, imageView.getId());
+                mainTextParams.setMargins(5, 25, 0, 0);
+                mainText.setLayoutParams(mainTextParams);
+                mainText.setText(eval.getName());
+                mainText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+                mainText.setTextColor(getResources().getColor(R.color.colorPrimary));
+                relativeLayout.addView(mainText, 1);
 
-            subText = new TextView(this);
-            subText.setId(eval.getId() + 9000);
-            subTextParams.addRule(RelativeLayout.BELOW, mainText.getId());
-            subTextParams.addRule(RelativeLayout.END_OF, imageView.getId());
-            subTextParams.addRule(RelativeLayout.RIGHT_OF, imageView.getId());
-            subTextParams.setMargins(5, 5, 0, 48);
-            subText.setLayoutParams(subTextParams);
-            subText.setText(eval.getDescription());
-            subText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
-            subText.setTextColor(getResources().getColor(R.color.colorAccent));
-            relativeLayout.addView(subText, 2);
+                subText = new TextView(this);
+                subText.setId(eval.getId() + 9000);
+                subTextParams.addRule(RelativeLayout.BELOW, mainText.getId());
+                subTextParams.addRule(RelativeLayout.END_OF, imageView.getId());
+                subTextParams.addRule(RelativeLayout.RIGHT_OF, imageView.getId());
+                subTextParams.setMargins(5, 5, 0, 48);
+                subText.setLayoutParams(subTextParams);
+                subText.setText(eval.getDescription());
+                subText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
+                subText.setTextColor(getResources().getColor(R.color.colorAccent));
+                relativeLayout.addView(subText, 2);
 
-            card.addView(relativeLayout);
-            // Finally, add the CardView in root layout
-            units_container.addView(card);
+                card.addView(relativeLayout);
+                // Finally, add the CardView in root layout
+                units_container.addView(card);
+            }
+        }else{
+            Toast.makeText(getApplicationContext(), "No hay Unidades disponibles", Toast.LENGTH_LONG).show();
         }
     }
 

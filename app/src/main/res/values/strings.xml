@@ -8,8 +8,8 @@
     <string name="title_activity_main2">UNADroid</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">UNADroid</string>
-    <string name="nav_header_subtitle">Computación Móvil</string>
+    <string name="nav_header_title">UNADROID</string>
+    <string name="nav_header_subtitle">Curso: Computación Móvil</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="campus_url">https://www.unad.edu.co/</string>
@@ -26,6 +26,7 @@
     <string name="topics_list_title">Temáticas de la Unidad</string>
     <string name="resource_list_title">Lista de recursos</string>
     <string name="quiz_list_title">Lista de Evaluaciones</string>
+    <string name="evaluation_description">Esta evaluación permite poner a prueba los conocimientos adquiridos en las unidades... </string>
     <string name="resource_list_return">Regresar</string>
     <string name="iam_password_repeat">Repetir contraseña</string>
     <string name="iam_title_edit_profile">Editar Perfil</string>
