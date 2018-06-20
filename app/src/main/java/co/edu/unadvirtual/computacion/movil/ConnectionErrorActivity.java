@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -59,7 +60,9 @@ public class ConnectionErrorActivity extends AppCompatActivity {
 
                         } else {
                             progressBar.setVisibility(View.INVISIBLE);
-                            Toast.makeText(ConnectionErrorActivity.this.getApplicationContext(), "Sin acceso a internet!", Toast.LENGTH_LONG).show();
+                            Toast toast =  Toast.makeText(ConnectionErrorActivity.this.getApplicationContext(), "Sin acceso a internet!", Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
                         }
                     }
                 },

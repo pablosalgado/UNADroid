@@ -9,11 +9,11 @@
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:hardwareAccelerated="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
@@ -45,7 +45,7 @@
         <activity
             android:name=".videos.VideosActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".ListTopicsActivity"/>
+        <activity android:name=".ListTopicsActivity" />
         <activity
             android:name=".common.StandarActivity"
             android:parentActivityName=".MainActivity" />
@@ -55,9 +55,9 @@
         <activity
             android:name=".EvaluationListActivity"
             android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".ViewResourceActivity"/>
-        <activity android:name=".ListResourcesActivity"></activity>
+        <activity android:name=".ViewResourceActivity" />
+        <activity android:name=".ListResourcesActivity" />
+        <activity android:name=".StartEvaluationActivity" android:parentActivityName=".EvaluationListActivity"></activity>
     </application>
 
 </manifest>
