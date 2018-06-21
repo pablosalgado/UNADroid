@@ -141,6 +141,9 @@ public class MainActivity extends AppCompatActivity
         }else if (id == R.id.nav_password) {
             Intent intent = new Intent(this, EditPasswordActivity.class);
             startActivity(intent);
+        }else if (id == R.id.nav_about) {
+            Intent intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

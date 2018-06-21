@@ -14,8 +14,8 @@ public class AppSingleton {
      * Endpoint para las peticiones REST al servidor de UNADroid
      */
 //    public final static String UNADROID_SERVER_ENDPOINT = "https://unadroid.tk/api"; /*PRODUCCION*/
-//    public final static String UNADROID_SERVER_ENDPOINT = "http://unadroid.tk:3002/api"; /*JUAN*/
-      public final static String UNADROID_SERVER_ENDPOINT = "http://unadroid.tk:3003/api"; /*YERSSON*/
+    public final static String UNADROID_SERVER_ENDPOINT = "http://unadroid.tk:3002/api"; /*JUAN*/
+  //    public final static String UNADROID_SERVER_ENDPOINT = "http://unadroid.tk:3003/api"; /*YERSSON*/
 //    public final static String UNADROID_SERVER_ENDPOINT = "http://192.168.0.3:3000/api"; // PABLO
 
     private static AppSingleton instance;

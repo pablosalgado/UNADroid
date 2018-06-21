@@ -44,4 +44,7 @@
     <string name="iam_button_recovery">Recuperar</string>
     <string name="iam_recovery_error">Ha ocurrido un error que no permite recuperar el acceso. Intente de nuevo. Si el problema persiste, contacte a soporte</string>
     <string name="iam_recover_message">Te hemos enviado un correo electrónico a la dirección registrada con las instrucciones para recuperar el acceso</string>
+    <string name="about_activity_title">Acerca de </string>
+    <string name="txt_about_objetive">UnaDroid se diseñó y desarrollo con el objetivo de apoyar el aprendizaje en el desarrollo de aplicaciones móviles para Android, a través de la formación que brinda el Diplomado de Profundización en Computación Móvil de la Universidad Nacional Abierta y a Distancia UNAD</string>
+    <string name="about_participants_title">Participantes</string>
 </resources>

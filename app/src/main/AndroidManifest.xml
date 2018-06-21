@@ -61,6 +61,9 @@
         <activity
             android:name=".iam.PasswordRecoveryActivity"
             android:parentActivityName=".iam.LoginActivity" />
+        <activity
+            android:name=".AboutActivity"
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>
