@@ -55,6 +55,8 @@ public class ConnectionErrorActivity extends AppCompatActivity {
 
                             /*Se lanza la intent a la activity suministrada  o  a la activity por defecto ( LoginActivity.class)*/
                             intent = new Intent(ConnectionErrorActivity.this, activityClass);
+                            Bundle extras = getIntent().getExtras();
+
                             ConnectionErrorActivity.this.startActivity(intent);
                             ConnectionErrorActivity.this.finish();
 

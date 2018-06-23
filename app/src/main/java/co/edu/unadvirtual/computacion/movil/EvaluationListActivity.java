@@ -2,6 +2,7 @@ package co.edu.unadvirtual.computacion.movil;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -127,6 +128,7 @@ public class EvaluationListActivity extends AppCompatActivity {
                 card.setOnClickListener(view -> {
                     Intent intent = new Intent(EvaluationListActivity.this, StartEvaluationActivity.class);
                     intent.putExtra("ACTIVITY_PARAMS_QUIZ_ID", eval.getId());
+                    intent.putExtra("ACTIVITY_PARAMS_QUIZ_NAME", eval.getName());
                     startActivity(intent);
                 });
 
@@ -154,7 +156,7 @@ public class EvaluationListActivity extends AppCompatActivity {
                 mainTextParams.setMargins(5, 25, 0, 0);
                 mainText.setLayoutParams(mainTextParams);
                 mainText.setText(eval.getName());
-                mainText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+                mainText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 24);
                 mainText.setTextColor(getResources().getColor(R.color.colorPrimary));
                 relativeLayout.addView(mainText, 1);
 
@@ -166,6 +168,7 @@ public class EvaluationListActivity extends AppCompatActivity {
                 subTextParams.setMargins(5, 5, 0, 48);
                 subText.setLayoutParams(subTextParams);
                 subText.setText(eval.getDescription());
+                subText.setTypeface(subText.getTypeface(), Typeface.BOLD);
                 subText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
                 subText.setTextColor(getResources().getColor(R.color.colorAccent));
                 relativeLayout.addView(subText, 2);

@@ -2,6 +2,7 @@ package co.edu.unadvirtual.computacion.movil;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v7.widget.CardView;
@@ -268,7 +269,9 @@ public class MainActivity extends AppCompatActivity
             subText.setText(unit.getDescription());
             subText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
             subText.setTextColor(getResources().getColor(R.color.colorAccent));
+            subText.setTypeface(subText.getTypeface(), Typeface.BOLD);
             relativeLayout.addView(subText, 2);
+
 
             card.addView(relativeLayout);
             // Finally, add the CardView in root layout

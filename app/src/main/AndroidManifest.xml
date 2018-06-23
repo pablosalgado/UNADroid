@@ -57,10 +57,13 @@
             android:parentActivityName=".MainActivity" />
         <activity android:name=".ViewResourceActivity" />
         <activity android:name=".ListResourcesActivity" />
-        <activity android:name=".StartEvaluationActivity" android:parentActivityName=".EvaluationListActivity"></activity>
+        <activity
+            android:name=".StartEvaluationActivity"
+            android:parentActivityName=".EvaluationListActivity" />
         <activity
             android:name=".iam.PasswordRecoveryActivity"
             android:parentActivityName=".iam.LoginActivity" />
+        <activity android:name=".EvaluationActivity" android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

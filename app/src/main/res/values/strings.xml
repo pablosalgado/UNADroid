@@ -5,6 +5,7 @@
     <string name="loader_footer_text">DIPLOMADO PROFUNDIZACIÓN EN COMPUTACIÓN MÓVIL</string>
     <string name="edit_message">Enter a message</string>
     <string name="button_send">Send</string>
+    <string name="string_void">Void</string>
     <string name="title_activity_main2">UNADroid</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -26,7 +27,10 @@
     <string name="topics_list_title">Temáticas de la Unidad</string>
     <string name="resource_list_title">Lista de recursos</string>
     <string name="quiz_list_title">Lista de Evaluaciones</string>
-    <string name="evaluation_description">Esta evaluación permite poner a prueba los conocimientos adquiridos en las unidades... </string>
+    <string name="evaluation_description">Esta evaluación permite poner a prueba los conocimientos adquiridos en la unidad seleccionada. Te recomendamos leer la documentación antes de continuar.\n\nSe presentan 12 preguntas y tienes tres intentos para completarlas de manera correcta. </string>
+    <string name="start_evaluation">Iniciar evaluación!</string>
+    <string name="evaluation_next_quest">Siguiente</string>
+    <string name="evaluation_finish">Finalizar</string>
     <string name="resource_list_return">Regresar</string>
     <string name="iam_password_repeat">Repetir contraseña</string>
     <string name="iam_title_edit_profile">Editar Perfil</string>
@@ -44,4 +48,6 @@
     <string name="iam_button_recovery">Recuperar</string>
     <string name="iam_recovery_error">Ha ocurrido un error que no permite recuperar el acceso. Intente de nuevo. Si el problema persiste, contacte a soporte</string>
     <string name="iam_recover_message">Te hemos enviado un correo electrónico a la dirección registrada con las instrucciones para recuperar el acceso</string>
+    <string name="title_activity_evaluation">EvaluationActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>
