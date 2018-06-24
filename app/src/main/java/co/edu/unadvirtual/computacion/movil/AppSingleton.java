@@ -1,6 +1,7 @@
 package co.edu.unadvirtual.computacion.movil;
 
 import android.content.Context;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -13,14 +14,14 @@ public class AppSingleton {
     /**
      * Endpoint para las peticiones REST al servidor de UNADroid
      */
-    public final static String UNADROID_SERVER_ENDPOINT = "https://unadroid.tk/api"; /*PRODUCCION*/
+//    public final static String UNADROID_SERVER_ENDPOINT = "https://unadroid.tk/api"; /*PRODUCCION*/
 //    public final static String UNADROID_SERVER_ENDPOINT = "http://unadroid.tk:3002/api"; /*JUAN*/
-//      public final static String UNADROID_SERVER_ENDPOINT = "http://unadroid.tk:3003/api"; /*YERSSON*/
-//    public final static String UNADROID_SERVER_ENDPOINT = "http://192.168.0.3:3000/api"; // PABLO
+//    public final static String UNADROID_SERVER_ENDPOINT = "http://unadroid.tk:3003/api"; /*YERSSON*/
+    public final static String UNADROID_SERVER_ENDPOINT = "http://192.168.0.3:3000/api"; // PABLO
 
     private static AppSingleton instance;
-    private RequestQueue requestQueue;
     private static Context context;
+    private RequestQueue requestQueue;
 
     private AppSingleton(Context context) {
         AppSingleton.context = context;
@@ -43,7 +44,7 @@ public class AppSingleton {
         return requestQueue;
     }
 
-    public <T> void addToRequestQueue(Request<T> req,String tag) {
+    public <T> void addToRequestQueue(Request<T> req, String tag) {
         req.setTag(tag);
         getRequestQueue().add(req);
     }
