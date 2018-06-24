@@ -61,6 +61,7 @@
         <activity
             android:name=".iam.PasswordRecoveryActivity"
             android:parentActivityName=".iam.LoginActivity" />
+        <activity android:name=".EvaluationActivity" android:screenOrientation="portrait"></activity>
         <activity
             android:name=".AboutActivity"
             android:parentActivityName=".MainActivity" />

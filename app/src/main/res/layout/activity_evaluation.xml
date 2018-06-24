@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:padding="0dp">
+
+    <LinearLayout
+        android:id="@+id/run_eval_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/question_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="1dp"
+            card_view:cardCornerRadius="4dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/start_eval_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginTop="7dp"
+                    android:gravity="left"
+                    android:text="@string/quiz_list_title"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/question_count"
+                    android:layout_width="203dp"
+                    android:layout_height="35dp"
+                    android:layout_below="@id/start_eval_title"
+                    android:gravity="left|center_vertical"
+                    android:text="Pregunta: 0 de 0"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/heart_1"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_alignRight="@id/start_eval_title"
+                    android:layout_below="@id/start_eval_title"
+                    android:src="@drawable/alive_android" />
+
+                <ImageView
+                    android:id="@+id/heart_2"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_below="@id/start_eval_title"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@id/heart_1"
+                    android:src="@drawable/alive_android" />
+
+                <ImageView
+                    android:id="@+id/heart_3"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_below="@id/start_eval_title"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@id/heart_2"
+                    android:src="@drawable/alive_android" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/questions_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            card_view:cardCornerRadius="4dp">
+
+            <LinearLayout
+                android:id="@+id/quest_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ProgressBar
+                    android:id="@+id/progressBarQuest"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="24dp" />
+
+                <TextView
+                    android:id="@+id/question"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="20sp"
+                    android:text="@string/string_void"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:typeface="monospace" />
+
+                <LinearLayout
+                    android:id="@+id/answer_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20sp"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="10dp">
+
+
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <Button
+            android:id="@+id/answer_action"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="177dp"
+            android:layout_height="59dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:onClick="evaluateAnswer"
+            android:text="@string/evaluation_next_quest"
+            android:textStyle="bold" />
+    </LinearLayout>
+</ScrollView>
