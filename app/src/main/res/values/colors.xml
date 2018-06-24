@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#004466</color>
     <color name="colorAccentOld">#F47920</color>
     <color name="colorAccent">#00838F</color>
+    <color name="white">#FFFFFF</color>
 </resources>
 
     <!-- https://www.w3schools.com/colors/colors_picker.asp -->
