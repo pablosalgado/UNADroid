@@ -142,7 +142,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
             User user = User.fromJSON(response);
 
-            Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             Session.putUserEmail(getApplicationContext(), user.getEmail());
             startActivity(intent);
             finish();
