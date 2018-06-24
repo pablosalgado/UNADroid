@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this, WebCampusActivity.class);
             startActivity(intent);
         }else if (id == R.id.nav_course_info) {
-            Intent intent = new Intent(this, StandarActivity.class);
+            Intent intent = new Intent(this, AboutCourseActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_exit) {
             signOut();
