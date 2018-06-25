@@ -264,7 +264,7 @@ public class EvaluationActivity extends AppCompatActivity {
                 String result_msg;
                 int percent = 0;
                 try {
-                    percent = ((correct_answers / question_list.size()) * 100);
+                    percent = (int) (((float)(correct_answers / question_list.size()))*100);
                 } catch (Exception ne) {
 
                 }
@@ -364,6 +364,7 @@ public class EvaluationActivity extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
             if (!response.isNull(0)) {
                 answer_list = QuestionAnswers.fromJSON(response);
+                Collections.shuffle(answer_list);
                 drawAnwers();
             } else {
                 answer_list = new ArrayList<>();

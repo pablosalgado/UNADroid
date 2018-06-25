@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
+
 import com.github.barteksc.pdfviewer.PDFView;
 import java.io.InputStream;
 import java.net.URL;
@@ -58,14 +60,14 @@ public class ViewResourceActivity extends AppCompatActivity {
                 callback.invoke(origin, true, false);
             }
         });
-
+*/
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;
             }
-        });*/
+        });
     }
 
     private void renderPdf(String url){
