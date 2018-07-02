@@ -53,4 +53,5 @@
     <string name="about_participants_title">Participantes</string>
     <string name="title_activity_evaluation">EvaluationActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="course_description">Es un curso académico ofertado a los estudiantes de los programas de Ingeniería de Sistemas, Ingeniería Electrónica e Ingeniería de las Telecomunicaciones de la UNAD de Colombia como alternativa de grado. Este curso se estructura bajo los principios académicos y pedagógicos del sistema de educación abierto y a distancia, que promueve la Universidad a través de su Proyecto Académico Pedagógico Solidario. </string>
 </resources>

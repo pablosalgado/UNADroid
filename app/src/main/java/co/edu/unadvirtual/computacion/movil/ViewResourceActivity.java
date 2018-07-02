@@ -8,12 +8,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.github.barteksc.pdfviewer.PDFView;
-import java.io.InputStream;
-import java.net.URL;
-
 public class ViewResourceActivity extends AppCompatActivity {
-    private PDFView pdfView;
     private int unit_id = 0;
     private int topic_id = 0;
     private int resource_type = 0;
@@ -32,11 +27,7 @@ public class ViewResourceActivity extends AppCompatActivity {
         if(resource_type ==1){
             resource_url = "https://www.youtube.com/embed/" + resource_url + "?autoplay=1&vq=small";
         }else if(resource_type ==2){
-            pdfView = findViewById(R.id.pdfView);
-            pdfView.setVisibility(View.VISIBLE);
-            webView.setVisibility(View.GONE);
-            renderPdf(resource_url);
-
+            resource_url = "http://docs.google.com/gview?embedded=true&url=" + resource_url;
         }
 
         webView.getSettings().setJavaScriptEnabled(true);
@@ -68,22 +59,6 @@ public class ViewResourceActivity extends AppCompatActivity {
                 return true;
             }
         });
-    }
-
-    private void renderPdf(String url){
-        try {
-            Thread thread = new Thread(() -> {
-                try  {
-                    InputStream input = new URL(url).openStream();
-                    pdfView.fromStream(input).load();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
-            thread.start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 

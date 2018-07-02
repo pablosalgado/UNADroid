@@ -114,7 +114,7 @@ public class EvaluationActivity extends AppCompatActivity {
         answer_container.removeAllViews();
         Question q = question_list.get(current_question_number - 1);
         current_question_id = q.getId();
-        question.setText(current_question_number + ") " + q.getQuestion());
+        question.setText(current_question_number + ") " + q.getQuestion().replaceAll("<nl>","\n"));
         progressBar.setVisibility(View.VISIBLE);
         question_count.setText("Pregunta: " + current_question_number + " de " + question_list.size());
         if (current_question_number == question_list.size()) {
@@ -139,6 +139,7 @@ public class EvaluationActivity extends AppCompatActivity {
                         rb.setId(answer.getId());
                         rb.setText(answer.getAnswer());
                         rb.setTypeface(Typeface.MONOSPACE);
+
                         if (answer.getCorrect() == 1) {
                             correct_answer_id = answer.getId();
                         }
@@ -264,12 +265,13 @@ public class EvaluationActivity extends AppCompatActivity {
                 String result_msg;
                 int percent = 0;
                 try {
-                    percent = (int) (((float)(correct_answers / question_list.size()))*100);
+                    percent = (int) (((float)correct_answers / (float)question_list.size())*100);
                 } catch (Exception ne) {
 
                 }
+                Toast.makeText(getApplicationContext(), ""+percent, Toast.LENGTH_LONG).show();
                 if (percent == 100) {
-                    result_msg = "\n\nExcelente puntuación! ;)";
+                    result_msg = "\n\nExcelente puntuacion! ;)";
                 } else if (percent > 70) {
                     result_msg = "\n\nBuen resultado. Pero puedes mejorar!";
                 } else {
@@ -280,8 +282,9 @@ public class EvaluationActivity extends AppCompatActivity {
                 }
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Aviso");
+                builder.setTitle("Resultado Evaluacion");
                 builder.setMessage(main_msg + result_msg);
+                builder.setIcon(R.drawable.quiz_icon);
                 builder.setPositiveButton("Aceptar", (dialog, id) -> {
                     Intent intent = new Intent(EvaluationActivity.this, EvaluationListActivity.class);
                     startActivity(intent);

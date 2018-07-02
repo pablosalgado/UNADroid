@@ -1,6 +1,7 @@
 package co.edu.unadvirtual.computacion.movil;
 
 import android.content.Intent;
+import android.graphics.pdf.PdfRenderer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +12,7 @@ public class StartEvaluationActivity extends AppCompatActivity {
     private int eval_id = 0;
     private String eval_desc= "Evaluacion unidad 0";
     TextView eval_title;
-
+    PdfRenderer pdfRenderer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
