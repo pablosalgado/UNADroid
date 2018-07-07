@@ -29,7 +29,6 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import org.json.JSONArray;
 import java.util.List;
 
-import co.edu.unadvirtual.computacion.movil.common.StandarActivity;
 import co.edu.unadvirtual.computacion.movil.common.Utilities;
 import co.edu.unadvirtual.computacion.movil.common.Session;
 import co.edu.unadvirtual.computacion.movil.domain.Unit;

@@ -47,9 +47,6 @@
             android:parentActivityName=".MainActivity" />
         <activity android:name=".ListTopicsActivity" />
         <activity
-            android:name=".common.StandarActivity"
-            android:parentActivityName=".MainActivity" />
-        <activity
             android:name=".ConnectionErrorActivity"
             android:screenOrientation="portrait" />
         <activity
